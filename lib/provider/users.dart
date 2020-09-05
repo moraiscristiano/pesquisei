@@ -5,7 +5,7 @@ import 'package:flutter_crud/data/dummy_users.dart';
 import 'package:flutter_crud/models/user.dart';
 
 class Users with ChangeNotifier {
-  final Map<String, User> _items = {...DUMMY_USERS};
+  final Map<String, User> _items = {...DUMMY_USERS}; // substituir para banco de dados / chamada a api
 
   List<User> get all {
     return [..._items.values];

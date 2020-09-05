@@ -38,26 +38,29 @@ class UserTile extends StatelessWidget {
                 color: Colors.red,
                 onPressed: () {
                   showDialog(
-                    context: context,
-                    builder: (ctx) => AlertDialog(
-                      title: Text('Excluir Usuário'),
-                      content: Text('Tem certeza que deseja excluir?'),
-                      actions: <Widget>[
-                        FlatButton(
-                          child: Text('Não'),
-                          onPressed: () => Navigator.of(context).pop(false),
-                        ),
-                        FlatButton(
-                          child: Text('Sim'),
-                          onPressed: () => Navigator.of(context).pop(true),
-                        )
-                      ],
-                    ),
-                  ).then((confimed) {
-                    if (confimed) {
-                      Provider.of<Users>(context, listen: false).remove(user);
-                    }
-                  });
+                      context: context,
+                      builder: (ctx) => AlertDialog(
+                            title: Text('Excluir Usuário'),
+                            content: Text('Tem certeza que deseja excluir?'),
+                            actions: <Widget>[
+                              FlatButton(
+                                child: Text('Não'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                              FlatButton(
+                                child: Text('Sim'),
+                                onPressed: () {
+                                  Provider.of<Users>(context, listen: false)
+                                      .remove(user);
+                                  Navigator.of(context).pop();
+                                },
+                              )
+                            ],
+
+                          ),
+                          );
                 },
               ),
             ],

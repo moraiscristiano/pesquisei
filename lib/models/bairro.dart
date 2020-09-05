@@ -5,8 +5,9 @@ class Bairro {
   final Cidade cidade;
   final String nome;
 
-  const Bairro(
-    {this.id, 
+  const Bairro({
+    this.id, 
     this.cidade, 
-    this.nome});
+    this.nome
+    });
 }
