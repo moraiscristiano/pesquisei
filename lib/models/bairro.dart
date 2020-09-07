@@ -2,7 +2,7 @@ import 'cidade.dart';
 
 class Bairro {
   final int id;
-  final Cidade cidade;
+  final int cidade;
   final String nome;
 
   const Bairro({
@@ -10,4 +10,6 @@ class Bairro {
     this.cidade, 
     this.nome
     });
+
+  
 }

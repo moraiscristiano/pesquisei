@@ -1,34 +1,47 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_crud/provider/users.dart';
-import 'package:flutter_crud/routes/app_routes.dart';
-import 'package:flutter_crud/views/user_form.dart';
-import 'package:flutter_crud/views/user_list.dart';
-import 'package:provider/provider.dart';
+/*import 'package:flutter/material.dart';
+import 'package:flutter_crud/views/cidade_list.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MaterialApp(
+    initialRoute: '/',
+    routes: <String, WidgetBuilder>{
+      '/': (context) => CidadeList(),
+    },
+  ));
 }
 
+*/
+
+
+import 'package:flutter/material.dart';
+import 'package:flutter_crud/views/drawer/nav_drawer.dart';
+
+
+void main() => runApp(MyApp());
+
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (ctx) => Users(),
-        )
-      ],
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        routes: {
-          AppRoutes.HOME: (_) => UserList(),
-          AppRoutes.USER_FORM: (_) => UserForm()
-        },
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      drawer: NavDrawer(),
+      appBar: AppBar(
+        title: Text('Menu'),
+      ),
+      body: Center(
+        child: Text(''),
       ),
     );
   }
