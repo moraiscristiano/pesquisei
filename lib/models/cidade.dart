@@ -1,15 +1,15 @@
 class Cidade {
   int id;
   String nome;
-  String estadoSigla;
+  String estado_sigla;
 
-  Cidade(this.id, this.nome, this.estadoSigla);
+  Cidade(this.id, this.nome, this.estado_sigla);
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
       'id': id,
       'nome': nome,
-      'estadoSigla': estadoSigla,
+      'estado_sigla': estado_sigla,
     };
 
     return map;
@@ -18,7 +18,7 @@ class Cidade {
   Cidade.fromMap(Map<String, dynamic> map) {
     id = map['id'];
     nome = map['nome'];
-    estadoSigla = map['estadoSigla'];
+    estado_sigla = map['estado_sigla'];
   }
 }
 

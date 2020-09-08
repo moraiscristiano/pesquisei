@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_crud/models/cidade.dart';
+import 'package:flutter_crud/provider/cidades.dart';
 import 'package:flutter_crud/utils/DBHelper.dart';
 
 
@@ -13,10 +14,6 @@ class CidadeList extends StatefulWidget {
     return _CidadeListState();
   }
 }
- 
-
-
-
 
 
 class _CidadeListState extends State<CidadeList> {
@@ -42,7 +39,7 @@ class _CidadeListState extends State<CidadeList> {
  
   refreshList() {
     setState(() {
-      cidades = dbHelper.getCidades();
+      cidades = CidadeProvider().getCidades();
     });
   }
  
@@ -56,13 +53,13 @@ class _CidadeListState extends State<CidadeList> {
       formKey.currentState.save();
       if (isUpdating) {
         Cidade e = Cidade(curCidadeId, nome, estadoSigla);
-        dbHelper.updateCidade(e);
+        CidadeProvider().updateCidade(e);
         setState(() {
           isUpdating = false;
         });
       } else {
         Cidade e = Cidade(null, nome, estadoSigla);
-        dbHelper.saveCidade(e);
+        CidadeProvider().saveCidade(e);
       }
       clearName();
       refreshList();
@@ -143,24 +140,24 @@ class _CidadeListState extends State<CidadeList> {
                           curCidadeId = cidade.id;
                         });
                         controllerTxtNome.text = cidade.nome;
-                        controllerTxtEstadoSigla.text = cidade.estadoSigla;
+                        controllerTxtEstadoSigla.text = cidade.estado_sigla;
                       },
                     ),
                     DataCell(
-                      Text(cidade.estadoSigla),
+                      Text(cidade.estado_sigla),
                       onTap: () {
                         setState(() {
                           isUpdating = true;
                           curCidadeId = cidade.id;
                         });
                        controllerTxtNome.text = cidade.nome;
-                        controllerTxtEstadoSigla.text = cidade.estadoSigla;
+                        controllerTxtEstadoSigla.text = cidade.estado_sigla;
                       },
                     ),
                     DataCell(IconButton(
                       icon: Icon(Icons.delete),
                       onPressed: () {
-                        dbHelper.deleteCidade(cidade.id);
+                        CidadeProvider().deleteCidade(cidade.id);
                         refreshList();
                       },
                     )),
@@ -193,9 +190,7 @@ class _CidadeListState extends State<CidadeList> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(
-        title: new Text('PESQUISEI'),
-      ),
+      
       body: new Container(
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.start,
