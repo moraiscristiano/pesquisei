@@ -2,15 +2,15 @@ import 'cidade.dart';
 
 class Bairro {
   int id;
-  Cidade cidade;
+  Cidade idcidade;
   String nome;
 
-  Bairro({this.id, this.cidade, this.nome});
+  Bairro({this.id, this.idcidade, this.nome});
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
       'id': id,
-      'cidade': cidade,
+      'idcidade': idcidade,
       'nome': nome,
     };
 
@@ -19,7 +19,16 @@ class Bairro {
 
   Bairro.fromMap(Map<String, dynamic> map) {
     id = map['id'];
-    cidade = map['cidade'];
+    idcidade = map['idcidade'];
     nome = map['nome'];
   }
+
+   factory Bairro.fromJson(Map<String, dynamic> json) {
+      return new Bairro(
+         id: json['id'],
+         idcidade: json['idcidade'],
+         nome: json['nome'].toString()
+      );
+   }
+
 }

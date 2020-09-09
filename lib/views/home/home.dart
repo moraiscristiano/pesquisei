@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_crud/views/fragment/Fragment.dart';
+import 'package:flutter_crud/views/fragment/fragment.dart';
+import 'package:flutter_crud/views/sincronize/sincronize.dart';
 
 import '../cidade/cidade_list.dart';
 
@@ -14,7 +15,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _selectedIndex = 0;
-  String curTitle = '';
+  String curTitle = 'Home';
 
   @override
   Widget build(BuildContext context) {
@@ -33,21 +34,21 @@ class _HomeState extends State<Home> {
               ),
             ),
             ListTile(
-              title: Text('HOME'),
+              title: Text('Home'),
               selected: 0 == _selectedIndex,
               onTap: () {
                 _onSelectItem(0);
               },
             ),
             ListTile(
-              title: Text('CIDADES'),
+              title: Text('Cidades'),
               selected: 1 == _selectedIndex,
               onTap: () {
                 _onSelectItem(1);
               },              
             ),
             ListTile(
-              title: Text('PESQUISA'),
+              title: Text('Pesquisa'),
               selected: 2 == _selectedIndex,
               onTap: () {
                 _onSelectItem(2);
@@ -55,7 +56,7 @@ class _HomeState extends State<Home> {
               
             ),
             ListTile(
-              title: Text('SINCRONIZAR'),
+              title: Text('Sincronizar'),
               selected: 3 == _selectedIndex,
               onTap: () {
                 _onSelectItem(3);
@@ -78,7 +79,7 @@ class _HomeState extends State<Home> {
       case 2: // Pesquisa
         return Fragment("");
       case 3: // Sincronizar
-        return Fragment("");
+        return SincronizePage();
     }
   }
 
@@ -86,16 +87,16 @@ class _HomeState extends State<Home> {
     
      switch (index) {
       case 0: // Home
-        curTitle = 'HOME';
+        curTitle = 'Home';
         break;
       case 1: // Cidades
-        curTitle = 'CIDADES';
+        curTitle = 'Cidades';
         break;
       case 2: // Pesquisa
-        curTitle = 'PESQUISA';
+        curTitle = 'Pesquisa';
         break;
       case 3: // Sincronizar
-        curTitle = 'SINCRONIZAR';
+        curTitle = 'Sincronizar';
         break;
     }
 

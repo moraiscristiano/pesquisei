@@ -1,53 +1,52 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_crud/models/cidade.dart';
-import 'package:flutter_crud/provider/cidades.dart';
-import 'package:flutter_crud/utils/DBHelper.dart';
-
+import 'package:flutter_crud/provider/cidade_provider.dart';
+import 'package:flutter_crud/utils/db_helper.dart';
 
 class CidadeList extends StatefulWidget {
   final String title;
- 
+
   CidadeList({Key key, this.title}) : super(key: key);
- 
+
   @override
   State<StatefulWidget> createState() {
     return _CidadeListState();
   }
 }
 
-
 class _CidadeListState extends State<CidadeList> {
-  //
   Future<List<Cidade>> cidades;
   TextEditingController controllerTxtNome = TextEditingController();
   TextEditingController controllerTxtEstadoSigla = TextEditingController();
   String nome;
   String estadoSigla;
   int curCidadeId;
- 
+
   final formKey = new GlobalKey<FormState>();
   var dbHelper;
   bool isUpdating;
- 
+
   @override
   void initState() {
     super.initState();
+
     dbHelper = DBHelper();
     isUpdating = false;
     refreshList();
   }
- 
+
   refreshList() {
     setState(() {
       cidades = CidadeProvider().getCidades();
     });
   }
- 
+
   clearName() {
     controllerTxtNome.text = '';
     controllerTxtEstadoSigla.text = '';
   }
- 
+
   validate() {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
@@ -65,7 +64,7 @@ class _CidadeListState extends State<CidadeList> {
       refreshList();
     }
   }
- 
+
   form() {
     return Form(
       key: formKey,
@@ -83,11 +82,12 @@ class _CidadeListState extends State<CidadeList> {
               validator: (val) => val.length == 0 ? 'Digite o nome' : null,
               onSaved: (val) => nome = val,
             ),
-             TextFormField(
+            TextFormField(
               controller: controllerTxtEstadoSigla,
               keyboardType: TextInputType.text,
               decoration: InputDecoration(labelText: 'Estado'),
-              validator: (val) => val.length == 0 ? 'Digite a sigla do Estado' : null,
+              validator: (val) =>
+                  val.length == 0 ? 'Digite a sigla do Estado' : null,
               onSaved: (val) => estadoSigla = val,
             ),
             Row(
@@ -113,7 +113,7 @@ class _CidadeListState extends State<CidadeList> {
       ),
     );
   }
- 
+
   SingleChildScrollView dataTable(List<Cidade> cidades) {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
@@ -132,42 +132,42 @@ class _CidadeListState extends State<CidadeList> {
         rows: cidades
             .map(
               (cidade) => DataRow(cells: [
-                    DataCell(
-                      Text(cidade.nome),
-                      onTap: () {
-                        setState(() {
-                          isUpdating = true;
-                          curCidadeId = cidade.id;
-                        });
-                        controllerTxtNome.text = cidade.nome;
-                        controllerTxtEstadoSigla.text = cidade.estado_sigla;
-                      },
-                    ),
-                    DataCell(
-                      Text(cidade.estado_sigla),
-                      onTap: () {
-                        setState(() {
-                          isUpdating = true;
-                          curCidadeId = cidade.id;
-                        });
-                       controllerTxtNome.text = cidade.nome;
-                        controllerTxtEstadoSigla.text = cidade.estado_sigla;
-                      },
-                    ),
-                    DataCell(IconButton(
-                      icon: Icon(Icons.delete),
-                      onPressed: () {
-                        CidadeProvider().deleteCidade(cidade.id);
-                        refreshList();
-                      },
-                    )),
-                  ]),
+                DataCell(
+                  Text(cidade.nome),
+                  onTap: () {
+                    setState(() {
+                      isUpdating = true;
+                      curCidadeId = cidade.id;
+                    });
+                    controllerTxtNome.text = cidade.nome;
+                    controllerTxtEstadoSigla.text = cidade.estadosigla;
+                  },
+                ),
+                DataCell(
+                  Text(cidade.estadosigla),
+                  onTap: () {
+                    setState(() {
+                      isUpdating = true;
+                      curCidadeId = cidade.id;
+                    });
+                    controllerTxtNome.text = cidade.nome;
+                    controllerTxtEstadoSigla.text = cidade.estadosigla;
+                  },
+                ),
+                DataCell(IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: () {
+                    CidadeProvider().deleteCidade(cidade.id);
+                    refreshList();
+                  },
+                )),
+              ]),
             )
             .toList(),
       ),
     );
   }
- 
+
   list() {
     return Expanded(
       child: FutureBuilder(
@@ -176,21 +176,20 @@ class _CidadeListState extends State<CidadeList> {
           if (snapshot.hasData) {
             return dataTable(snapshot.data);
           }
- 
+
           if (null == snapshot.data || snapshot.data.length == 0) {
             return Text("No Data Found");
           }
- 
+
           return CircularProgressIndicator();
         },
       ),
     );
   }
- 
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      
       body: new Container(
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.start,

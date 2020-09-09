@@ -26,7 +26,8 @@ dependencies:
   provider:   
   sqflite: any
   path_provider:
-  http:
+  dio:
+  catcher:
     
 
   # The following adds the Cupertino Icons font to your application.
@@ -44,8 +45,8 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   uses-material-design: true
-  assets:
-    - assets/images/cover.jpg
+  #assets:
+  #  - assets/images/cover.jpg
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

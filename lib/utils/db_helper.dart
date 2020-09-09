@@ -1,4 +1,3 @@
-import 'package:flutter_crud/models/cidade.dart';
 import 'package:sqflite/sqflite.dart'; //sqflite package
 import 'package:path_provider/path_provider.dart'; //path_provider package
 import 'package:path/path.dart'; //used to join paths
@@ -30,10 +29,10 @@ class DBHelper {
   _onCreate(Database db, int version) async {
     // Cidade
     await db
-        .execute("CREATE TABLE Cidade (id INTEGER PRIMARY KEY, nome TEXT, estadoSigla TEXT)");
+        .execute("CREATE TABLE Cidade (id INTEGER PRIMARY KEY, nome TEXT, estadosigla TEXT)");
     // Bairro
     await db
-        .execute("CREATE TABLE Bairro (id INTEGER PRIMARY KEY, nome TEXT, id_cidade INTEGER,  FOREIGN KEY (id_cidade) REFERENCES tbl_cidade(id))");
+        .execute("CREATE TABLE Bairro (id INTEGER PRIMARY KEY, nome TEXT, idcidade INTEGER)");
   }
  
  

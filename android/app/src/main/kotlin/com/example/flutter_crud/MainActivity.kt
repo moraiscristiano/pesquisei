@@ -1,4 +1,4 @@
-package com.example.flutter_crud
+package com.br.perguntei
 
 import io.flutter.embedding.android.FlutterActivity
 
