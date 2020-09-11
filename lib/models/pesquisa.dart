@@ -34,6 +34,6 @@ class Pesquisa {
         nome: json['nome'].toString(),
         descricao: json['descricao'].toString(),
         idbairro: json['idbairro'],
-        dataalteracao: json['idbaidataalteracaorro'].toString());
+        dataalteracao: json['dataalteracao'].toString());
   }
 }

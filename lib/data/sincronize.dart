@@ -1,24 +1,29 @@
 import 'package:flutter_crud/models/bairro.dart';
 import 'package:flutter_crud/models/cidade.dart';
+import 'package:flutter_crud/models/pesquisa.dart';
 import 'package:flutter_crud/provider/bairro_provider.dart';
 import 'package:flutter_crud/provider/cidade_provider.dart';
+import 'package:flutter_crud/provider/pesquisa_provider.dart';
 import 'package:intl/intl.dart';
 
 class Sincronize {
   DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
   CidadeProvider cidadeProvider;
   BairroProvider bairroProvider;
+  PesquisaProvider pesquisaProvider;
 
   Sincronize() {
     cidadeProvider = new CidadeProvider();
     bairroProvider = new BairroProvider();
+    pesquisaProvider = new PesquisaProvider();
   }
 
   Future<bool> Sincronizar() async {
     bool synccidades = await this.SincronizarCidades();
     bool syncBairros = await this.SincronizarBairros();
+    bool syncPesquisas = await this.SincronizarPesquisas();
 
-    if (synccidades && syncBairros) {
+    if (synccidades && syncBairros && syncPesquisas) {
       return true;
     } else {
       return false;
@@ -103,6 +108,48 @@ class Sincronize {
       } else {
         // add
         cidadeProvider.saveCidade(itemApi);
+      }
+    }
+
+    return true;
+  }
+
+  Future<bool> SincronizarPesquisas() async {
+    List<Pesquisa> pesquisasApi = new List<Pesquisa>();
+    List<Pesquisa> pesquisasDb = new List<Pesquisa>();
+
+    pesquisasApi = await pesquisaProvider.getPesquisasFromServer();
+
+    if (pesquisasApi == null || pesquisasApi.length == 0) {
+      return true; // Não há registros para sincronizar.
+    }
+
+    pesquisasDb = await pesquisaProvider.getPesquisas();
+
+    for (var itemApi in pesquisasApi) {
+      bool itemParaAtualizar = false;
+      bool itemExist = false;
+      for (var itemDb in pesquisasDb) {
+        if (itemApi.id == itemDb.id) {
+          itemExist = true;
+
+          if (itemApi.dataalteracao?.isEmpty ||
+              itemDb.dataalteracao?.isEmpty ||
+              DateTime.parse(itemApi.dataalteracao)
+                  .isAfter(DateTime.parse(itemDb.dataalteracao))) {
+            itemParaAtualizar = true;
+          }
+        }
+      }
+
+      if (itemExist) {
+        if (itemParaAtualizar) {
+          // Atualizar
+          pesquisaProvider.updatePesquisa(itemApi);
+        }
+      } else {
+        // add
+        pesquisaProvider.savePesquisa(itemApi);
       }
     }
 

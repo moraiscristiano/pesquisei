@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_crud/views/bairro/bairro_list.dart';
 import 'package:flutter_crud/views/fragment/fragment.dart';
+import 'package:flutter_crud/views/pesquisa/pesquisa_list.dart';
 import 'package:flutter_crud/views/sincronize/sincronize.dart';
 
 import '../cidade/cidade_list.dart';
@@ -56,7 +57,14 @@ class _HomeState extends State<Home> {
               },
             ),
             ListTile(
-              title: Text('Pesquisa'),
+              title: Text('Pesquisas'),
+              selected: 5 == _selectedIndex,
+              onTap: () {
+                _onSelectItem(5);
+              },
+            ),
+            ListTile(
+              title: Text('PesquisaApp'),
               selected: 2 == _selectedIndex,
               onTap: () {
                 _onSelectItem(2);
@@ -88,6 +96,8 @@ class _HomeState extends State<Home> {
         return SincronizePage();
       case 4: // Sincronizar
         return BairroList();
+      case 5: // Sincronizar
+        return PesquisaList();
     }
   }
 
@@ -99,14 +109,17 @@ class _HomeState extends State<Home> {
       case 1: // Cidades
         curTitle = 'Cidades';
         break;
-      case 2: // Pesquisa
-        curTitle = 'Pesquisa';
+      case 2: // PesquisaApp
+        curTitle = 'PesquisaApp';
         break;
       case 3: // Sincronizar
         curTitle = 'Sincronizar';
         break;
-      case 4: // Sincronizar
+      case 4: // Bairros
         curTitle = 'Bairros';
+        break;
+      case 5: // Pesquisas
+        curTitle = 'Pesquisas';
         break;
     }
 
