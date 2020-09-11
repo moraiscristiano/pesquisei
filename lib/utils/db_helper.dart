@@ -29,10 +29,10 @@ class DBHelper {
   _onCreate(Database db, int version) async {
     // Cidade
     await db
-        .execute("CREATE TABLE Cidade (id INTEGER PRIMARY KEY, nome TEXT, estadosigla TEXT)");
+        .execute("CREATE TABLE cidade (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL ,nome VARCHAR (255) NOT NULL,estadosigla VARCHAR (2) NOT NULL,dataalteracao VARCHAR NOT NULL)");
     // Bairro
     await db
-        .execute("CREATE TABLE Bairro (id INTEGER PRIMARY KEY, nome TEXT, idcidade INTEGER)");
+        .execute("CREATE TABLE Bairro (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,nome VARCHAR (255) NOT NULL, idcidade INTEGER NOT NULL,dataalteracao VARCHAR NOT NULL)");
   }
  
  

@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:flutter_crud/dto/cidadeDto.dart';
 import 'package:flutter_crud/models/cidade.dart';
 import 'package:flutter_crud/utils/Strings.dart';
 import 'package:flutter_crud/utils/db_helper.dart';
@@ -35,11 +34,9 @@ class CidadeProvider {
   }
 
   Future<List<Cidade>> getCidades() async {
-    getCidadesFromServer();
-
     var dbClient = await _db;
     List<Map> maps =
-        await dbClient.query('Cidade', columns: ['id', 'nome', 'estadosigla']);
+        await dbClient.query('Cidade', columns: ['id', 'nome', 'estadosigla','dataalteracao']);
     //List<Map> maps = await dbClient.rawQuery("SELECT * FROM $TABLE");
     List<Cidade> cidades = [];
     if (maps.length > 0) {
@@ -61,14 +58,14 @@ class CidadeProvider {
         where: 'id = ?', whereArgs: [cidade.id]);
   }
 
-  Future<List<CidadeDTO>> getCidadesFromServer() async {
-    List<CidadeDTO> lista;
+  Future<List<Cidade>> getCidadesFromServer() async {
+    List<Cidade> lista;
 
     Response<String> response =
         await _dio.get(Strings.GET_ALL_CIDADES_FROM_SERVER);
     if (response != null && response.statusCode == 200) {
       List responseJson = json.decode(response.data);
-      lista = responseJson.map((m) => new CidadeDTO.fromJson(m)).toList();
+      lista = responseJson.map((m) => new Cidade.fromJson(m)).toList();
     }
     print(lista[0]);
     return lista;

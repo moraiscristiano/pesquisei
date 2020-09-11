@@ -1,8 +1,8 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_crud/models/cidade.dart';
 import 'package:flutter_crud/provider/cidade_provider.dart';
 import 'package:flutter_crud/utils/db_helper.dart';
+import 'package:intl/intl.dart';
 
 class CidadeList extends StatefulWidget {
   final String title;
@@ -19,9 +19,12 @@ class _CidadeListState extends State<CidadeList> {
   Future<List<Cidade>> cidades;
   TextEditingController controllerTxtNome = TextEditingController();
   TextEditingController controllerTxtEstadoSigla = TextEditingController();
+  DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
+
   String nome;
-  String estadoSigla;
+  String estadosigla;
   int curCidadeId;
+  String dataalteracao;
 
   final formKey = new GlobalKey<FormState>();
   var dbHelper;
@@ -45,19 +48,31 @@ class _CidadeListState extends State<CidadeList> {
   clearName() {
     controllerTxtNome.text = '';
     controllerTxtEstadoSigla.text = '';
+
+    dataalteracao = '';
   }
 
   validate() {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
       if (isUpdating) {
-        Cidade e = Cidade(curCidadeId, nome, estadoSigla);
-        CidadeProvider().updateCidade(e);
+        Cidade c = Cidade(
+            id: curCidadeId,
+            nome: nome,
+            estadosigla: estadosigla,
+            dataalteracao: dateFormat.format(DateTime.now()));
+
+        CidadeProvider().updateCidade(c);
         setState(() {
           isUpdating = false;
         });
       } else {
-        Cidade e = Cidade(null, nome, estadoSigla);
+        Cidade e = Cidade(
+            id: null,
+            nome: nome,
+            estadosigla: estadosigla,
+            dataalteracao: dateFormat.format(DateTime.now()));
+
         CidadeProvider().saveCidade(e);
       }
       clearName();
@@ -88,7 +103,7 @@ class _CidadeListState extends State<CidadeList> {
               decoration: InputDecoration(labelText: 'Estado'),
               validator: (val) =>
                   val.length == 0 ? 'Digite a sigla do Estado' : null,
-              onSaved: (val) => estadoSigla = val,
+              onSaved: (val) => estadosigla = val,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,

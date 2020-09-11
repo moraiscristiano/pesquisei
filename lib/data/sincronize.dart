@@ -1,62 +1,65 @@
-import 'package:flutter_crud/dto/cidadeDto.dart';
 import 'package:flutter_crud/models/cidade.dart';
 import 'package:flutter_crud/provider/cidade_provider.dart';
+import 'package:intl/intl.dart';
 
 class Sincronize {
+  DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
   CidadeProvider cidadeProvider;
 
   Sincronize() {
     cidadeProvider = new CidadeProvider();
   }
 
-  bool SincronizarCidades() {
-    List<CidadeDTO> cidadesServerDTO = new List<CidadeDTO>();
-    List<Cidade> cidadesServer  = new List<Cidade>();       
-    List<Cidade> cidades = new List<Cidade>();
+  Future<bool> SincronizarCidades() async {
+    print("SincronizarCidades()");
 
-    print("Entrou no sicronize");
+    List<Cidade> cidadesApi = new List<Cidade>();
+    List<Cidade> cidadesDb = new List<Cidade>();
 
-    Future<List<CidadeDTO>> retornoFromServer =
-        cidadeProvider.getCidadesFromServer();
+    cidadesApi = await cidadeProvider.getCidadesFromServer();
 
-    retornoFromServer.then((value) {
-      if (value != null) value.forEach((item) => cidadesServerDTO.add(item));
-    });
+    print("SincronizarCidades().cidadesapi.lenght");
 
-    print("retornoFromServer: " + retornoFromServer.toString());
-    print("cidadesServerDTO: " + cidadesServerDTO.toString());
-
-    
-    
-    cidadesServerDTO.forEach((element) {
-      cidadesServer.add(CidadeDTO().DtoToModel(element));
-    });
-
-    /*
-    cidadesFromServer.then((value) {
-      if (value != null) value.forEach((item) => cidadesServer.add(item));
-    });
-    */
-    print("cidadesServer" + cidadesServer.toString());
-
-    if (cidadesServer == null || cidadesServer.length == 0) {
-      return true;
+    if (cidadesApi == null || cidadesApi.length == 0) {
+      return true; // Não há registros para sincronizar.
     }
 
-    print("cidadesServer {0}" + cidadesServer.length.toString());
+    cidadesDb = await cidadeProvider.getCidades();
 
-    Future<List<Cidade>>  cidadesSqlite = cidadeProvider.getCidades();
-cidadesSqlite.then((value) {
-      if (value != null) value.forEach((item) => cidades.add(item));
-    });
+    print("SincronizarCidades().cidadesdb.lenght");
 
+    for (var itemApi in cidadesApi) {
+      bool itemParaAtualizar = false;
+      bool itemExist = false;
+      for (var itemDb in cidadesDb) {
+        if (itemApi.id == itemDb.id) {
+          itemExist = true;
 
-    cidadesServer.removeWhere((item) => cidades.contains(item));
+          print("itemApi" + itemApi.dataalteracao);
+          print("itemDb" + itemDb.dataalteracao);
+        
 
-    cidadesServer.forEach((element) {
-      print("ADD CIDADE" + element.nome);
-      CidadeProvider().saveCidade(element);
-    });
+          if (itemApi.dataalteracao?.isEmpty ||
+               itemDb.dataalteracao?.isEmpty ||
+              DateTime.parse(itemApi.dataalteracao)
+                  .isAfter(DateTime.parse(itemDb.dataalteracao))) {
+            itemParaAtualizar = true;
+          }
+        }
+      }
+
+      if (itemExist) {
+        if (itemParaAtualizar) {
+          // Atualizar
+          print("SincronizarCidades().update");
+          cidadeProvider.updateCidade(itemApi);
+        }
+      } else {
+        // add
+        print("SincronizarCidades().add");
+        cidadeProvider.saveCidade(itemApi);
+      }
+    }
 
     return true;
   }

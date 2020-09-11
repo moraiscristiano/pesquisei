@@ -28,8 +28,7 @@ class _SincronizePageState extends State<SincronizePage> {
             ),
             RaisedButton(
               onPressed: (){
-                Sincronize().SincronizarCidades();
-                print("clicou");
+                new Sincronize().SincronizarCidades();
               },
               color: Colors.blue,
               textColor: Colors.white,
