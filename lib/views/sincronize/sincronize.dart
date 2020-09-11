@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_crud/data/sincronize.dart';
 
-
 class SincronizePage extends StatefulWidget {
   SincronizePage({Key key, this.title}) : super(key: key);
   final String title;
@@ -11,11 +10,9 @@ class SincronizePage extends StatefulWidget {
 }
 
 class _SincronizePageState extends State<SincronizePage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -27,12 +24,12 @@ class _SincronizePageState extends State<SincronizePage> {
               ),
             ),
             RaisedButton(
-              onPressed: (){
-                new Sincronize().SincronizarCidades();
+              onPressed: () {
+                new Sincronize().Sincronizar();
               },
               color: Colors.blue,
               textColor: Colors.white,
-              child: Text ('Clique aqui'),
+              child: Text('Clique aqui'),
             )
           ],
         ),

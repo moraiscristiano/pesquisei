@@ -1,46 +1,51 @@
+import 'package:flutter_crud/models/bairro.dart';
 import 'package:flutter_crud/models/cidade.dart';
+import 'package:flutter_crud/provider/bairro_provider.dart';
 import 'package:flutter_crud/provider/cidade_provider.dart';
 import 'package:intl/intl.dart';
 
 class Sincronize {
   DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
   CidadeProvider cidadeProvider;
+  BairroProvider bairroProvider;
 
   Sincronize() {
     cidadeProvider = new CidadeProvider();
+    bairroProvider = new BairroProvider();
+  }
+
+  Future<bool> Sincronizar() async {
+    bool synccidades = await this.SincronizarCidades();
+    bool syncBairros = await this.SincronizarBairros();
+
+    if (synccidades && syncBairros) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   Future<bool> SincronizarCidades() async {
-    print("SincronizarCidades()");
+    List<Bairro> bairrosApi = new List<Bairro>();
+    List<Bairro> bairrosDb = new List<Bairro>();
 
-    List<Cidade> cidadesApi = new List<Cidade>();
-    List<Cidade> cidadesDb = new List<Cidade>();
+    bairrosApi = await bairroProvider.getBairrosFromServer();
 
-    cidadesApi = await cidadeProvider.getCidadesFromServer();
-
-    print("SincronizarCidades().cidadesapi.lenght");
-
-    if (cidadesApi == null || cidadesApi.length == 0) {
+    if (bairrosApi == null || bairrosApi.length == 0) {
       return true; // Não há registros para sincronizar.
     }
 
-    cidadesDb = await cidadeProvider.getCidades();
+    bairrosDb = await bairroProvider.getBairros();
 
-    print("SincronizarCidades().cidadesdb.lenght");
-
-    for (var itemApi in cidadesApi) {
+    for (var itemApi in bairrosApi) {
       bool itemParaAtualizar = false;
       bool itemExist = false;
-      for (var itemDb in cidadesDb) {
+      for (var itemDb in bairrosDb) {
         if (itemApi.id == itemDb.id) {
           itemExist = true;
 
-          print("itemApi" + itemApi.dataalteracao);
-          print("itemDb" + itemDb.dataalteracao);
-        
-
           if (itemApi.dataalteracao?.isEmpty ||
-               itemDb.dataalteracao?.isEmpty ||
+              itemDb.dataalteracao?.isEmpty ||
               DateTime.parse(itemApi.dataalteracao)
                   .isAfter(DateTime.parse(itemDb.dataalteracao))) {
             itemParaAtualizar = true;
@@ -51,12 +56,52 @@ class Sincronize {
       if (itemExist) {
         if (itemParaAtualizar) {
           // Atualizar
-          print("SincronizarCidades().update");
+          bairroProvider.updateBairro(itemApi);
+        }
+      } else {
+        // add
+        bairroProvider.saveBairro(itemApi);
+      }
+    }
+
+    return true;
+  }
+
+  Future<bool> SincronizarBairros() async {
+    List<Cidade> cidadesApi = new List<Cidade>();
+    List<Cidade> cidadesDb = new List<Cidade>();
+
+    cidadesApi = await cidadeProvider.getCidadesFromServer();
+
+    if (cidadesApi == null || cidadesApi.length == 0) {
+      return true; // Não há registros para sincronizar.
+    }
+
+    cidadesDb = await cidadeProvider.getCidades();
+
+    for (var itemApi in cidadesApi) {
+      bool itemParaAtualizar = false;
+      bool itemExist = false;
+      for (var itemDb in cidadesDb) {
+        if (itemApi.id == itemDb.id) {
+          itemExist = true;
+
+          if (itemApi.dataalteracao?.isEmpty ||
+              itemDb.dataalteracao?.isEmpty ||
+              DateTime.parse(itemApi.dataalteracao)
+                  .isAfter(DateTime.parse(itemDb.dataalteracao))) {
+            itemParaAtualizar = true;
+          }
+        }
+      }
+
+      if (itemExist) {
+        if (itemParaAtualizar) {
+          // Atualizar
           cidadeProvider.updateCidade(itemApi);
         }
       } else {
         // add
-        print("SincronizarCidades().add");
         cidadeProvider.saveCidade(itemApi);
       }
     }

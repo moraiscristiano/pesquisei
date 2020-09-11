@@ -35,8 +35,8 @@ class CidadeProvider {
 
   Future<List<Cidade>> getCidades() async {
     var dbClient = await _db;
-    List<Map> maps =
-        await dbClient.query('Cidade', columns: ['id', 'nome', 'estadosigla','dataalteracao']);
+    List<Map> maps = await dbClient.query('Cidade',
+        columns: ['id', 'nome', 'estadosigla', 'dataalteracao']);
     //List<Map> maps = await dbClient.rawQuery("SELECT * FROM $TABLE");
     List<Cidade> cidades = [];
     if (maps.length > 0) {
@@ -67,7 +67,6 @@ class CidadeProvider {
       List responseJson = json.decode(response.data);
       lista = responseJson.map((m) => new Cidade.fromJson(m)).toList();
     }
-    print(lista[0]);
     return lista;
   }
 }

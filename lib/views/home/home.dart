@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_crud/views/bairro/bairro_list.dart';
 import 'package:flutter_crud/views/fragment/fragment.dart';
 import 'package:flutter_crud/views/sincronize/sincronize.dart';
 
@@ -7,7 +8,7 @@ import '../cidade/cidade_list.dart';
 class Home extends StatefulWidget {
   final String title;
 
-   Home({Key key, this.title}) : super(key: key);
+  Home({Key key, this.title}) : super(key: key);
 
   @override
   _HomeState createState() => _HomeState();
@@ -45,7 +46,14 @@ class _HomeState extends State<Home> {
               selected: 1 == _selectedIndex,
               onTap: () {
                 _onSelectItem(1);
-              },              
+              },
+            ),
+            ListTile(
+              title: Text('Bairros'),
+              selected: 1 == _selectedIndex,
+              onTap: () {
+                _onSelectItem(4);
+              },
             ),
             ListTile(
               title: Text('Pesquisa'),
@@ -53,7 +61,6 @@ class _HomeState extends State<Home> {
               onTap: () {
                 _onSelectItem(2);
               },
-              
             ),
             ListTile(
               title: Text('Sincronizar'),
@@ -61,7 +68,6 @@ class _HomeState extends State<Home> {
               onTap: () {
                 _onSelectItem(3);
               },
-              
             ),
           ],
         ),
@@ -80,12 +86,13 @@ class _HomeState extends State<Home> {
         return Fragment("");
       case 3: // Sincronizar
         return SincronizePage();
+      case 4: // Sincronizar
+        return BairroList();
     }
   }
 
   _onSelectItem(int index) {
-    
-     switch (index) {
+    switch (index) {
       case 0: // Home
         curTitle = 'Home';
         break;
@@ -98,12 +105,12 @@ class _HomeState extends State<Home> {
       case 3: // Sincronizar
         curTitle = 'Sincronizar';
         break;
+      case 4: // Sincronizar
+        curTitle = 'Bairros';
+        break;
     }
 
-    
     setState(() => _selectedIndex = index);
     Navigator.of(context).pop();
   }
 }
-
-

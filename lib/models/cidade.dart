@@ -1,5 +1,3 @@
-import 'package:intl/intl.dart';
-
 class Cidade {
   int id;
   String nome;
@@ -9,7 +7,6 @@ class Cidade {
   Cidade({this.id, this.nome, this.estadosigla, this.dataalteracao});
 
   Map<String, dynamic> toMap() {
-
     var map = <String, dynamic>{
       'id': id,
       'nome': nome,
@@ -21,7 +18,6 @@ class Cidade {
   }
 
   Cidade.fromMap(Map<String, dynamic> map) {
-
     id = map['id'];
     nome = map['nome'];
     estadosigla = map['estadosigla'];
@@ -29,7 +25,6 @@ class Cidade {
   }
 
   factory Cidade.fromJson(Map<String, dynamic> json) {
-
     return new Cidade(
         id: json['id'],
         nome: json['nome'].toString(),

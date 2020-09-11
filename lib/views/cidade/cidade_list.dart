@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_crud/models/cidade.dart';
 import 'package:flutter_crud/provider/cidade_provider.dart';
-import 'package:flutter_crud/utils/db_helper.dart';
 import 'package:intl/intl.dart';
 
 class CidadeList extends StatefulWidget {
@@ -27,14 +26,12 @@ class _CidadeListState extends State<CidadeList> {
   String dataalteracao;
 
   final formKey = new GlobalKey<FormState>();
-  var dbHelper;
   bool isUpdating;
 
   @override
   void initState() {
     super.initState();
 
-    dbHelper = DBHelper();
     isUpdating = false;
     refreshList();
   }
