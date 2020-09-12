@@ -33,9 +33,15 @@ class DBHelper {
     // Bairro
     await db.execute(
         "CREATE TABLE Bairro (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,nome VARCHAR (255) NOT NULL, idcidade INTEGER NOT NULL,dataalteracao VARCHAR NOT NULL)");
-
+    // Pesquisa
     await db.execute(
         "CREATE TABLE Pesquisa (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,nome VARCHAR (255) NOT NULL,descricao VARCHAR (255) NOT NULL, idBairro INTEGER NOT NULL,dataalteracao VARCHAR NOT NULL)");
+    // Pergunta
+    await db.execute(
+        "CREATE TABLE Pergunta (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,idpesquisa INTEGER NOT NULL, descricao VARCHAR (255) NOT NULL,ordem INTEGER NOT NULL,dataalteracao VARCHAR NOT NULL)");
+    // Resposta
+    await db.execute(
+        "CREATE TABLE Resposta (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,idpergunta INTEGER NOT NULL, descricao VARCHAR (255) NOT NULL,ordem INTEGER NOT NULL,dataalteracao VARCHAR NOT NULL)");
   }
 
   Future close() async {

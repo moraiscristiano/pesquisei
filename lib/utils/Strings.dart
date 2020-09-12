@@ -4,6 +4,6 @@ class Strings {
   static const String GET_ALL_CIDADES_FROM_SERVER = "/36dc247e-6ad0-405a-9fed-269f0b435b87";
   static const String GET_ALL_BAIRROS_FROM_SERVER = "/c19b4cf2-4631-4ece-b3a1-606537aecb59";
   static const String GET_ALL_PESQUISAS_FROM_SERVER = "/78fe1833-c39b-4504-b6f2-6096bfcf2d24";
-  static const String GET_ALL_PERGUNTAS_FROM_SERVER = "";
-  static const String GET_ALL_RESPOSTAS_FROM_SERVER = "";
+  static const String GET_ALL_PERGUNTAS_FROM_SERVER = "/121e0e10-0b04-4767-8b01-810f3eb0b082"; 
+  static const String GET_ALL_RESPOSTAS_FROM_SERVER = "/961c1a01-d8e4-48d4-a8ba-52fe261e7cb0";
 }

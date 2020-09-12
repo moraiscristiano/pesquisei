@@ -1,6 +1,3 @@
-import 'package:flutter_crud/models/pesquisa.dart';
-import 'package:flutter_crud/models/resposta.dart';
-
 class Pergunta {
   int id;
   int idpesquisa;

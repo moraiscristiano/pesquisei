@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_crud/views/bairro/bairro_list.dart';
 import 'package:flutter_crud/views/fragment/fragment.dart';
+import 'package:flutter_crud/views/pergunta/pergunta_list.dart';
 import 'package:flutter_crud/views/pesquisa/pesquisa_list.dart';
+import 'package:flutter_crud/views/resposta/pergunta_list.dart';
 import 'package:flutter_crud/views/sincronize/sincronize.dart';
 
 import '../cidade/cidade_list.dart';
@@ -64,6 +66,20 @@ class _HomeState extends State<Home> {
               },
             ),
             ListTile(
+              title: Text('Perguntas'),
+              selected: 6 == _selectedIndex,
+              onTap: () {
+                _onSelectItem(6);
+              },
+            ),
+            ListTile(
+              title: Text('Respostas'),
+              selected: 7 == _selectedIndex,
+              onTap: () {
+                _onSelectItem(7);
+              },
+            ),
+            ListTile(
               title: Text('PesquisaApp'),
               selected: 2 == _selectedIndex,
               onTap: () {
@@ -98,6 +114,10 @@ class _HomeState extends State<Home> {
         return BairroList();
       case 5: // Sincronizar
         return PesquisaList();
+      case 6: // Sincronizar
+        return PerguntaList();
+      case 7: // Sincronizar
+        return RespostaList();
     }
   }
 
@@ -120,6 +140,12 @@ class _HomeState extends State<Home> {
         break;
       case 5: // Pesquisas
         curTitle = 'Pesquisas';
+        break;
+      case 6: // Perguntas
+        curTitle = 'Perguntas';
+        break;
+      case 6: // Respostas
+        curTitle = 'Respostas';
         break;
     }
 
