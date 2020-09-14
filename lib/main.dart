@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_crud/stores/app.store.dart';
+import 'package:flutter_crud/stores/pesquisa.localidade.store.dart';
+import 'package:flutter_crud/stores/pesquisa.store.dart';
 import 'package:flutter_crud/views/home/home.dart';
 import 'package:flutter_crud/views/signup.view.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +17,13 @@ class MyApp extends StatelessWidget {
         Provider<AppStore>.value(
           value: AppStore(),
         ),
+        Provider<PesquisaStore>.value(
+          value: PesquisaStore(),
+        ),
+        Provider<PesquisaLocalidadeStore>.value(
+          value: PesquisaLocalidadeStore(),
+        ),
+
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

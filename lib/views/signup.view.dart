@@ -4,7 +4,6 @@ import 'package:flutter_crud/stores/app.store.dart';
 import 'package:flutter_crud/view-models/signup.viewmodel.dart';
 import 'package:provider/provider.dart';
 
-import 'home.view.dart';
 import 'home/home.dart';
 
 class SignupView extends StatefulWidget {
@@ -29,7 +28,7 @@ class _SignupViewState extends State<SignupView> {
             key: _formKey,
             child: Column(
               children: <Widget>[
-                Text("Cadastre-se"),
+                Text("Login"),
                 TextFormField(
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
@@ -52,26 +51,7 @@ class _SignupViewState extends State<SignupView> {
                 ),
                 TextFormField(
                   keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    labelText: "E-mail",
-                    labelStyle: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 16,
-                    ),
-                  ),
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'E-mail Inválido';
-                    }
-                    return null;
-                  },
-                  onSaved: (val) {
-                    model.email = val;
-                  },
-                ),
-                TextFormField(
-                  keyboardType: TextInputType.emailAddress,
+                  obscureText: true,
                   decoration: InputDecoration(
                     labelText: "Senha",
                     labelStyle: TextStyle(
@@ -103,65 +83,66 @@ class _SignupViewState extends State<SignupView> {
                       )
                     : FlatButton(
                         color: Theme.of(context).primaryColor,
-                        child: Text("Cadastrar"),
+                        child: Text("Entrar"),
                         onPressed: () {
                           if (_formKey.currentState.validate()) {
                             _formKey.currentState.save();
-                          }
 
-                          // TODO: Validação de login
+                            // TODO: Validação de login
 
-                          Future<void> _showMyDialog() async {
-                            return showDialog<void>(
-                              context: context,
-                              barrierDismissible:
-                                  false, // user must tap button!
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: Text('Falha no login'),
-                                  content: SingleChildScrollView(
-                                    child: ListBody(
-                                      children: <Widget>[
-                                        Text('Ocorreu um erro.'),
-                                        Text('Tente fazer login novamente.'),
-                                      ],
+                            Future<void> _showMyDialog() async {
+                              return showDialog<void>(
+                                context: context,
+                                barrierDismissible:
+                                    false, // user must tap button!
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text('Falha no login'),
+                                    content: SingleChildScrollView(
+                                      child: ListBody(
+                                        children: <Widget>[
+                                          Text('Ocorreu um erro.'),
+                                          Text('Tente fazer login novamente.'),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  actions: <Widget>[
-                                    FlatButton(
-                                      child: Text('OK'),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          }
+                                    actions: <Widget>[
+                                      FlatButton(
+                                        child: Text('OK'),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            }
 
-                          if (model.name.trim() != 'admin' ||
-                              model.password.isEmpty ||
-                              model.email.isEmpty) {
-                            _showMyDialog();
-                          } else {
-                            setState(() {});
-                            _controller.create(model).then((data) {
+                            // TODO: Alterar validação de credenciais pelo retorno da busca  usuário na controller.
+
+                            if (model.name.trim() != 'admin' ||
+                                model.password.trim() != 'admin123') {
+                              _showMyDialog();
+                            } else {
                               setState(() {});
+                              _controller.create(model).then((data) {
+                                setState(() {});
 
-                              store.setUser(
-                                data.name,
-                                data.email,
-                                data.picture,
-                                data.token,
-                              );
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Home(),
-                                ),
-                              );
-                            });
+                                store.setUser(
+                                  data.name,
+                                  data.email,
+                                  data.picture,
+                                  data.token,
+                                );
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Home(),
+                                  ),
+                                );
+                              });
+                            }
                           }
                         },
                       ),

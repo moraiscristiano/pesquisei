@@ -63,4 +63,18 @@ class BairroProvider {
     }
     return lista;
   }
+
+  Future<List<Bairro>> getBairrosPorCidadeId(String minhaCidade) async{
+    var dbBairro = await _db;
+    //List<Map> maps = await dbBairro.query('Bairro', columns: ['id', 'idcidade', 'nome', 'dataalteracao']);
+    List<Map> maps = await dbBairro.rawQuery("SELECT id,idcidade,nome,dataalteracao FROM Bairro where idcidade= $minhaCidade");
+    List<Bairro> bairros = [];
+    if (maps.length > 0) {
+      for (int i = 0; i < maps.length; i++) {
+        bairros.add(Bairro.fromMap(maps[i]));
+      }
+    }
+    return bairros;
+
+  }
 }

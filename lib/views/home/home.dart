@@ -7,6 +7,7 @@ import 'package:flutter_crud/views/resposta/pergunta_list.dart';
 import 'package:flutter_crud/views/sincronize/sincronize.dart';
 
 import '../cidade/cidade_list.dart';
+import '../pesquisa.localidade.view.dart';
 
 class Home extends StatefulWidget {
   final String title;
@@ -37,6 +38,7 @@ class _HomeState extends State<Home> {
                 color: Colors.blue,
               ),
             ),
+            
             ListTile(
               title: Text('Home'),
               selected: 0 == _selectedIndex,
@@ -44,6 +46,7 @@ class _HomeState extends State<Home> {
                 _onSelectItem(0);
               },
             ),
+            /*
             ListTile(
               title: Text('Cidades'),
               selected: 1 == _selectedIndex,
@@ -58,6 +61,7 @@ class _HomeState extends State<Home> {
                 _onSelectItem(4);
               },
             ),
+            */
             ListTile(
               title: Text('Pesquisas'),
               selected: 5 == _selectedIndex,
@@ -65,6 +69,9 @@ class _HomeState extends State<Home> {
                 _onSelectItem(5);
               },
             ),
+          
+
+            /*
             ListTile(
               title: Text('Perguntas'),
               selected: 6 == _selectedIndex,
@@ -79,6 +86,7 @@ class _HomeState extends State<Home> {
                 _onSelectItem(7);
               },
             ),
+            */
             ListTile(
               title: Text('PesquisaApp'),
               selected: 2 == _selectedIndex,
@@ -107,7 +115,7 @@ class _HomeState extends State<Home> {
       case 1: // Cidades
         return CidadeList();
       case 2: // Pesquisa
-        return Fragment("");
+        return PesquisaLocalidadeView();
       case 3: // Sincronizar
         return SincronizePage();
       case 4: // Sincronizar
