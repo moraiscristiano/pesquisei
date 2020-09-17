@@ -1,3 +1,6 @@
+import 'package:flutter_crud/controllers/pesquisa.list.controller.dart';
+import 'package:flutter_crud/models/pesquisa.quiz.dart';
+import 'package:flutter_crud/models/resposta.dart';
 import 'package:mobx/mobx.dart';
 part 'pesquisa.store.g.dart';
 
@@ -19,6 +22,20 @@ abstract class _PesquisaStore with Store {
   @observable
   int idcidade;
 
+  @observable
+  List<PerguntaQuiz> perguntas;
+
+  @action
+  Future<void> setPerguntas(
+    int pId,
+  ) async {
+    PesquisaListController _controller = new PesquisaListController();
+
+    print('veio aqui');
+    perguntas = await _controller.getPerguntasPorPesquisa(pId);
+    
+  }
+
   @action
   void setPesquisa(
     int pId,
@@ -32,5 +49,8 @@ abstract class _PesquisaStore with Store {
     descricao = pDescricao;
     idbairro = pIdBairro;
     idcidade = pIdCidade;
+
+        setPerguntas(pId);
+
   }
 }

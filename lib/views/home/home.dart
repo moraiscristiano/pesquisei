@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_crud/models/user.model.dart';
+import 'package:flutter_crud/stores/app.store.dart';
 import 'package:flutter_crud/views/bairro/bairro_list.dart';
 import 'package:flutter_crud/views/fragment/fragment.dart';
 import 'package:flutter_crud/views/pergunta/pergunta_list.dart';
 import 'package:flutter_crud/views/pesquisa/pesquisa_list.dart';
 import 'package:flutter_crud/views/resposta/pergunta_list.dart';
+import 'package:flutter_crud/views/signup.view.dart';
 import 'package:flutter_crud/views/sincronize/sincronize.dart';
+import 'package:provider/provider.dart';
 
 import '../cidade/cidade_list.dart';
 import '../pesquisa.localidade.view.dart';
@@ -24,6 +28,40 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    var store = Provider.of<AppStore>(context);
+
+    void _showDialogLogout() {
+      // flutter defined function
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          // return object of type Dialog
+          return AlertDialog(
+            title: new Text("Finalizar sessão?"),
+            content: new Text("Deseja sair da sessão?"),
+            actions: <Widget>[
+              FlatButton(
+                child: new Text("NÂO"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              FlatButton(
+                child: new Text("SIM"),
+                onPressed: () async {
+                  await Future.delayed(Duration(seconds: 1));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SignupView()),
+                  );
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return Scaffold(
       appBar: new AppBar(
         title: new Text(curTitle),
@@ -32,15 +70,21 @@ class _HomeState extends State<Home> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            DrawerHeader(
-              child: Text('Menu'),
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
+            Container(
+              height: 80.0,
+              child: DrawerHeader(
+                  child: Text(
+                    store.name, 
+                    style: TextStyle(color: Colors.white, fontStyle: FontStyle.normal, fontSize: 16),
+
+                  ),
+                  decoration: BoxDecoration(color: Colors.blue),
+                  margin: EdgeInsets.all(0.0),
+                  padding: EdgeInsets.all(10.0)),
             ),
-            
             ListTile(
               title: Text('Home'),
+              leading: Icon(Icons.home),
               selected: 0 == _selectedIndex,
               onTap: () {
                 _onSelectItem(0);
@@ -64,12 +108,12 @@ class _HomeState extends State<Home> {
             */
             ListTile(
               title: Text('Pesquisas'),
+               leading: Icon(Icons.search),
               selected: 5 == _selectedIndex,
               onTap: () {
                 _onSelectItem(5);
               },
             ),
-          
 
             /*
             ListTile(
@@ -89,6 +133,7 @@ class _HomeState extends State<Home> {
             */
             ListTile(
               title: Text('PesquisaApp'),
+              leading: Icon(Icons.search),
               selected: 2 == _selectedIndex,
               onTap: () {
                 _onSelectItem(2);
@@ -96,9 +141,17 @@ class _HomeState extends State<Home> {
             ),
             ListTile(
               title: Text('Sincronizar'),
+              leading: Icon(Icons.sync),
               selected: 3 == _selectedIndex,
               onTap: () {
                 _onSelectItem(3);
+              },
+            ),
+            ListTile(
+              title: Text("Logout"),
+              leading: Icon(Icons.exit_to_app),
+              onTap: () {
+                _showDialogLogout();
               },
             ),
           ],

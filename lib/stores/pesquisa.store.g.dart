@@ -94,6 +94,30 @@ mixin _$PesquisaStore on _PesquisaStore, Store {
     }, _$idcidadeAtom, name: '${_$idcidadeAtom.name}_set');
   }
 
+  final _$perguntasAtom = Atom(name: '_PesquisaStore.perguntas');
+
+  @override
+  List<PerguntaQuiz> get perguntas {
+    _$perguntasAtom.context.enforceReadPolicy(_$perguntasAtom);
+    _$perguntasAtom.reportObserved();
+    return super.perguntas;
+  }
+
+  @override
+  set perguntas(List<PerguntaQuiz> value) {
+    _$perguntasAtom.context.conditionallyRunInAction(() {
+      super.perguntas = value;
+      _$perguntasAtom.reportChanged();
+    }, _$perguntasAtom, name: '${_$perguntasAtom.name}_set');
+  }
+
+  final _$setPerguntasAsyncAction = AsyncAction('setPerguntas');
+
+  @override
+  Future<void> setPerguntas(int pId) {
+    return _$setPerguntasAsyncAction.run(() => super.setPerguntas(pId));
+  }
+
   final _$_PesquisaStoreActionController =
       ActionController(name: '_PesquisaStore');
 
