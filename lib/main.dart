@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_crud/stores/app.store.dart';
 import 'package:flutter_crud/stores/pesquisa.localidade.store.dart';
 import 'package:flutter_crud/stores/pesquisa.store.dart';
-import 'package:flutter_crud/views/home/home.dart';
+import 'package:flutter_crud/views/home/home.view.dart';
 import 'package:flutter_crud/views/signup.view.dart';
 import 'package:provider/provider.dart';
 

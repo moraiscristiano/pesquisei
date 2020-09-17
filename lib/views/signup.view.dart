@@ -4,7 +4,7 @@ import 'package:flutter_crud/stores/app.store.dart';
 import 'package:flutter_crud/view-models/signup.viewmodel.dart';
 import 'package:provider/provider.dart';
 
-import 'home/home.dart';
+import 'home/home.view.dart';
 
 class SignupView extends StatefulWidget {
   @override

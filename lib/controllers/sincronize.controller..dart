@@ -10,7 +10,7 @@ import 'package:flutter_crud/provider/pesquisa_provider.dart';
 import 'package:flutter_crud/provider/resposta_provider.dart';
 import 'package:intl/intl.dart';
 
-class Sincronize {
+class SincronizeController {
   DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
   CidadeProvider cidadeProvider;
   BairroProvider bairroProvider;
@@ -18,7 +18,7 @@ class Sincronize {
   PerguntaProvider perguntaProvider;
   RespostaProvider respostaProvider;
 
-  Sincronize() {
+  SincronizeController() {
     cidadeProvider = new CidadeProvider();
     bairroProvider = new BairroProvider();
     pesquisaProvider = new PesquisaProvider();

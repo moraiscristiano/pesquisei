@@ -9,7 +9,7 @@ import 'package:flutter_crud/views/pergunta.quiz.view.dart';
 import 'package:flutter_crud/views/pesquisa.localidade.view.dart';
 import 'package:provider/provider.dart';
 
-import 'home/home.dart';
+import 'home/home.view.dart';
 
 class PesquisaListView extends StatefulWidget {
   @override

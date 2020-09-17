@@ -1,6 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_crud/controllers/quiz.controller.dart';
+import 'package:flutter_crud/models/resposta_escolhida.dart';
+import 'package:flutter_crud/provider/resposta_escolhida.dart';
+import 'package:flutter_crud/stores/pesquisa.localidade.store.dart';
 import 'package:flutter_crud/stores/pesquisa.store.dart';
 import 'package:flutter_crud/utils/centered.circular.progress.dart';
 import 'package:flutter_crud/utils/centered.message.dart';
@@ -48,7 +51,8 @@ class _PerguntaQuizViewState extends State<PerguntaQuizView> {
   @override
   Widget build(BuildContext context) {
     var pesquisaStore = Provider.of<PesquisaStore>(context);
-
+   var pesquisaLocalidadeStore = Provider.of<PesquisaLocalidadeStore>(context);
+   
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.grey.shade900,
@@ -61,13 +65,13 @@ class _PerguntaQuizViewState extends State<PerguntaQuizView> {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.0),
-          child: _buildQuiz(),
+          child: _buildQuiz(pesquisaLocalidadeStore.idbairro),
         ),
       ),
     );
   }
 
-  _buildQuiz() {
+  _buildQuiz(int bairro) {
     if (_loading) return CenteredCircularProgress();
 
     if (_controller.questionsNumber == 0)
@@ -81,7 +85,8 @@ class _PerguntaQuizViewState extends State<PerguntaQuizView> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         _buildQuestion(_controller.getQuestion()),
-        for (var i in _controller.getAnswers()) _buildAnswerButton(i.descricao),
+        for (var i in _controller.getAnswers())
+          _buildAnswerButton(i.id, bairro, i.descricao),
         _buildScoreKeeper(),
       ],
     );
@@ -106,7 +111,7 @@ class _PerguntaQuizViewState extends State<PerguntaQuizView> {
     );
   }
 
-  _buildAnswerButton(String answer) {
+  _buildAnswerButton(int idResposta, int bairro, String answer) {
     return Expanded(
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 8.0),
@@ -129,12 +134,20 @@ class _PerguntaQuizViewState extends State<PerguntaQuizView> {
             ),
           ),
           onTap: () {
-            bool correct = _controller.correctAnswer(answer);
+            RespostaEscolhida resp = new RespostaEscolhida();
+            resp.idbairro = bairro;
+            resp.idpergunta = _controller.question.id;
+            resp.idresposta = idResposta;
+            print(bairro);
+            print(_controller.question.id);
+            print(idResposta);
+
+            new RespostaEscolhidaProvider().saveRespostaEscolhida(resp);
 
             ResultDialog.show(
               context,
+              resp: answer,
               question: _controller.question,
-              correct: correct,
               onNext: () {
                 setState(() {
                   _scoreKeeper.add(

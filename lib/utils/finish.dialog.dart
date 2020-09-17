@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_crud/views/home/home.view.dart';
 import 'package:flutter_crud/views/pesquisa.list.view.dart';
 
 class FinishDialog {
@@ -41,7 +42,7 @@ class FinishDialog {
               ),
               const SizedBox(height: 8),
               Text(
-                'Você acertou $hitNumber de $questionNumber!',
+                'Você respondeu todas as perguntas!',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -49,7 +50,7 @@ class FinishDialog {
                 ),
               ),
               Text(
-                'Que tal tentar mais uma vez? Quem sabe você consegue acertar todas na próxima!',
+                'Para realizar uma nova pesquisa clique no menu correspondente.',
                 style: TextStyle(
                   color: Colors.white70,
                 ),
@@ -58,13 +59,7 @@ class FinishDialog {
           ),
           actions: [
             FlatButton(
-              child: const Text('COMPARTILHAR'),
-              onPressed: () {
-                print('Quiz COVID-29. Você acertou $hitNumber de 10!');
-              },
-            ),
-            FlatButton(
-              child: const Text('JOGAR NOVAMENTE'),
+              child: const Text('NOVA PESQUISA'),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -75,7 +70,12 @@ class FinishDialog {
             FlatButton(
               child: const Text('SAIR'),
               onPressed: () {
-                SystemNavigator.pop();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Home(),
+                  ),
+                );
               },
             )
           ],

@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter_crud/models/resposta.dart';
 
 class PerguntaQuiz {

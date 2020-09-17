@@ -10,19 +10,18 @@ class PesquisaListController {
   }
 
   Future<List<Pesquisa>> getPesquisasPorCidadeBairro(int idbairro) async {
-    print("idbairro que entrou =  $idbairro");
     Future<List<Pesquisa>> pesquisas =
         repository.getPesquisasPorCidadeBairro(idbairro);
 
     return pesquisas;
   }
 
-  Future<List<PerguntaQuiz>> getPerguntasPorPesquisa(int idpesquisa)  async {
-
-    print("idpesquisa que entrou =  $idpesquisa");
-
-    List<PerguntaQuiz> perguntas =  await repository.getPerguntasPorPesquisa(idpesquisa);
+  Future<List<PerguntaQuiz>> getPerguntasPorPesquisa(int idpesquisa) async {
+    List<PerguntaQuiz> perguntas =
+        await repository.getPerguntasPorPesquisa(idpesquisa);
 
     return perguntas;
   }
+
+  
 }

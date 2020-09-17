@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_crud/models/resposta_escolhida.dart';
 import 'package:flutter_crud/models/user.model.dart';
 import 'package:flutter_crud/stores/app.store.dart';
-import 'package:flutter_crud/views/bairro/bairro_list.dart';
+import 'package:flutter_crud/views/bairro/bairro.list.view.dart';
 import 'package:flutter_crud/views/fragment/fragment.dart';
-import 'package:flutter_crud/views/pergunta/pergunta_list.dart';
-import 'package:flutter_crud/views/pesquisa/pesquisa_list.dart';
-import 'package:flutter_crud/views/resposta/pergunta_list.dart';
+import 'package:flutter_crud/views/pergunta/pergunta.list.view.dart';
+import 'package:flutter_crud/views/pesquisa/pesquisa.list.view.dart';
+import 'package:flutter_crud/views/resposta/pergunta.list.view.dart';
+import 'package:flutter_crud/views/respostaescolhida/resposta.escolhida.list.dart';
 import 'package:flutter_crud/views/signup.view.dart';
 import 'package:flutter_crud/views/sincronize/sincronize.dart';
 import 'package:provider/provider.dart';
 
-import '../cidade/cidade_list.dart';
+import '../cidade/cidade.list.view.dart';
 import '../pesquisa.localidade.view.dart';
 
 class Home extends StatefulWidget {
@@ -74,9 +76,11 @@ class _HomeState extends State<Home> {
               height: 80.0,
               child: DrawerHeader(
                   child: Text(
-                    store.name, 
-                    style: TextStyle(color: Colors.white, fontStyle: FontStyle.normal, fontSize: 16),
-
+                    store.name,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontStyle: FontStyle.normal,
+                        fontSize: 16),
                   ),
                   decoration: BoxDecoration(color: Colors.blue),
                   margin: EdgeInsets.all(0.0),
@@ -105,7 +109,7 @@ class _HomeState extends State<Home> {
                 _onSelectItem(4);
               },
             ),
-            */
+      
             ListTile(
               title: Text('Pesquisas'),
                leading: Icon(Icons.search),
@@ -115,7 +119,7 @@ class _HomeState extends State<Home> {
               },
             ),
 
-            /*
+        
             ListTile(
               title: Text('Perguntas'),
               selected: 6 == _selectedIndex,
@@ -130,7 +134,17 @@ class _HomeState extends State<Home> {
                 _onSelectItem(7);
               },
             ),
-            */
+          
+            ListTile(
+              title: Text('Respostas Escolhidas'),
+              leading: Icon(Icons.search),
+              selected: 8 == _selectedIndex,
+              onTap: () {
+                _onSelectItem(8);
+              },
+            ),
+              */
+              
             ListTile(
               title: Text('PesquisaApp'),
               leading: Icon(Icons.search),
@@ -179,6 +193,8 @@ class _HomeState extends State<Home> {
         return PerguntaList();
       case 7: // Sincronizar
         return RespostaList();
+      case 8: // Sincronizar
+        return RespostaEscolhidaList();
     }
   }
 
@@ -205,8 +221,11 @@ class _HomeState extends State<Home> {
       case 6: // Perguntas
         curTitle = 'Perguntas';
         break;
-      case 6: // Respostas
+      case 7: // Respostas
         curTitle = 'Respostas';
+        break;
+      case 8: // Respostas Escolhidas
+        curTitle = 'Respostas Escolhidas';
         break;
     }
 

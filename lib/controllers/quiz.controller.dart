@@ -5,15 +5,13 @@ import 'package:flutter_crud/models/resposta.dart';
 import 'package:flutter_crud/repositories/pesquisa.list.repository.dart';
 
 class QuizController {
-  PesquisaListRepository repository;  
-  int idpesquisa ;
+  PesquisaListRepository repository;
+  int idpesquisa;
 
-
-   QuizController(int pesquisa) {
+  QuizController(int pesquisa) {
     repository = new PesquisaListRepository();
-      idpesquisa = pesquisa;
+    idpesquisa = pesquisa;
   }
-
 
   List<PerguntaQuiz> _questionBank;
 
@@ -43,36 +41,16 @@ class QuizController {
     return _questionBank[questionIndex].descricao;
   }
 
-   List<Resposta> getAnswers() {
+  List<Resposta> getAnswers() {
     return _questionBank[questionIndex].opcoes;
   }
 
-
-  String getAnswer1() {
-    return _shiftAnswer
-        ? _questionBank[questionIndex].opcoes[0].descricao
-        : _questionBank[questionIndex].opcoes[1].descricao;
-  }
-
-  String getAnswer2() {
-    return _shiftAnswer
-        ? _questionBank[questionIndex].opcoes[1].descricao
-        : _questionBank[questionIndex].opcoes[0].descricao;
-  }
-
-  bool correctAnswer(String answer) {
-    var correct = _questionBank[questionIndex].descricao == answer;
-    hitNumber = hitNumber + (correct ? 1 : 0);
-    return correct;
-  }
-
-   Future<List<PerguntaQuiz>> getPerguntasPorPesquisa(int idpesquisa)  async {
-
+  Future<List<PerguntaQuiz>> getPerguntasPorPesquisa(int idpesquisa) async {
     print("idpesquisa que entrou =  $idpesquisa");
 
-    List<PerguntaQuiz> perguntas =  await repository.getPerguntasPorPesquisa(idpesquisa);
+    List<PerguntaQuiz> perguntas =
+        await repository.getPerguntasPorPesquisa(idpesquisa);
 
     return perguntas;
   }
-
 }

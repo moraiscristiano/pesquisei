@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_crud/data/sincronize.dart';
+import 'package:flutter_crud/controllers/sincronize.controller..dart';
 
 class SincronizePage extends StatefulWidget {
   SincronizePage({Key key, this.title}) : super(key: key);
@@ -25,7 +25,7 @@ class _SincronizePageState extends State<SincronizePage> {
             ),
             RaisedButton(
               onPressed: () {
-                new Sincronize().Sincronizar();
+                new SincronizeController().Sincronizar();
               },
               color: Colors.blue,
               textColor: Colors.white,

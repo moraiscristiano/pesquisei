@@ -42,6 +42,9 @@ class DBHelper {
     // Resposta
     await db.execute(
         "CREATE TABLE Resposta (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,idpergunta INTEGER NOT NULL, descricao VARCHAR (255) NOT NULL,ordem INTEGER NOT NULL,dataalteracao VARCHAR NOT NULL)");
+
+    await db.execute(
+        "CREATE TABLE RespostaEscolhida (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,idpergunta INTEGER NOT NULL, idresposta INTEGER NOT NULL, idbairro INTEGER NOT NULL,dataalteracao VARCHAR NOT NULL)");
   }
 
   Future close() async {

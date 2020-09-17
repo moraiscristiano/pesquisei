@@ -5,7 +5,7 @@ class ResultDialog {
   static Future show(
     BuildContext context, {
     @required PerguntaQuiz question,
-    @required bool correct,
+    @required String resp,
     @required Function onNext,
   }) {
     return showDialog<void>(
@@ -20,9 +20,9 @@ class ResultDialog {
             ),
           ),
           title: CircleAvatar(
-            backgroundColor: correct ? Colors.green : Colors.red,
+            backgroundColor: Colors.green,
             child: Icon(
-              correct ? Icons.check : Icons.close,
+               Icons.check ,
               color: Colors.grey.shade900,
             ),
           ),
@@ -40,15 +40,15 @@ class ResultDialog {
               ),
               const SizedBox(height: 8),
               Text(
-                correct ? 'Você acertou!' : 'Você errou! O correto é:',
+                'Voto recebido!',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: correct ? Colors.green : Colors.red,
+                  color: Colors.green,
                 ),
               ),
               Text(
-                question.descricao,
+                resp,
                 style: TextStyle(
                   color: Colors.white70,
                 ),
