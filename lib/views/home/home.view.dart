@@ -92,7 +92,7 @@ class _HomeState extends State<Home> {
                 _onSelectItem(0);
               },
             ),
-           
+             /*
             ListTile(
               title: Text('Cidades'),
               selected: 1 == _selectedIndex,
@@ -100,7 +100,7 @@ class _HomeState extends State<Home> {
                 _onSelectItem(1);
               },
             ),
-             /*
+           
              
             ListTile(
               title: Text('Bairros'),
@@ -178,7 +178,7 @@ class _HomeState extends State<Home> {
   _getDrawerItem(int pos) {
     switch (pos) {
       case 0: // Home
-        return Fragment("Bem Vindo ao Pesquisei: O seu App de Pesquisas");
+        return Fragment("Bem Vindo ao Pesquisei!");
       case 1: // Cidades
         return CidadeList();
       case 2: // Pesquisa

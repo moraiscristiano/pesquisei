@@ -14,18 +14,18 @@ class FinishDialog {
       barrierDismissible: false,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: Colors.grey.shade900,
+          backgroundColor: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
               Radius.circular(10.0),
             ),
           ),
           title: CircleAvatar(
-            backgroundColor: Colors.green,
+            backgroundColor: Colors.blue,
             maxRadius: 35.0,
             child: Icon(
               hitNumber < 6 ? Icons.warning : Icons.favorite,
-              color: Colors.grey.shade900,
+              color: Colors.white,
             ),
           ),
           content: Column(
@@ -37,7 +37,7 @@ class FinishDialog {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
               ),
               const SizedBox(height: 8),
@@ -46,13 +46,15 @@ class FinishDialog {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: Colors.blue,
                 ),
               ),
+                const SizedBox(height: 8),
               Text(
-                'Para realizar uma nova pesquisa clique no menu correspondente.',
+                'Deseja realizar uma nova pesquisa?',
                 style: TextStyle(
-                  color: Colors.white70,
+                  color: Colors.black,
+                      fontWeight: FontWeight.bold,
                 ),
               ),
             ],

@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_crud/controllers/quiz.controller.dart';
-import 'package:flutter_crud/models/resposta_escolhida.dart';
+import 'package:flutter_crud/models/resposta.escolhida.dart';
 import 'package:flutter_crud/provider/resposta_escolhida.dart';
 import 'package:flutter_crud/stores/pesquisa.localidade.store.dart';
 import 'package:flutter_crud/stores/pesquisa.store.dart';
@@ -55,13 +55,13 @@ class _PerguntaQuizViewState extends State<PerguntaQuizView> {
    
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.grey.shade900,
+        backgroundColor: Colors.blue,
         title: Text(
             '( ${null == _scoreKeeper.length ? 0 : _scoreKeeper.length}/${null == pesquisaStore.perguntas ? 0 : pesquisaStore.perguntas.length} )'),
         centerTitle: true,
         elevation: 0.0,
       ),
-      backgroundColor: Colors.grey.shade900,
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.0),
@@ -103,7 +103,7 @@ class _PerguntaQuizViewState extends State<PerguntaQuizView> {
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 25.0,
-              color: Colors.white,
+              color: Colors.black,
             ),
           ),
         ),

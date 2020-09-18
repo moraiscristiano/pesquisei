@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_crud/models/bairro.dart';
-import 'package:flutter_crud/models/resposta_escolhida.dart';
+import 'package:flutter_crud/models/resposta.escolhida.dart';
 import 'package:flutter_crud/provider/bairro_provider.dart';
 import 'package:flutter_crud/provider/resposta_escolhida.dart';
 import 'package:intl/intl.dart';

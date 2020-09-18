@@ -1,14 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter_crud/controllers/auth.controller.dart';
-import 'package:flutter_crud/models/cidade.dart';
+import 'package:flutter_crud/models/bairro.dart';
 import 'package:flutter_crud/models/token.return.dart';
 import 'package:flutter_crud/utils/db_helper.dart';
 import 'package:flutter_crud/utils/strings.dart';
 import 'package:http/http.dart';
 import 'package:sqflite/sqflite.dart';
 
-class CidadeRepository {
+class BairroRepository {
   Future<TokenReturn> sincronizar(String pUser, String pPass) async {
     Future<Database> _db = DBHelper().db;
 
@@ -21,12 +21,11 @@ class CidadeRepository {
       return tokenReturn;
     }
 
-    // Get Cidades da API
-    List<Cidade> listaApi =
-        await getCidadesWebApi(tokenReturn.token.accessToken);
+    // Get Bairros da API
+    List<Bairro> listaApi = await getListaWebApi(tokenReturn.token.accessToken);
 
-    // Get Cidades Db
-    List<Cidade> listaDb = await getCidadesDb(_db);
+    // Get Bairros Db
+    List<Bairro> listaDb = await getListaDb(_db);
 
     for (var itemApi in listaApi) {
       bool itemParaAtualizar = false;
@@ -47,12 +46,12 @@ class CidadeRepository {
       if (itemExist) {
         if (itemParaAtualizar) {
           // Atualizar
-          int q = await atualizarCidade(_db, itemApi);
+          int q = await atualizar(_db, itemApi);
           print(q.toString() + ' registro atualizado');
         }
       } else {
         // add
-        salvarCidade(_db, itemApi);
+        salvar(_db, itemApi);
         print('registro de id:' + itemApi.id.toString() + '  adicionado');
       }
 
@@ -63,26 +62,26 @@ class CidadeRepository {
     return tokenReturn;
   }
 
-  Future<List<Cidade>> getCidadesDb(Future<Database> db) async {
-    var dbClient = await db;
-    List<Map> maps = await dbClient.query('Cidade',
-        columns: ['id', 'nome', 'estadosigla', 'dataalteracao']);
+  Future<List<Bairro>> getListaDb(Future<Database> db) async {
+    var database = await db;
+    List<Map> maps = await database
+        .query('Bairro', columns: ['id', 'idcidade', 'nome', 'dataalteracao']);
     //List<Map> maps = await dbClient.rawQuery("SELECT * FROM $TABLE");
-    List<Cidade> cidades = [];
+    List<Bairro> lista = [];
     if (maps.length > 0) {
       for (int i = 0; i < maps.length; i++) {
-        cidades.add(Cidade.fromMap(maps[i]));
+        lista.add(Bairro.fromMap(maps[i]));
       }
     }
-    return cidades;
+    return lista;
   }
 
-  Future<List<Cidade>> getCidadesWebApi(String accessToken) async {
+  Future<List<Bairro>> getListaWebApi(String accessToken) async {
     String bearerAuth = 'Bearer ' + accessToken;
-    List<Cidade> cidades = [];
+    List<Bairro> lista = [];
 
     var r = await get(
-        Strings.BASE_URL_WEB_API + Strings.GET_ALL_CIDADES_FROM_WEB_API,
+        Strings.BASE_URL_WEB_API + Strings.GET_ALL_BAIRROS_FROM_WEB_API,
         headers: <String, String>{'authorization': bearerAuth});
     await Future.delayed(new Duration(milliseconds: 1500));
 
@@ -93,27 +92,27 @@ class CidadeRepository {
 
       if (null != lista && lista.length > 0) {
         for (int i = 0; i < lista.length; i++) {
-          cidades.add(Cidade.fromMap(lista[i]));
+          lista.add(Bairro.fromMap(lista[i]));
         }
       }
     }
-    return cidades;
+    return lista;
   }
 
-  void salvarCidade(Future<Database> db, Cidade cidade) async {
-    var dbClient = await db;
-    cidade.id = await dbClient.insert('Cidade', cidade.toMap());
-    print("saveCidade().cidade.id: " + cidade.id.toString());
+  void salvar(Future<Database> db, Bairro param) async {
+    var database = await db;
+    param.id = await database.insert('Bairro', param.toMap());
+    print("salvar().bairro.id: " + param.id.toString());
   }
 
-  Future<int> atualizarCidade(Future<Database> db, Cidade cidade) async {
-    var dbClient = await db;
-    return await dbClient.update('Cidade', cidade.toMap(),
-        where: 'id = ?', whereArgs: [cidade.id]);
+  Future<int> atualizar(Future<Database> db, Bairro param) async {
+    var database = await db;
+    return await database.update('Bairro', param.toMap(),
+        where: 'id = ?', whereArgs: [param.id]);
   }
 
-  Future<int> deletarCidade(Future<Database> db, int id) async {
-    var dbClient = await db;
-    return await dbClient.delete('Cidade', where: 'id = ?', whereArgs: [id]);
+  Future<int> deletar(Future<Database> db, int id) async {
+    var database = await db;
+    return await database.delete('Bairro', where: 'id = ?', whereArgs: [id]);
   }
 }

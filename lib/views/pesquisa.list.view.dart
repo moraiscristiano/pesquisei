@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_crud/controllers/pesquisa.list.controller.dart';
+import 'package:flutter_crud/controllers/pesquisa.controller.dart';
 import 'package:flutter_crud/models/pesquisa.dart';
 import 'package:flutter_crud/stores/pesquisa.localidade.store.dart';
 import 'package:flutter_crud/stores/pesquisa.store.dart';
@@ -17,7 +17,7 @@ class PesquisaListView extends StatefulWidget {
 }
 
 class _PesquisaListViewState extends State<PesquisaListView> {
-  final _controller = new PesquisaListController();
+  final _controller = new PesquisaController();
 
   @override
   void initState() {

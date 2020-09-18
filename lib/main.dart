@@ -6,8 +6,7 @@ import 'package:flutter_crud/views/home/home.view.dart';
 import 'package:flutter_crud/views/signup.view.dart';
 import 'package:provider/provider.dart';
 
-void main() => runApp(MyApp()); 
-
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
@@ -23,7 +22,6 @@ class MyApp extends StatelessWidget {
         Provider<PesquisaLocalidadeStore>.value(
           value: PesquisaLocalidadeStore(),
         ),
-
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -36,7 +34,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
 
 /* MyAppOld
 class MyApp extends StatelessWidget {

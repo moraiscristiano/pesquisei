@@ -1,18 +1,18 @@
 import 'package:flutter_crud/models/token.return.dart';
-import 'package:flutter_crud/repositories/cidade.repository.dart';
+import 'package:flutter_crud/repositories/bairro.repository.dart';
 
-class CidadeController {
-  CidadeRepository repository;
+class BairroController {
+  BairroRepository repository;
 
-  CidadeController() {
-    repository = new CidadeRepository();
+  BairroController() {
+    repository = new BairroRepository();
   }
 
   Future<TokenReturn> sincronizar(String pUser, String pPass) async {
     TokenReturn retorno = new TokenReturn();
     bool processado = false;
     int tentativas = 0;
-    print('sincroniza Cidade...');
+    print('sincroniza Bairro...');
     while (processado == false && tentativas <= 3) {
       retorno = await repository.sincronizar(pUser, pPass);
 

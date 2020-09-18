@@ -13,16 +13,16 @@ class ResultDialog {
       barrierDismissible: false,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: Colors.grey.shade900,
+          backgroundColor: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
               Radius.circular(10.0),
             ),
           ),
           title: CircleAvatar(
-            backgroundColor: Colors.green,
+            backgroundColor: Colors.blue,
             child: Icon(
-               Icons.check ,
+              Icons.check,
               color: Colors.grey.shade900,
             ),
           ),
@@ -35,7 +35,7 @@ class ResultDialog {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
               ),
               const SizedBox(height: 8),
@@ -44,13 +44,15 @@ class ResultDialog {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Colors.green,
+                  color: Colors.blue,
                 ),
               ),
+              const SizedBox(height: 8),
               Text(
-                resp,
+                "Resposta Escolhida: " + resp,
                 style: TextStyle(
-                  color: Colors.white70,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
                 ),
               ),
             ],

@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_crud/models/resposta_escolhida.dart';
+import 'package:flutter_crud/models/resposta.escolhida.dart';
 import 'package:flutter_crud/utils/strings.dart';
 import 'package:flutter_crud/utils/db_helper.dart';
 import 'package:sqflite/sqflite.dart';

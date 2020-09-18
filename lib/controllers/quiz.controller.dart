@@ -2,14 +2,14 @@ import 'dart:math';
 
 import 'package:flutter_crud/models/pesquisa.quiz.dart';
 import 'package:flutter_crud/models/resposta.dart';
-import 'package:flutter_crud/repositories/pesquisa.list.repository.dart';
+import 'package:flutter_crud/repositories/pesquisa.repository.dart';
 
 class QuizController {
-  PesquisaListRepository repository;
+  PesquisaRepository repository;
   int idpesquisa;
 
   QuizController(int pesquisa) {
-    repository = new PesquisaListRepository();
+    repository = new PesquisaRepository();
     idpesquisa = pesquisa;
   }
 

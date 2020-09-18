@@ -1,4 +1,4 @@
-import 'package:flutter_crud/controllers/pesquisa.list.controller.dart';
+import 'package:flutter_crud/controllers/pesquisa.controller.dart';
 import 'package:flutter_crud/models/pesquisa.quiz.dart';
 import 'package:flutter_crud/models/resposta.dart';
 import 'package:mobx/mobx.dart';
@@ -29,7 +29,7 @@ abstract class _PesquisaStore with Store {
   Future<void> setPerguntas(
     int pId,
   ) async {
-    PesquisaListController _controller = new PesquisaListController();
+    PesquisaController _controller = new PesquisaController();
 
     print('veio aqui');
     perguntas = await _controller.getPerguntasPorPesquisa(pId);
