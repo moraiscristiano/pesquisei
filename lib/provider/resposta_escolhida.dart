@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_crud/models/bairro.dart';
 import 'package:flutter_crud/models/resposta_escolhida.dart';
-import 'package:flutter_crud/utils/Strings.dart';
+import 'package:flutter_crud/utils/strings.dart';
 import 'package:flutter_crud/utils/db_helper.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -21,7 +20,8 @@ class RespostaEscolhidaProvider {
 
   Future<RespostaEscolhida> saveRespostaEscolhida(
       RespostaEscolhida resposta) async {
-    resposta.dataalteracao = DateTime.parse(new DateTime.now().toString()).toString();
+    resposta.dataalteracao =
+        DateTime.parse(new DateTime.now().toString()).toString();
     var dbRespostaEscolhida = await _db;
     resposta.id =
         await dbRespostaEscolhida.insert('RespostaEscolhida', resposta.toMap());
@@ -31,13 +31,14 @@ class RespostaEscolhidaProvider {
 
   Future<List<RespostaEscolhida>> getRespostasEscolhidas() async {
     var dbRespostaEscolhida = await _db;
-    List<Map> maps = await dbRespostaEscolhida.query('RespostaEscolhida', columns: [
-      'id',
-      'idpergunta',
-      'idresposta',
-      'idbairro',
-      'dataalteracao'
-    ]);
+    List<Map> maps = await dbRespostaEscolhida.query('RespostaEscolhida',
+        columns: [
+          'id',
+          'idpergunta',
+          'idresposta',
+          'idbairro',
+          'dataalteracao'
+        ]);
     //List<Map> maps = await dbClient.rawQuery("SELECT * FROM $TABLE");
     List<RespostaEscolhida> resp = [];
     if (maps.length > 0) {

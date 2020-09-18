@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_crud/models/pergunta.dart';
-import 'package:flutter_crud/utils/Strings.dart';
+import 'package:flutter_crud/utils/strings.dart';
 import 'package:flutter_crud/utils/db_helper.dart';
 import 'package:sqflite/sqflite.dart';
 

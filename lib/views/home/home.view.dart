@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_crud/models/resposta_escolhida.dart';
-import 'package:flutter_crud/models/user.model.dart';
 import 'package:flutter_crud/stores/app.store.dart';
 import 'package:flutter_crud/views/bairro/bairro.list.view.dart';
 import 'package:flutter_crud/views/fragment/fragment.dart';
@@ -94,7 +92,7 @@ class _HomeState extends State<Home> {
                 _onSelectItem(0);
               },
             ),
-            /*
+           
             ListTile(
               title: Text('Cidades'),
               selected: 1 == _selectedIndex,
@@ -102,6 +100,8 @@ class _HomeState extends State<Home> {
                 _onSelectItem(1);
               },
             ),
+             /*
+             
             ListTile(
               title: Text('Bairros'),
               selected: 4 == _selectedIndex,
@@ -144,7 +144,7 @@ class _HomeState extends State<Home> {
               },
             ),
               */
-              
+
             ListTile(
               title: Text('PesquisaApp'),
               leading: Icon(Icons.search),

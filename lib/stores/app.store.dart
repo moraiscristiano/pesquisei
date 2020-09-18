@@ -8,6 +8,9 @@ abstract class _AppStore with Store {
   String name = "";
 
   @observable
+  String pass = "";
+
+  @observable
   String email = "";
 
   @observable
@@ -19,11 +22,13 @@ abstract class _AppStore with Store {
   @action
   void setUser(
     String pName,
+    String pPass,
     String pEmail,
     String pPicture,
     String pToken,
   ) {
     name = pName;
+    pass = pPass;
     email = pEmail;
     picture = pPicture;
     token = pToken;

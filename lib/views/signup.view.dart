@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_crud/controllers/auth.controller.dart';
 import 'package:flutter_crud/controllers/signup.controller.dart';
 import 'package:flutter_crud/stores/app.store.dart';
 import 'package:flutter_crud/view-models/signup.viewmodel.dart';
@@ -14,6 +15,7 @@ class SignupView extends StatefulWidget {
 class _SignupViewState extends State<SignupView> {
   final _formKey = GlobalKey<FormState>();
   final _controller = new SignupController();
+
   var model = new SignupViewModel();
 
   @override
@@ -131,10 +133,12 @@ class _SignupViewState extends State<SignupView> {
 
                                 store.setUser(
                                   data.name,
+                                  data.pass,
                                   data.email,
                                   data.picture,
                                   data.token,
                                 );
+
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(

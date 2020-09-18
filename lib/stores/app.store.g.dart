@@ -26,6 +26,23 @@ mixin _$AppStore on _AppStore, Store {
     }, _$nameAtom, name: '${_$nameAtom.name}_set');
   }
 
+  final _$passAtom = Atom(name: '_AppStore.pass');
+
+  @override
+  String get pass {
+    _$passAtom.context.enforceReadPolicy(_$passAtom);
+    _$passAtom.reportObserved();
+    return super.pass;
+  }
+
+  @override
+  set pass(String value) {
+    _$passAtom.context.conditionallyRunInAction(() {
+      super.pass = value;
+      _$passAtom.reportChanged();
+    }, _$passAtom, name: '${_$passAtom.name}_set');
+  }
+
   final _$emailAtom = Atom(name: '_AppStore.email');
 
   @override
@@ -80,10 +97,11 @@ mixin _$AppStore on _AppStore, Store {
   final _$_AppStoreActionController = ActionController(name: '_AppStore');
 
   @override
-  void setUser(String pName, String pEmail, String pPicture, String pToken) {
+  void setUser(String pName, String pPass, String pEmail, String pPicture,
+      String pToken) {
     final _$actionInfo = _$_AppStoreActionController.startAction();
     try {
-      return super.setUser(pName, pEmail, pPicture, pToken);
+      return super.setUser(pName, pPass, pEmail, pPicture, pToken);
     } finally {
       _$_AppStoreActionController.endAction(_$actionInfo);
     }

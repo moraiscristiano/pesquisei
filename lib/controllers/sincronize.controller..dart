@@ -44,7 +44,7 @@ class SincronizeController {
     }
   }
 
-  Future<bool> SincronizarCidades() async {
+  Future<bool> SincronizarBairros() async {
     List<Bairro> bairrosApi = new List<Bairro>();
     List<Bairro> bairrosDb = new List<Bairro>();
 
@@ -86,7 +86,7 @@ class SincronizeController {
     return true;
   }
 
-  Future<bool> SincronizarBairros() async {
+  Future<bool> SincronizarCidades() async {
     List<Cidade> cidadesApi = new List<Cidade>();
     List<Cidade> cidadesDb = new List<Cidade>();
 

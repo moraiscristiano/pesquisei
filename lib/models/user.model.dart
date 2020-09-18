@@ -1,6 +1,7 @@
 class UserModel {
   String id;
   String name;
+  String pass;
   String email;
   String picture;
   String role;
@@ -8,6 +9,7 @@ class UserModel {
 
   UserModel({
     this.id,
+    this.pass,
     this.name,
     this.email,
     this.picture,
@@ -18,6 +20,7 @@ class UserModel {
   UserModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
+    pass = json['pass'];
     email = json['email'];
     picture = json['picture'];
     role = json['role'];
@@ -28,6 +31,7 @@ class UserModel {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['name'] = this.name;
+    data['pass'] = this.pass;
     data['email'] = this.email;
     data['picture'] = this.picture;
     data['role'] = this.role;

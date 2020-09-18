@@ -1,5 +1,3 @@
-
-
 import 'package:flutter_crud/view-models/signup.viewmodel.dart';
 import 'package:flutter_crud/models/user.model.dart';
 
@@ -8,11 +6,12 @@ class AccountRepository {
     await Future.delayed(new Duration(milliseconds: 1500));
     return new UserModel(
       id: "1",
-      name: "Administrador",
+      name: "admin",
+      pass: "admin123",
       email: "administrador@perguntei.com",
-      picture: "https://picsum.photos/200/200",
+      picture: "",
       role: "admin",
-      token: "123456789",
+      token: "",
     );
   }
 }

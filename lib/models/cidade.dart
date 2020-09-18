@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Cidade {
   int id;
   String nome;
@@ -10,17 +12,27 @@ class Cidade {
     var map = <String, dynamic>{
       'id': id,
       'nome': nome,
-      'estadosigla': estadosigla,
+      'estadoSigla': estadosigla,
       'dataalteracao': dataalteracao
     };
 
     return map;
   }
 
+  Future<List<String>> _mapTodoData(List<dynamic> todos) async {
+    try {
+      var res = todos.map((v) => json.encode(v)).toList();
+      return res;
+    } catch (err) {
+      // Just in case
+      return [];
+    }
+  }
+
   Cidade.fromMap(Map<String, dynamic> map) {
     id = map['id'];
     nome = map['nome'];
-    estadosigla = map['estadosigla'];
+    estadosigla = map['estadoSigla'];
     dataalteracao = map['dataalteracao'];
   }
 
@@ -28,7 +40,7 @@ class Cidade {
     return new Cidade(
         id: json['id'],
         nome: json['nome'].toString(),
-        estadosigla: json['estadosigla'].toString(),
+        estadosigla: json['estadoSigla'].toString(),
         dataalteracao: json['dataalteracao'].toString());
   }
 }
