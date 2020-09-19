@@ -3,17 +3,17 @@ import 'dart:convert';
 class Cidade {
   int id;
   String nome;
-  String estadosigla;
-  String dataalteracao;
+  String estadoSigla;
+  String alteracao;
 
-  Cidade({this.id, this.nome, this.estadosigla, this.dataalteracao});
+  Cidade({this.id, this.nome, this.estadoSigla, this.alteracao});
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
       'id': id,
       'nome': nome,
-      'estadoSigla': estadosigla,
-      'dataalteracao': dataalteracao
+      'estadoSigla': estadoSigla,
+      'alteracao': alteracao
     };
 
     return map;
@@ -32,15 +32,15 @@ class Cidade {
   Cidade.fromMap(Map<String, dynamic> map) {
     id = map['id'];
     nome = map['nome'];
-    estadosigla = map['estadoSigla'];
-    dataalteracao = map['dataalteracao'];
+    estadoSigla = map['estadoSigla'];
+    alteracao = map['alteracao'];
   }
 
   factory Cidade.fromJson(Map<String, dynamic> json) {
     return new Cidade(
         id: json['id'],
         nome: json['nome'].toString(),
-        estadosigla: json['estadoSigla'].toString(),
-        dataalteracao: json['dataalteracao'].toString());
+        estadoSigla: json['estadoSigla'].toString(),
+        alteracao: json['alteracao'].toString());
   }
 }

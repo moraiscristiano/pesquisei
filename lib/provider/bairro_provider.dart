@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_crud/models/bairro.dart';
 import 'package:flutter_crud/utils/strings.dart';
-import 'package:flutter_crud/utils/db_helper.dart';
+import 'package:flutter_crud/utils/db.helper.dart';
 import 'package:sqflite/sqflite.dart';
 
 class BairroProvider {
@@ -17,7 +17,7 @@ class BairroProvider {
     );
     _dio = new Dio(options);
 
-    _db = DBHelper().db;
+    _db = DbHelper().db;
   }
 
   Future<Bairro> saveBairro(Bairro bairro) async {
@@ -30,12 +30,12 @@ class BairroProvider {
   Future<List<Bairro>> getBairros() async {
     var dbBairro = await _db;
     List<Map> maps = await dbBairro
-        .query('Bairro', columns: ['id', 'idcidade', 'nome', 'dataalteracao']);
+        .query('Bairro', columns: ['id', 'idcidade', 'nome', 'alteracao']);
     //List<Map> maps = await dbClient.rawQuery("SELECT * FROM $TABLE");
     List<Bairro> bairros = [];
     if (maps.length > 0) {
       for (int i = 0; i < maps.length; i++) {
-        bairros.add(Bairro.fromMap(maps[i]));
+        bairros.add(Bairro.fromMapDb(maps[i]));
       }
     }
     return bairros;
@@ -68,11 +68,11 @@ class BairroProvider {
     var dbBairro = await _db;
     //List<Map> maps = await dbBairro.query('Bairro', columns: ['id', 'idcidade', 'nome', 'dataalteracao']);
     List<Map> maps = await dbBairro.rawQuery(
-        "SELECT id,idcidade,nome,dataalteracao FROM Bairro where idcidade= $minhaCidade");
+        "SELECT id,idcidade,nome,alteracao FROM Bairro where idcidade= $minhaCidade");
     List<Bairro> bairros = [];
     if (maps.length > 0) {
       for (int i = 0; i < maps.length; i++) {
-        bairros.add(Bairro.fromMap(maps[i]));
+        bairros.add(Bairro.fromMapDb(maps[i]));
       }
     }
     return bairros;

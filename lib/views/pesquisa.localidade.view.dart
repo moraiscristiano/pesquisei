@@ -200,25 +200,19 @@ class _PesquisaLocalidadeViewState extends State<PesquisaLocalidadeView> {
 
   List<Cidade> cidades;
   String _minhaCidade;
+  List<Bairro> bairros;
+  String _meuBairro;
 
-  String stateInfoUrl = 'http://cleanions.bestweb.my/api/location/get_state';
   Future<String> _getCidadesList() async {
     CidadeProvider cidadeProvider = new CidadeProvider();
 
     List<Cidade> retornoCidades = await cidadeProvider.getCidades();
 
-//      print(data);
     setState(() {
       cidades = retornoCidades;
     });
   }
 
-  // Get State information by API
-  List<Bairro> bairros;
-  String _meuBairro;
-
-  String cityInfoUrl =
-      'http://cleanions.bestweb.my/api/location/get_city_by_state_id';
   Future<String> _getBairrosList() async {
     BairroProvider bairroProvider = new BairroProvider();
 

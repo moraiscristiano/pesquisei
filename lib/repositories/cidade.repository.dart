@@ -3,14 +3,14 @@ import 'dart:convert';
 import 'package:flutter_crud/controllers/auth.controller.dart';
 import 'package:flutter_crud/models/cidade.dart';
 import 'package:flutter_crud/models/token.return.dart';
-import 'package:flutter_crud/utils/db_helper.dart';
+import 'package:flutter_crud/utils/db.helper.dart';
 import 'package:flutter_crud/utils/strings.dart';
 import 'package:http/http.dart';
 import 'package:sqflite/sqflite.dart';
 
 class CidadeRepository {
   Future<TokenReturn> sincronizar(String pUser, String pPass) async {
-    Future<Database> _db = DBHelper().db;
+    Future<Database> _db = DbHelper().db;
 
     AuthController _authController = new AuthController();
 
@@ -28,6 +28,9 @@ class CidadeRepository {
     // Get Cidades Db
     List<Cidade> listaDb = await getCidadesDb(_db);
 
+    print('listaApi' + listaApi.length.toString());
+    print('listaDb' + listaDb.length.toString());
+
     for (var itemApi in listaApi) {
       bool itemParaAtualizar = false;
       bool itemExist = false;
@@ -35,15 +38,17 @@ class CidadeRepository {
         if (itemApi.id == itemDb.id) {
           itemExist = true;
 
-          if (itemApi.dataalteracao?.isEmpty ||
-              itemDb.dataalteracao?.isEmpty ||
-              DateTime.parse(itemApi.dataalteracao)
-                  .isAfter(DateTime.parse(itemDb.dataalteracao))) {
+          if (itemApi.alteracao?.isEmpty ||
+              itemDb.alteracao?.isEmpty ||
+              DateTime.parse(itemApi.alteracao)
+                  .isAfter(DateTime.parse(itemDb.alteracao))) {
             itemParaAtualizar = true;
           }
         }
       }
 
+      print('itemExist?' + itemExist.toString());
+      print('itemParaAtualizar?' + itemParaAtualizar.toString());
       if (itemExist) {
         if (itemParaAtualizar) {
           // Atualizar
@@ -66,7 +71,7 @@ class CidadeRepository {
   Future<List<Cidade>> getCidadesDb(Future<Database> db) async {
     var dbClient = await db;
     List<Map> maps = await dbClient.query('Cidade',
-        columns: ['id', 'nome', 'estadosigla', 'dataalteracao']);
+        columns: ['id', 'nome', 'estadoSigla', 'alteracao']);
     //List<Map> maps = await dbClient.rawQuery("SELECT * FROM $TABLE");
     List<Cidade> cidades = [];
     if (maps.length > 0) {

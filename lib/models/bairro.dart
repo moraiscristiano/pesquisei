@@ -1,17 +1,19 @@
+import 'cidade.dart';
+
 class Bairro {
   int id;
   int idcidade;
   String nome;
-  String dataalteracao;
+  String alteracao;
 
-  Bairro({this.id, this.idcidade, this.nome, this.dataalteracao});
+  Bairro({this.id, this.idcidade, this.nome, this.alteracao});
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
       'id': id,
       'idcidade': idcidade,
       'nome': nome,
-      'dataalteracao': dataalteracao,
+      'alteracao': alteracao,
     };
 
     return map;
@@ -19,16 +21,24 @@ class Bairro {
 
   Bairro.fromMap(Map<String, dynamic> map) {
     id = map['id'];
+    idcidade = Cidade.fromJson(map['cidade']).id;
+    nome = map['nome'];
+    alteracao = map['alteracao'];
+  }
+
+   Bairro.fromMapDb(Map<String, dynamic> map) {
+    id = map['id'];
     idcidade = map['idcidade'];
     nome = map['nome'];
-    dataalteracao = map['dataalteracao'];
+    alteracao = map['alteracao'];
   }
+
 
   factory Bairro.fromJson(Map<String, dynamic> json) {
     return Bairro(
         id: json['id'],
-        idcidade: json['idcidade'],
+        idcidade: Cidade.fromJson(json['cidade']).id,
         nome: json['nome'].toString(),
-        dataalteracao: json['dataalteracao']);
+        alteracao: json['alteracao']);
   }
 }

@@ -5,7 +5,7 @@ import 'package:flutter_crud/models/pesquisa.dart';
 import 'package:flutter_crud/models/pesquisa.quiz.dart';
 import 'package:flutter_crud/models/resposta.dart';
 import 'package:flutter_crud/models/token.return.dart';
-import 'package:flutter_crud/utils/db_helper.dart';
+import 'package:flutter_crud/utils/db.helper.dart';
 import 'package:flutter_crud/utils/strings.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
@@ -16,7 +16,7 @@ class PesquisaRepository {
   DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
 
   PesquisaRepository() {
-    _db = DBHelper().db;
+    _db = DbHelper().db;
   }
 
   Future<List<Pesquisa>> getPesquisasPorCidadeBairro(int idbairro) async {
@@ -66,7 +66,7 @@ class PesquisaRepository {
   }
 
   Future<TokenReturn> sincronizar(String pUser, String pPass) async {
-    Future<Database> _db = DBHelper().db;
+    Future<Database> _db = DbHelper().db;
 
     AuthController _authController = new AuthController();
 

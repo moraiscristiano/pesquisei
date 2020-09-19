@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_crud/models/cidade.dart';
 import 'package:flutter_crud/utils/strings.dart';
-import 'package:flutter_crud/utils/db_helper.dart';
+import 'package:flutter_crud/utils/db.helper.dart';
 import 'package:sqflite/sqflite.dart';
 
 class CidadeProvider {
@@ -17,7 +17,7 @@ class CidadeProvider {
     );
     _dio = new Dio(options);
 
-    _db = DBHelper().db;
+    _db = DbHelper().db;
   }
 
   Future<Cidade> saveCidade(Cidade cidade) async {
@@ -36,7 +36,7 @@ class CidadeProvider {
   Future<List<Cidade>> getCidades() async {
     var dbClient = await _db;
     List<Map> maps = await dbClient.query('Cidade',
-        columns: ['id', 'nome', 'estadosigla', 'dataalteracao']);
+        columns: ['id', 'nome', 'estadoSigla', 'alteracao']);
     //List<Map> maps = await dbClient.rawQuery("SELECT * FROM $TABLE");
     List<Cidade> cidades = [];
     if (maps.length > 0) {
@@ -44,6 +44,7 @@ class CidadeProvider {
         cidades.add(Cidade.fromMap(maps[i]));
       }
     }
+    print(cidades.length);
     return cidades;
   }
 

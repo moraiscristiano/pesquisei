@@ -4,7 +4,7 @@ import 'package:path/path.dart'; //used to join paths
 import 'dart:io';
 import 'dart:async';
 
-class DBHelper {
+class DbHelper {
   static Database _db;
 
   static const String DB_NAME = 'perguntei.db';
@@ -29,10 +29,10 @@ class DBHelper {
   _onCreate(Database db, int version) async {
     // Cidade
     await db.execute(
-        "CREATE TABLE Cidade (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL ,nome VARCHAR (255) NOT NULL,estadosigla VARCHAR (2) NOT NULL,dataalteracao VARCHAR NOT NULL)");
+        "CREATE TABLE Cidade (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL ,nome VARCHAR (255) NOT NULL,estadoSigla VARCHAR (2) NOT NULL,alteracao VARCHAR NOT NULL)");
     // Bairro
     await db.execute(
-        "CREATE TABLE Bairro (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,nome VARCHAR (255) NOT NULL, idcidade INTEGER NOT NULL,dataalteracao VARCHAR NOT NULL)");
+        "CREATE TABLE Bairro (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,nome VARCHAR (255) NOT NULL, idcidade INTEGER NOT NULL,alteracao VARCHAR NOT NULL)");
     // Pesquisa
     await db.execute(
         "CREATE TABLE Pesquisa (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,nome VARCHAR (255) NOT NULL,descricao VARCHAR (255) NOT NULL, idBairro INTEGER NOT NULL,dataalteracao VARCHAR NOT NULL)");

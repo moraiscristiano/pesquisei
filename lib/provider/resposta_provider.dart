@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_crud/models/resposta.dart';
 import 'package:flutter_crud/utils/strings.dart';
-import 'package:flutter_crud/utils/db_helper.dart';
+import 'package:flutter_crud/utils/db.helper.dart';
 import 'package:sqflite/sqflite.dart';
 
 class RespostaProvider {
@@ -17,7 +17,7 @@ class RespostaProvider {
     );
     _dio = new Dio(options);
 
-    _db = DBHelper().db;
+    _db = DbHelper().db;
   }
 
   Future<Resposta> saveResposta(Resposta resposta) async {

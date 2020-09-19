@@ -92,7 +92,7 @@ class _HomeState extends State<Home> {
                 _onSelectItem(0);
               },
             ),
-             /*
+        
             ListTile(
               title: Text('Cidades'),
               selected: 1 == _selectedIndex,
@@ -101,7 +101,7 @@ class _HomeState extends State<Home> {
               },
             ),
            
-             
+               
             ListTile(
               title: Text('Bairros'),
               selected: 4 == _selectedIndex,
@@ -109,7 +109,7 @@ class _HomeState extends State<Home> {
                 _onSelectItem(4);
               },
             ),
-      
+     
             ListTile(
               title: Text('Pesquisas'),
                leading: Icon(Icons.search),
@@ -118,7 +118,7 @@ class _HomeState extends State<Home> {
                 _onSelectItem(5);
               },
             ),
-
+    /*
         
             ListTile(
               title: Text('Perguntas'),

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_crud/models/pesquisa.dart';
 import 'package:flutter_crud/utils/strings.dart';
-import 'package:flutter_crud/utils/db_helper.dart';
+import 'package:flutter_crud/utils/db.helper.dart';
 import 'package:sqflite/sqflite.dart';
 
 class PesquisaProvider {
@@ -17,7 +17,7 @@ class PesquisaProvider {
     );
     _dio = new Dio(options);
 
-    _db = DBHelper().db;
+    _db = DbHelper().db;
   }
 
   Future<Pesquisa> savePesquisa(Pesquisa pesquisa) async {

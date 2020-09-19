@@ -21,7 +21,7 @@ class _CidadeListState extends State<CidadeList> {
   DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
 
   String nome;
-  String estadosigla;
+  String estadoSigla;
   int curCidadeId;
   String dataalteracao;
 
@@ -56,8 +56,8 @@ class _CidadeListState extends State<CidadeList> {
         Cidade c = Cidade(
             id: curCidadeId,
             nome: nome,
-            estadosigla: estadosigla,
-            dataalteracao: dateFormat.format(DateTime.now()));
+            estadoSigla: estadoSigla,
+            alteracao: dateFormat.format(DateTime.now()));
 
         CidadeProvider().updateCidade(c);
         setState(() {
@@ -67,8 +67,8 @@ class _CidadeListState extends State<CidadeList> {
         Cidade e = Cidade(
             id: null,
             nome: nome,
-            estadosigla: estadosigla,
-            dataalteracao: dateFormat.format(DateTime.now()));
+            estadoSigla: estadoSigla,
+            alteracao: dateFormat.format(DateTime.now()));
 
         CidadeProvider().saveCidade(e);
       }
@@ -100,7 +100,7 @@ class _CidadeListState extends State<CidadeList> {
               decoration: InputDecoration(labelText: 'Estado'),
               validator: (val) =>
                   val.length == 0 ? 'Digite a sigla do Estado' : null,
-              onSaved: (val) => estadosigla = val,
+              onSaved: (val) => estadoSigla = val,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -145,25 +145,25 @@ class _CidadeListState extends State<CidadeList> {
             .map(
               (cidade) => DataRow(cells: [
                 DataCell(
-                  Text(cidade.nome),
+                  Text(cidade.nome ?? ''),
                   onTap: () {
                     setState(() {
                       isUpdating = true;
                       curCidadeId = cidade.id;
                     });
                     controllerTxtNome.text = cidade.nome;
-                    controllerTxtEstadoSigla.text = cidade.estadosigla;
+                    controllerTxtEstadoSigla.text = cidade.estadoSigla;
                   },
                 ),
                 DataCell(
-                  Text(cidade.estadosigla),
+                  Text(cidade.estadoSigla ?? ''),
                   onTap: () {
                     setState(() {
                       isUpdating = true;
                       curCidadeId = cidade.id;
                     });
                     controllerTxtNome.text = cidade.nome;
-                    controllerTxtEstadoSigla.text = cidade.estadosigla;
+                    controllerTxtEstadoSigla.text = cidade.estadoSigla;
                   },
                 ),
                 DataCell(IconButton(
@@ -188,7 +188,7 @@ class _CidadeListState extends State<CidadeList> {
           if (snapshot.hasData) {
             return dataTable(snapshot.data);
           }
-
+print(snapshot.data );
           if (null == snapshot.data || snapshot.data.length == 0) {
             return Text("No Data Found");
           }

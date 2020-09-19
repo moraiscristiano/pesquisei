@@ -3,14 +3,14 @@ import 'dart:convert';
 import 'package:flutter_crud/controllers/auth.controller.dart';
 import 'package:flutter_crud/models/bairro.dart';
 import 'package:flutter_crud/models/token.return.dart';
-import 'package:flutter_crud/utils/db_helper.dart';
+import 'package:flutter_crud/utils/db.helper.dart';
 import 'package:flutter_crud/utils/strings.dart';
 import 'package:http/http.dart';
 import 'package:sqflite/sqflite.dart';
 
 class BairroRepository {
   Future<TokenReturn> sincronizar(String pUser, String pPass) async {
-    Future<Database> _db = DBHelper().db;
+    Future<Database> _db = DbHelper().db;
 
     AuthController _authController = new AuthController();
 
@@ -23,9 +23,13 @@ class BairroRepository {
 
     // Get Bairros da API
     List<Bairro> listaApi = await getListaWebApi(tokenReturn.token.accessToken);
+    print('listaApi' + listaApi.length.toString());
 
     // Get Bairros Db
     List<Bairro> listaDb = await getListaDb(_db);
+
+    print('listaDb' + listaDb.length.toString());
+
 
     for (var itemApi in listaApi) {
       bool itemParaAtualizar = false;
@@ -34,15 +38,17 @@ class BairroRepository {
         if (itemApi.id == itemDb.id) {
           itemExist = true;
 
-          if (itemApi.dataalteracao?.isEmpty ||
-              itemDb.dataalteracao?.isEmpty ||
-              DateTime.parse(itemApi.dataalteracao)
-                  .isAfter(DateTime.parse(itemDb.dataalteracao))) {
+          if (itemApi.alteracao?.isEmpty ||
+              itemDb.alteracao?.isEmpty ||
+              DateTime.parse(itemApi.alteracao)
+                  .isAfter(DateTime.parse(itemDb.alteracao))) {
             itemParaAtualizar = true;
           }
         }
       }
 
+      print('itemExist?' + itemExist.toString());
+      print('itemParaAtualizar?' + itemParaAtualizar.toString());
       if (itemExist) {
         if (itemParaAtualizar) {
           // Atualizar
@@ -65,12 +71,20 @@ class BairroRepository {
   Future<List<Bairro>> getListaDb(Future<Database> db) async {
     var database = await db;
     List<Map> maps = await database
-        .query('Bairro', columns: ['id', 'idcidade', 'nome', 'dataalteracao']);
+        .query('Bairro', columns: ['id', 'idcidade', 'nome', 'alteracao']);
     //List<Map> maps = await dbClient.rawQuery("SELECT * FROM $TABLE");
     List<Bairro> lista = [];
+print('map1');
+print(maps);
+
+
     if (maps.length > 0) {
       for (int i = 0; i < maps.length; i++) {
-        lista.add(Bairro.fromMap(maps[i]));
+print('map2');
+        print(Bairro.fromMapDb(maps[i]));
+
+
+        lista.add(Bairro.fromMapDb(maps[i]));
       }
     }
     return lista;
@@ -78,7 +92,9 @@ class BairroRepository {
 
   Future<List<Bairro>> getListaWebApi(String accessToken) async {
     String bearerAuth = 'Bearer ' + accessToken;
-    List<Bairro> lista = [];
+    List<Bairro> bairros = [];
+
+print('Bearer');
 
     var r = await get(
         Strings.BASE_URL_WEB_API + Strings.GET_ALL_BAIRROS_FROM_WEB_API,
@@ -90,13 +106,26 @@ class BairroRepository {
     if (r.statusCode == 200) {
       List<dynamic> lista = jsonDecode(r.body);
 
+
+print('lista: '+lista.toString());
+
+
+
       if (null != lista && lista.length > 0) {
         for (int i = 0; i < lista.length; i++) {
-          lista.add(Bairro.fromMap(lista[i]));
+
+          print(Bairro.fromMap(lista[i]).id);
+          print(Bairro.fromMap(lista[i]).alteracao);
+          print(Bairro.fromMap(lista[i]).idcidade);
+          print(Bairro.fromMap(lista[i]).nome);
+
+          bairros.add(Bairro.fromMap(lista[i]));
+
+          print('ok??????????');
         }
       }
     }
-    return lista;
+    return bairros;
   }
 
   void salvar(Future<Database> db, Bairro param) async {
