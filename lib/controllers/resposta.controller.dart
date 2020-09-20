@@ -1,20 +1,19 @@
 import 'package:flutter_crud/models/token.return.dart';
-import 'package:flutter_crud/repositories/cidade.repository.dart';
+import 'package:flutter_crud/repositories/resposta.repository.dart';
 import 'package:flutter_crud/view-models/sincronize.viewmodel.dart';
 
-class CidadeController {
-  CidadeRepository repository;
+class RespostaController {
+  RespostaRepository repository;
 
-  CidadeController() {
-    repository = new CidadeRepository();
+  RespostaController() {
+    repository = new RespostaRepository();
   }
 
   Future<TokenReturn> sincronizar(String pUser, String pPass, SincronizeViewModel vm) async {
-    vm.busy = true;
     TokenReturn retorno = new TokenReturn();
     bool processado = false;
     int tentativas = 0;
-    print('sincroniza Cidade...');
+    print('sincroniza Resposta...');
     while (processado == false && tentativas <= 3) {
       retorno = await repository.sincronizar(pUser, pPass);
 
@@ -24,6 +23,9 @@ class CidadeController {
         tentativas = tentativas + 1;
       }
     }
+
+    vm.busy = false;
+
 
     return retorno;
   }

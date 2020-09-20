@@ -65,6 +65,8 @@ class _PesquisaLocalidadeViewState extends State<PesquisaLocalidadeView> {
                         key: _cidadeFormKey,
                         onChanged: (String newValue) {
                           setState(() {
+                            _minhaCidade = null;
+                            _meuBairro = null;
                             _minhaCidade = newValue;
                             _getBairrosList();
                             print(_minhaCidade);

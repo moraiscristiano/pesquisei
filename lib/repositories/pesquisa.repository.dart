@@ -52,7 +52,7 @@ class PesquisaRepository {
       int idpergunta = perguntas[i].id;
 
       List<Map> maps = await db
-          .rawQuery("SELECT * FROM Resposta where idpergunta = $idpergunta");
+          .rawQuery("SELECT * FROM Resposta where perguntaId = $idpergunta");
 
       List<Resposta> respostas = [];
       if (maps.length > 0) {

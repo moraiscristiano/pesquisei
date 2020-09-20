@@ -1,24 +1,24 @@
 class Resposta {
   int id;
-  int idpergunta;
+  int perguntaId;
   String descricao;
   int ordem;
-  String dataalteracao;
+  String alteracao;
 
   Resposta(
       {this.id,
-      this.idpergunta,
+      this.perguntaId,
       this.descricao,
       this.ordem,
-      this.dataalteracao});
+      this.alteracao});
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
       'id': id,
-      'idpergunta': idpergunta,
+      'perguntaId': perguntaId,
       'descricao': descricao,
       'ordem': ordem,
-      'dataalteracao': dataalteracao,
+      'alteracao': alteracao,
     };
 
     return map;
@@ -26,18 +26,18 @@ class Resposta {
 
   Resposta.fromMap(Map<String, dynamic> map) {
     id = map['id'];
-    idpergunta = map['idpergunta'];
+    perguntaId = map['perguntaId'];
     descricao = map['descricao'];
     ordem = map['ordem'];
-    dataalteracao = map['dataalteracao'];
+    alteracao = map['alteracao'];
   }
 
   factory Resposta.fromJson(Map<String, dynamic> json) {
     return Resposta(
         id: json['id'],
-        idpergunta: json['idpergunta'],
+        perguntaId: json['perguntaId'],
         descricao: json['descricao'].toString(),
         ordem: json['ordem'],
-        dataalteracao: json['dataalteracao'].toString());
+        alteracao: json['alteracao'].toString());
   }
 }
