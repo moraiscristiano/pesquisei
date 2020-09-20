@@ -30,7 +30,7 @@ class PerguntaProvider {
   Future<List<Pergunta>> getPerguntas() async {
     var dbPergunta = await _db;
     List<Map> maps = await dbPergunta.query('Pergunta',
-        columns: ['id', 'idpesquisa', 'descricao', 'ordem', 'dataalteracao']);
+        columns: ['id', 'pesquisaId', 'descricao', 'ordem', 'alteracao']);
     //List<Map> maps = await dbClient.rawQuery("SELECT * FROM $TABLE");
     List<Pergunta> perguntas = [];
     if (maps.length > 0) {

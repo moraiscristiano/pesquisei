@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_crud/controllers/auth.controller.dart';
 import 'package:flutter_crud/controllers/bairro.controller%20.dart';
 import 'package:flutter_crud/controllers/cidade.controller.dart';
+import 'package:flutter_crud/controllers/pergunta.controller.dart';
 import 'package:flutter_crud/controllers/pesquisa.controller.dart';
 import 'package:flutter_crud/controllers/sincronize.controller..dart';
 import 'package:flutter_crud/stores/app.store.dart';
@@ -19,6 +20,7 @@ class _SincronizePageState extends State<SincronizePage> {
   final _cidadeController = new CidadeController();
   final _bairroController = new BairroController();
   final _pesquisaController = new PesquisaController();
+  final _perguntaController = new PerguntaController();
 
   @override
   Widget build(BuildContext context) {
@@ -55,13 +57,23 @@ class _SincronizePageState extends State<SincronizePage> {
                     .then((data) {
                   print('bairros sincronizados!');
                 });   
-                */
+               
 
                 _pesquisaController
                     .sincronizar(store.name, store.pass)
                     .then((data) {
                   print('pesquisas sincronizadas!');
                 });
+ */
+ _perguntaController
+                    .sincronizar(store.name, store.pass)
+                    .then((data) {
+                  print('pesquisas sincronizadas!');
+                });
+
+
+                  
+
               },
               color: Colors.blue,
               textColor: Colors.white,

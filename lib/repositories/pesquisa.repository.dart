@@ -39,7 +39,7 @@ class PesquisaRepository {
     var db = await _db;
 
     List<Map> maps = await db
-        .rawQuery("SELECT * FROM Pergunta where idpesquisa = $idpesquisa");
+        .rawQuery("SELECT * FROM Pergunta where pesquisaId = $idpesquisa");
 
     List<PerguntaQuiz> perguntas = [];
     if (maps.length > 0) {

@@ -189,10 +189,10 @@ class SincronizeController {
         if (itemApi.id == itemDb.id) {
           itemExist = true;
 
-          if (itemApi.dataalteracao?.isEmpty ||
-              itemDb.dataalteracao?.isEmpty ||
-              DateTime.parse(itemApi.dataalteracao)
-                  .isAfter(DateTime.parse(itemDb.dataalteracao))) {
+          if (itemApi.alteracao?.isEmpty ||
+              itemDb.alteracao?.isEmpty ||
+              DateTime.parse(itemApi.alteracao)
+                  .isAfter(DateTime.parse(itemDb.alteracao))) {
             itemParaAtualizar = true;
           }
         }
