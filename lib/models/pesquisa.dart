@@ -1,39 +1,55 @@
+import 'bairro.pesquisa.dart';
+
 class Pesquisa {
   int id;
   String nome;
   String descricao;
+  String dataCricao;
+  int numeroEntrevistados;
+  String alteracao;
   int idbairro;
-  String dataalteracao;
 
-  Pesquisa(
-      {this.id, this.nome, this.descricao, this.idbairro, this.dataalteracao});
+  Pesquisa({
+    this.id,
+    this.nome,
+    this.descricao,
+    this.dataCricao,
+    this.numeroEntrevistados,
+    this.alteracao,
+    this.idbairro,
+  });
 
-  Map<String, dynamic> toMap() {
-    var map = <String, dynamic>{
-      'id': id,
-      'nome': nome,
-      'descricao': descricao,
-      'idbairro': idbairro,
-      'dataalteracao': dataalteracao,
-    };
 
-    return map;
+  Pesquisa.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    nome = json['nome'];
+    descricao = json['descricao'];
+    dataCricao = json['dataCricao'];
+    numeroEntrevistados = json['numeroEntrevistados'];
+    alteracao = json['alteracao'];
+    idbairro = 0;
   }
 
-  Pesquisa.fromMap(Map<String, dynamic> map) {
-    id = map['id'];
-    nome = map['nome'];
-    descricao = map['descricao'];
-    idbairro = map['idbairro'];
-    dataalteracao = map['dataalteracao'];
+  Pesquisa.fromJsonDb(Map<String, dynamic> json) {
+    id = json['id'];
+    nome = json['nome'];
+    descricao = json['descricao'];
+    dataCricao = json['dataCricao'];
+    numeroEntrevistados = json['numeroEntrevistados'];
+    alteracao = json['alteracao'];
+    idbairro = json['idbairro'];
   }
 
-  factory Pesquisa.fromJson(Map<String, dynamic> json) {
-    return Pesquisa(
-        id: json['id'],
-        nome: json['nome'].toString(),
-        descricao: json['descricao'].toString(),
-        idbairro: json['idbairro'],
-        dataalteracao: json['dataalteracao'].toString());
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['nome'] = this.nome;
+    data['descricao'] = this.descricao;
+    data['dataCricao'] = this.dataCricao;
+    data['numeroEntrevistados'] = this.numeroEntrevistados;
+    data['alteracao'] = this.alteracao;
+    data['idbairro'] = this.idbairro;
+
+    return data;
   }
 }

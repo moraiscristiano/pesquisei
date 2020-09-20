@@ -29,22 +29,26 @@ class DbHelper {
   _onCreate(Database db, int version) async {
     // Cidade
     await db.execute(
-        "CREATE TABLE Cidade (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL ,nome VARCHAR (255) NOT NULL,estadoSigla VARCHAR (2) NOT NULL,alteracao VARCHAR NOT NULL)");
+        "CREATE TABLE Cidade (id INTEGER PRIMARY KEY  UNIQUE NOT NULL ,nome VARCHAR (255) NOT NULL,estadoSigla VARCHAR (2) NOT NULL,alteracao VARCHAR NOT NULL)");
     // Bairro
     await db.execute(
-        "CREATE TABLE Bairro (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,nome VARCHAR (255) NOT NULL, idcidade INTEGER NOT NULL,alteracao VARCHAR NOT NULL)");
+        "CREATE TABLE Bairro (id INTEGER PRIMARY KEY  UNIQUE NOT NULL,nome VARCHAR (255) NOT NULL, idcidade INTEGER NOT NULL,alteracao VARCHAR NOT NULL)");
     // Pesquisa
     await db.execute(
-        "CREATE TABLE Pesquisa (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,nome VARCHAR (255) NOT NULL,descricao VARCHAR (255) NOT NULL, idBairro INTEGER NOT NULL,dataalteracao VARCHAR NOT NULL)");
+        "CREATE TABLE Pesquisa (id INTEGER    NOT NULL,nome VARCHAR (255) NOT NULL,descricao VARCHAR (255) NOT NULL, dataCricao VARCHAR NOT NULL, numeroEntrevistados INTEGER NOT NULL,alteracao VARCHAR NOT NULL,  idbairro INTEGER NOT NULL)");
+   // Bairro Pesquisa
+      await db.execute(
+        "CREATE TABLE BairroPesquisas (idbairro INTEGER NOT NULL, idpesquisa INTEGER NOT NULL, percentual INTEGER NOT NULL)");
+   
     // Pergunta
     await db.execute(
-        "CREATE TABLE Pergunta (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,idpesquisa INTEGER NOT NULL, descricao VARCHAR (255) NOT NULL,ordem INTEGER NOT NULL,dataalteracao VARCHAR NOT NULL)");
+        "CREATE TABLE Pergunta (id INTEGER PRIMARY KEY  UNIQUE NOT NULL,idpesquisa INTEGER NOT NULL, descricao VARCHAR (255) NOT NULL,ordem INTEGER NOT NULL,dataalteracao VARCHAR NOT NULL)");
     // Resposta
     await db.execute(
-        "CREATE TABLE Resposta (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,idpergunta INTEGER NOT NULL, descricao VARCHAR (255) NOT NULL,ordem INTEGER NOT NULL,dataalteracao VARCHAR NOT NULL)");
+        "CREATE TABLE Resposta (id INTEGER PRIMARY KEY  UNIQUE NOT NULL,idpergunta INTEGER NOT NULL, descricao VARCHAR (255) NOT NULL,ordem INTEGER NOT NULL,dataalteracao VARCHAR NOT NULL)");
 
     await db.execute(
-        "CREATE TABLE RespostaEscolhida (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,idpergunta INTEGER NOT NULL, idresposta INTEGER NOT NULL, idbairro INTEGER NOT NULL,dataalteracao VARCHAR NOT NULL)");
+        "CREATE TABLE RespostaEscolhida (id INTEGER PRIMARY KEY  UNIQUE NOT NULL,idpergunta INTEGER NOT NULL, idresposta INTEGER NOT NULL, idbairro INTEGER NOT NULL,dataalteracao VARCHAR NOT NULL)");
   }
 
   Future close() async {

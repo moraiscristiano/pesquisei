@@ -41,6 +41,9 @@ class _PesquisaListState extends State<PesquisaList> {
           DataColumn(
             label: Text('NOME'),
           ),
+           DataColumn(
+            label: Text('BAIRRO'),
+          ),
           DataColumn(
             label: Text('EXCLUIR'),
           )
@@ -50,6 +53,9 @@ class _PesquisaListState extends State<PesquisaList> {
               (pesquisa) => DataRow(cells: [
                 DataCell(
                   Text(pesquisa.nome),
+                ),
+                 DataCell(
+                  Text(pesquisa.idbairro.toString()),
                 ),
                 DataCell(IconButton(
                   icon: Icon(Icons.delete),

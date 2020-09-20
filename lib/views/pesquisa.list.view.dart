@@ -58,7 +58,7 @@ class _PesquisaListViewState extends State<PesquisaListView> {
                           pesquisa.id,
                           pesquisa.nome,
                           pesquisa.descricao,
-                          pesquisa.idbairro,
+                          pesquisaLocalidadeStore.idbairro,
                           pesquisaLocalidadeStore.idcidade);
 
                       setState(() {});

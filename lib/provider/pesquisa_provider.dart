@@ -22,7 +22,7 @@ class PesquisaProvider {
 
   Future<Pesquisa> savePesquisa(Pesquisa pesquisa) async {
     var dbPesquisa = await _db;
-    pesquisa.id = await dbPesquisa.insert('Pesquisa', pesquisa.toMap());
+    pesquisa.id = await dbPesquisa.insert('Pesquisa', pesquisa.toJson());
     print("savePesquisa().pesquisa.id: " + pesquisa.id.toString());
     return pesquisa;
   }
@@ -30,12 +30,12 @@ class PesquisaProvider {
   Future<List<Pesquisa>> getPesquisas() async {
     var dbPesquisa = await _db;
     List<Map> maps = await dbPesquisa.query('Pesquisa',
-        columns: ['id', 'nome', 'descricao', 'idbairro', 'dataalteracao']);
+        columns: ['id', 'nome', 'descricao', 'dataCricao' ,'numeroEntrevistados' ,'alteracao', 'idbairro']);
     //List<Map> maps = await dbClient.rawQuery("SELECT * FROM $TABLE");
     List<Pesquisa> pesquisas = [];
     if (maps.length > 0) {
       for (int i = 0; i < maps.length; i++) {
-        pesquisas.add(Pesquisa.fromMap(maps[i]));
+        pesquisas.add(Pesquisa.fromJsonDb(maps[i]));
       }
     }
     return pesquisas;
@@ -49,7 +49,7 @@ class PesquisaProvider {
 
   Future<int> updatePesquisa(Pesquisa pesquisa) async {
     var dbPesquisa = await _db;
-    return await dbPesquisa.update('Pesquisa', pesquisa.toMap(),
+    return await dbPesquisa.update('Pesquisa', pesquisa.toJson(),
         where: 'id = ?', whereArgs: [pesquisa.id]);
   }
 
