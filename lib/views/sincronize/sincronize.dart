@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_crud/controllers/auth.controller.dart';
-import 'package:flutter_crud/controllers/bairro.controller%20.dart';
-import 'package:flutter_crud/controllers/cidade.controller.dart';
-import 'package:flutter_crud/controllers/pergunta.controller.dart';
-import 'package:flutter_crud/controllers/pesquisa.controller.dart';
-import 'package:flutter_crud/controllers/resposta.controller.dart';
-import 'package:flutter_crud/controllers/resposta.escolhida.controller.dart';
-import 'package:flutter_crud/controllers/sincronize.controller..dart';
-import 'package:flutter_crud/stores/app.store.dart';
-import 'package:flutter_crud/view-models/sincronize.viewmodel.dart';
+import 'package:Pesquisei/controllers/bairro.controller%20.dart';
+import 'package:Pesquisei/controllers/cidade.controller.dart';
+import 'package:Pesquisei/controllers/pergunta.controller.dart';
+import 'package:Pesquisei/controllers/pesquisa.controller.dart';
+import 'package:Pesquisei/controllers/resposta.controller.dart';
+import 'package:Pesquisei/controllers/resposta.escolhida.controller.dart';
+import 'package:Pesquisei/stores/app.store.dart';
+import 'package:Pesquisei/view-models/sincronize.viewmodel.dart';
 import 'package:provider/provider.dart';
 
 class SincronizePage extends StatefulWidget {

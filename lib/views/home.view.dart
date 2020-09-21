@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_crud/stores/app.store.dart';
+import 'package:Pesquisei/stores/app.store.dart';
 import 'package:provider/provider.dart';
 
 class HomeView extends StatelessWidget {

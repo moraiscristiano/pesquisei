@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_crud/models/resposta.escolhida.dart';
-import 'package:flutter_crud/utils/strings.dart';
-import 'package:flutter_crud/utils/db.helper.dart';
+import 'package:Pesquisei/models/resposta.escolhida.dart';
+import 'package:Pesquisei/utils/strings.dart';
+import 'package:Pesquisei/utils/db.helper.dart';
 import 'package:sqflite/sqflite.dart';
 
 class RespostaEscolhidaProvider {

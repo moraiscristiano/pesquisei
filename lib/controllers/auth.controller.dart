@@ -1,5 +1,5 @@
-import 'package:flutter_crud/models/token.return.dart';
-import 'package:flutter_crud/repositories/auth.repository.dart';
+import 'package:Pesquisei/models/token.return.dart';
+import 'package:Pesquisei/repositories/auth.repository.dart';
 
 class AuthController {
   AuthRepository repository;

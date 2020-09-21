@@ -1,5 +1,5 @@
-import 'package:flutter_crud/models/token.return.dart';
-import 'package:flutter_crud/repositories/bairro.repository.dart';
+import 'package:Pesquisei/models/token.return.dart';
+import 'package:Pesquisei/repositories/bairro.repository.dart';
 
 class BairroController {
   BairroRepository repository;

@@ -1,6 +1,6 @@
-import 'package:flutter_crud/models/token.return.dart';
-import 'package:flutter_crud/repositories/resposta.repository.dart';
-import 'package:flutter_crud/view-models/sincronize.viewmodel.dart';
+import 'package:Pesquisei/models/token.return.dart';
+import 'package:Pesquisei/repositories/resposta.repository.dart';
+import 'package:Pesquisei/view-models/sincronize.viewmodel.dart';
 
 class RespostaController {
   RespostaRepository repository;

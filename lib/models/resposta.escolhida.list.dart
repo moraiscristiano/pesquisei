@@ -1,4 +1,4 @@
-import 'package:flutter_crud/models/resposta.escolhida.dart';
+import 'package:Pesquisei/models/resposta.escolhida.dart';
 
 class RespostaEscolhidaList {
   List<RespostaEscolhida> respostas;

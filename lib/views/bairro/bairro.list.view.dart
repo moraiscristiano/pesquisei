@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_crud/models/bairro.dart';
-import 'package:flutter_crud/provider/bairro_provider.dart';
+import 'package:Pesquisei/models/bairro.dart';
+import 'package:Pesquisei/provider/bairro_provider.dart';
 import 'package:intl/intl.dart';
 
 class BairroList extends StatefulWidget {

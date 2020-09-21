@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_crud/models/pesquisa.quiz.dart';
+import 'package:Pesquisei/models/pesquisa.quiz.dart';
 
 class ResultDialog {
   static Future show(

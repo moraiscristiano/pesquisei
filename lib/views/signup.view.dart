@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_crud/controllers/auth.controller.dart';
-import 'package:flutter_crud/controllers/signup.controller.dart';
-import 'package:flutter_crud/stores/app.store.dart';
-import 'package:flutter_crud/view-models/signup.viewmodel.dart';
+import 'package:Pesquisei/controllers/auth.controller.dart';
+import 'package:Pesquisei/controllers/signup.controller.dart';
+import 'package:Pesquisei/stores/app.store.dart';
+import 'package:Pesquisei/view-models/signup.viewmodel.dart';
 import 'package:provider/provider.dart';
 
 import 'home/home.view.dart';

@@ -1,7 +1,7 @@
-import 'package:flutter_crud/models/pesquisa.dart';
-import 'package:flutter_crud/models/pesquisa.quiz.dart';
-import 'package:flutter_crud/models/token.return.dart';
-import 'package:flutter_crud/repositories/pesquisa.repository.dart';
+import 'package:Pesquisei/models/pesquisa.dart';
+import 'package:Pesquisei/models/pesquisa.quiz.dart';
+import 'package:Pesquisei/models/token.return.dart';
+import 'package:Pesquisei/repositories/pesquisa.repository.dart';
 
 class PesquisaController {
   PesquisaRepository repository;

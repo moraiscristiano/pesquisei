@@ -1,14 +1,14 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_crud/controllers/quiz.controller.dart';
-import 'package:flutter_crud/models/resposta.escolhida.dart';
-import 'package:flutter_crud/provider/resposta_escolhida.dart';
-import 'package:flutter_crud/stores/pesquisa.localidade.store.dart';
-import 'package:flutter_crud/stores/pesquisa.store.dart';
-import 'package:flutter_crud/utils/centered.circular.progress.dart';
-import 'package:flutter_crud/utils/centered.message.dart';
-import 'package:flutter_crud/utils/finish.dialog.dart';
-import 'package:flutter_crud/utils/result.dialog.dart';
+import 'package:Pesquisei/controllers/quiz.controller.dart';
+import 'package:Pesquisei/models/resposta.escolhida.dart';
+import 'package:Pesquisei/provider/resposta_escolhida.dart';
+import 'package:Pesquisei/stores/pesquisa.localidade.store.dart';
+import 'package:Pesquisei/stores/pesquisa.store.dart';
+import 'package:Pesquisei/utils/centered.circular.progress.dart';
+import 'package:Pesquisei/utils/centered.message.dart';
+import 'package:Pesquisei/utils/finish.dialog.dart';
+import 'package:Pesquisei/utils/result.dialog.dart';
 import 'package:provider/provider.dart';
 
 class PerguntaQuizView extends StatefulWidget {

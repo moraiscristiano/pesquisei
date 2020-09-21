@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_crud/models/pergunta.dart';
-import 'package:flutter_crud/provider/pergunta_provider.dart';
+import 'package:Pesquisei/models/pergunta.dart';
+import 'package:Pesquisei/provider/pergunta_provider.dart';
 import 'package:intl/intl.dart';
 
 class PerguntaList extends StatefulWidget {

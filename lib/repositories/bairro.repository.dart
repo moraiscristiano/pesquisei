@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:flutter_crud/controllers/auth.controller.dart';
-import 'package:flutter_crud/models/bairro.dart';
-import 'package:flutter_crud/models/token.return.dart';
-import 'package:flutter_crud/utils/db.helper.dart';
-import 'package:flutter_crud/utils/strings.dart';
+import 'package:Pesquisei/controllers/auth.controller.dart';
+import 'package:Pesquisei/models/bairro.dart';
+import 'package:Pesquisei/models/token.return.dart';
+import 'package:Pesquisei/utils/db.helper.dart';
+import 'package:Pesquisei/utils/strings.dart';
 import 'package:http/http.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -101,7 +101,7 @@ class BairroRepository {
     print(r.body);
 
     if (r.statusCode == 200) {
-      List<dynamic> lista = jsonDecode(r.body);
+      List<dynamic> lista = jsonDecode(utf8convert(r.body));
 
       print('lista: ' + lista.toString());
 
@@ -136,5 +136,10 @@ class BairroRepository {
   Future<int> deletar(Future<Database> db, int id) async {
     var database = await db;
     return await database.delete('Bairro', where: 'id = ?', whereArgs: [id]);
+  }
+
+  static String utf8convert(String text) {
+    List<int> bytes = text.toString().codeUnits;
+    return utf8.decode(bytes);
   }
 }

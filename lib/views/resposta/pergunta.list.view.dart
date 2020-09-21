@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_crud/models/pergunta.dart';
-import 'package:flutter_crud/models/resposta.dart';
-import 'package:flutter_crud/provider/pergunta_provider.dart';
-import 'package:flutter_crud/provider/resposta_provider.dart';
+import 'package:Pesquisei/models/pergunta.dart';
+import 'package:Pesquisei/models/resposta.dart';
+import 'package:Pesquisei/provider/pergunta_provider.dart';
+import 'package:Pesquisei/provider/resposta_provider.dart';
 import 'package:intl/intl.dart';
 
 class RespostaList extends StatefulWidget {

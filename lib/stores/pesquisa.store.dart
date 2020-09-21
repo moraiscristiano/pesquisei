@@ -1,5 +1,5 @@
-import 'package:flutter_crud/controllers/pesquisa.controller.dart';
-import 'package:flutter_crud/models/pesquisa.quiz.dart';
+import 'package:Pesquisei/controllers/pesquisa.controller.dart';
+import 'package:Pesquisei/models/pesquisa.quiz.dart';
 import 'package:mobx/mobx.dart';
 part 'pesquisa.store.g.dart';
 

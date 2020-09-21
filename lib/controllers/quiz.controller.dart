@@ -1,8 +1,8 @@
 import 'dart:math';
 
-import 'package:flutter_crud/models/pesquisa.quiz.dart';
-import 'package:flutter_crud/models/resposta.dart';
-import 'package:flutter_crud/repositories/pesquisa.repository.dart';
+import 'package:Pesquisei/models/pesquisa.quiz.dart';
+import 'package:Pesquisei/models/resposta.dart';
+import 'package:Pesquisei/repositories/pesquisa.repository.dart';
 
 class QuizController {
   PesquisaRepository repository;

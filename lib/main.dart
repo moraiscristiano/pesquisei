@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_crud/stores/app.store.dart';
-import 'package:flutter_crud/stores/pesquisa.localidade.store.dart';
-import 'package:flutter_crud/stores/pesquisa.store.dart';
-import 'package:flutter_crud/views/home/home.view.dart';
-import 'package:flutter_crud/views/signup.view.dart';
+import 'package:Pesquisei/stores/app.store.dart';
+import 'package:Pesquisei/stores/pesquisa.localidade.store.dart';
+import 'package:Pesquisei/stores/pesquisa.store.dart';
+import 'package:Pesquisei/views/home/home.view.dart';
+import 'package:Pesquisei/views/signup.view.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(MyApp());
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Pesquisei',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,

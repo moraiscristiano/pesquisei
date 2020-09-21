@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_crud/models/resposta.escolhida.dart';
-import 'package:flutter_crud/provider/resposta_escolhida.dart';
+import 'package:Pesquisei/models/resposta.escolhida.dart';
+import 'package:Pesquisei/provider/resposta_escolhida.dart';
 import 'package:intl/intl.dart';
 
 class RespostaEscolhidaList extends StatefulWidget {

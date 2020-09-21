@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_crud/views/home/home.view.dart';
-import 'package:flutter_crud/views/pesquisa.list.view.dart';
+import 'package:Pesquisei/views/home/home.view.dart';
+import 'package:Pesquisei/views/pesquisa.list.view.dart';
 
 class FinishDialog {
   static Future show(

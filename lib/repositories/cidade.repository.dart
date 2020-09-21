@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:flutter_crud/controllers/auth.controller.dart';
-import 'package:flutter_crud/models/cidade.dart';
-import 'package:flutter_crud/models/token.return.dart';
-import 'package:flutter_crud/utils/db.helper.dart';
-import 'package:flutter_crud/utils/strings.dart';
+import 'package:Pesquisei/controllers/auth.controller.dart';
+import 'package:Pesquisei/models/cidade.dart';
+import 'package:Pesquisei/models/token.return.dart';
+import 'package:Pesquisei/utils/db.helper.dart';
+import 'package:Pesquisei/utils/strings.dart';
 import 'package:http/http.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -70,8 +70,8 @@ class CidadeRepository {
 
   Future<List<Cidade>> getCidadesDb(Future<Database> db) async {
     var dbClient = await db;
-    List<Map> maps = await dbClient.query('Cidade',
-        columns: ['id', 'nome', 'estadoSigla', 'alteracao']);
+    List<Map> maps = await dbClient
+        .query('Cidade', columns: ['id', 'nome', 'estadoSigla', 'alteracao']);
     //List<Map> maps = await dbClient.rawQuery("SELECT * FROM $TABLE");
     List<Cidade> cidades = [];
     if (maps.length > 0) {
@@ -94,7 +94,7 @@ class CidadeRepository {
     print(r.body);
 
     if (r.statusCode == 200) {
-      List<dynamic> lista = jsonDecode(r.body);
+      List<dynamic> lista = jsonDecode(utf8convert(r.body));
 
       if (null != lista && lista.length > 0) {
         for (int i = 0; i < lista.length; i++) {
@@ -120,5 +120,10 @@ class CidadeRepository {
   Future<int> deletarCidade(Future<Database> db, int id) async {
     var dbClient = await db;
     return await dbClient.delete('Cidade', where: 'id = ?', whereArgs: [id]);
+  }
+
+  static String utf8convert(String text) {
+    List<int> bytes = text.toString().codeUnits;
+    return utf8.decode(bytes);
   }
 }

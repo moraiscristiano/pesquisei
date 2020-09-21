@@ -23,10 +23,13 @@ class DbHelper {
 
     print(path);
     var db = await openDatabase(path, version: 1, onCreate: _onCreate);
+
     return db;
   }
 
   _onCreate(Database db, int version) async {
+    db.execute("PRAGMA encoding = \"UTF-16\"");
+
     // Cidade
     await db.execute(
         "CREATE TABLE Cidade (id INTEGER PRIMARY KEY  UNIQUE NOT NULL ,nome VARCHAR (255) NOT NULL,estadoSigla VARCHAR (2) NOT NULL,alteracao VARCHAR NOT NULL)");
@@ -36,10 +39,10 @@ class DbHelper {
     // Pesquisa
     await db.execute(
         "CREATE TABLE Pesquisa (id INTEGER    NOT NULL,nome VARCHAR (255) NOT NULL,descricao VARCHAR (255) NOT NULL, dataCricao VARCHAR NOT NULL, numeroEntrevistados INTEGER NOT NULL,alteracao VARCHAR NOT NULL,  idbairro INTEGER NOT NULL)");
-   // Bairro Pesquisa
-      await db.execute(
+    // Bairro Pesquisa
+    await db.execute(
         "CREATE TABLE BairroPesquisas (idbairro INTEGER NOT NULL, idpesquisa INTEGER NOT NULL, percentual INTEGER NOT NULL)");
-   
+
     // Pergunta
     await db.execute(
         "CREATE TABLE Pergunta (id INTEGER PRIMARY KEY  UNIQUE NOT NULL,pesquisaId INTEGER NOT NULL, descricao VARCHAR (255) NOT NULL,ordem INTEGER NOT NULL,alteracao VARCHAR NOT NULL)");

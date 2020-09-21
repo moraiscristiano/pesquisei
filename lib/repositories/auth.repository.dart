@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:flutter_crud/models/token.dart';
-import 'package:flutter_crud/models/token.return.dart';
-import 'package:flutter_crud/utils/strings.dart';
+import 'package:Pesquisei/models/token.dart';
+import 'package:Pesquisei/models/token.return.dart';
+import 'package:Pesquisei/utils/strings.dart';
 import 'package:http/http.dart';
 
 class AuthRepository {

@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:flutter_crud/controllers/auth.controller.dart';
-import 'package:flutter_crud/models/resposta.escolhida.dart';
-import 'package:flutter_crud/models/resposta.escolhida.list.dart';
-import 'package:flutter_crud/models/token.return.dart';
-import 'package:flutter_crud/utils/db.helper.dart';
-import 'package:flutter_crud/utils/strings.dart';
+import 'package:Pesquisei/controllers/auth.controller.dart';
+import 'package:Pesquisei/models/resposta.escolhida.dart';
+import 'package:Pesquisei/models/resposta.escolhida.list.dart';
+import 'package:Pesquisei/models/token.return.dart';
+import 'package:Pesquisei/utils/db.helper.dart';
+import 'package:Pesquisei/utils/strings.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:sqflite/sqflite.dart';

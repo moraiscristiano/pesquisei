@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_crud/models/cidade.dart';
-import 'package:flutter_crud/provider/cidade_provider.dart';
+import 'package:Pesquisei/models/cidade.dart';
+import 'package:Pesquisei/provider/cidade_provider.dart';
 import 'package:intl/intl.dart';
 
 class CidadeList extends StatefulWidget {

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_crud/models/bairro.dart';
-import 'package:flutter_crud/models/cidade.dart';
-import 'package:flutter_crud/provider/bairro_provider.dart';
-import 'package:flutter_crud/provider/cidade_provider.dart';
-import 'package:flutter_crud/stores/pesquisa.localidade.store.dart';
-import 'package:flutter_crud/views/pesquisa.list.view.dart';
+import 'package:Pesquisei/models/bairro.dart';
+import 'package:Pesquisei/models/cidade.dart';
+import 'package:Pesquisei/provider/bairro_provider.dart';
+import 'package:Pesquisei/provider/cidade_provider.dart';
+import 'package:Pesquisei/stores/pesquisa.localidade.store.dart';
+import 'package:Pesquisei/views/pesquisa.list.view.dart';
 import 'package:provider/provider.dart';
 
 class PesquisaLocalidadeView extends StatefulWidget {
@@ -61,7 +61,7 @@ class _PesquisaLocalidadeViewState extends State<PesquisaLocalidadeView> {
                           color: Colors.black54,
                           fontSize: 16,
                         ),
-                        hint: Text('Select Cidade'),
+                        hint: Text('Selecione a Cidade'),
                         key: _cidadeFormKey,
                         onChanged: (String newValue) {
                           setState(() {
@@ -110,7 +110,7 @@ class _PesquisaLocalidadeViewState extends State<PesquisaLocalidadeView> {
                           color: Colors.black54,
                           fontSize: 16,
                         ),
-                        hint: Text('Select Bairro'),
+                        hint: Text('Selecione o Bairro'),
                         key: _bairroFormKey,
                         onChanged: (String newValue) {
                           setState(() {

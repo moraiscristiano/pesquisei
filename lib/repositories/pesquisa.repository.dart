@@ -1,13 +1,14 @@
 import 'dart:convert';
 
-import 'package:flutter_crud/controllers/auth.controller.dart';
-import 'package:flutter_crud/models/bairro.pesquisa.dart';
-import 'package:flutter_crud/models/pesquisa.dart';
-import 'package:flutter_crud/models/pesquisa.quiz.dart';
-import 'package:flutter_crud/models/resposta.dart';
-import 'package:flutter_crud/models/token.return.dart';
-import 'package:flutter_crud/utils/db.helper.dart';
-import 'package:flutter_crud/utils/strings.dart';
+import 'package:Pesquisei/controllers/auth.controller.dart';
+import 'package:Pesquisei/models/bairro.pesquisa.dart';
+import 'package:Pesquisei/models/pesquisa.dart';
+import 'package:Pesquisei/models/pesquisa.quiz.dart';
+import 'package:Pesquisei/models/resposta.dart';
+import 'package:Pesquisei/models/token.return.dart';
+import 'package:Pesquisei/utils/db.helper.dart';
+import 'package:Pesquisei/utils/strings.dart';
+import 'package:html_unescape/html_unescape.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:sqflite/sqflite.dart';
@@ -175,12 +176,10 @@ class PesquisaRepository {
     var r = await get(
         Strings.BASE_URL_WEB_API + Strings.GET_ALL_PESQUISAS_FROM_WEB_API,
         headers: <String, String>{'authorization': bearerAuth});
-    await Future.delayed(new Duration(milliseconds: 1500));
-
-    print(r.body);
+    // await Future.delayed(new Duration(milliseconds: 1500));
 
     if (r.statusCode == 200) {
-      List<dynamic> lista = jsonDecode(r.body);
+      List<dynamic> lista = jsonDecode(utf8convert(r.body));
 
       print('decode=');
       print(lista);
@@ -245,5 +244,10 @@ class PesquisaRepository {
   Future<int> deletar(Future<Database> db, int id) async {
     var database = await db;
     return await database.delete('Pesquisa', where: 'id = ?', whereArgs: [id]);
+  }
+
+  static String utf8convert(String text) {
+    List<int> bytes = text.toString().codeUnits;
+    return utf8.decode(bytes);
   }
 }

@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_crud/controllers/pesquisa.controller.dart';
-import 'package:flutter_crud/models/pesquisa.dart';
-import 'package:flutter_crud/stores/pesquisa.localidade.store.dart';
-import 'package:flutter_crud/stores/pesquisa.store.dart';
-import 'package:flutter_crud/views/pergunta.quiz.view.dart';
-import 'package:flutter_crud/views/pesquisa.localidade.view.dart';
+import 'package:Pesquisei/controllers/pesquisa.controller.dart';
+import 'package:Pesquisei/models/pesquisa.dart';
+import 'package:Pesquisei/stores/pesquisa.localidade.store.dart';
+import 'package:Pesquisei/stores/pesquisa.store.dart';
+import 'package:Pesquisei/views/pergunta.quiz.view.dart';
+import 'package:Pesquisei/views/pesquisa.localidade.view.dart';
 import 'package:provider/provider.dart';
 
 import 'home/home.view.dart';

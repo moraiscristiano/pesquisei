@@ -1,4 +1,4 @@
-import 'package:flutter_crud/models/token.dart';
+import 'package:Pesquisei/models/token.dart';
 
 class TokenReturn {
   int statuscode;

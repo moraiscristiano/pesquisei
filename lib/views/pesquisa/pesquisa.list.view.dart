@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_crud/models/pesquisa.dart';
-import 'package:flutter_crud/provider/pesquisa_provider.dart';
+import 'package:Pesquisei/models/pesquisa.dart';
+import 'package:Pesquisei/provider/pesquisa_provider.dart';
 import 'package:intl/intl.dart';
 
 class PesquisaList extends StatefulWidget {

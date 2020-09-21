@@ -1,6 +1,6 @@
-import 'package:flutter_crud/models/token.return.dart';
-import 'package:flutter_crud/repositories/cidade.repository.dart';
-import 'package:flutter_crud/repositories/pergunta.repository.dart';
+import 'package:Pesquisei/models/token.return.dart';
+import 'package:Pesquisei/repositories/cidade.repository.dart';
+import 'package:Pesquisei/repositories/pergunta.repository.dart';
 
 class PerguntaController {
   PerguntaRepository repository;

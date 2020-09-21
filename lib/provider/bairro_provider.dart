@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:flutter_crud/models/bairro.dart';
-import 'package:flutter_crud/utils/strings.dart';
-import 'package:flutter_crud/utils/db.helper.dart';
+import 'package:Pesquisei/models/bairro.dart';
+import 'package:Pesquisei/utils/strings.dart';
+import 'package:Pesquisei/utils/db.helper.dart';
 import 'package:sqflite/sqflite.dart';
 
 class BairroProvider {

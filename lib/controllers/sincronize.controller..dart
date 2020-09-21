@@ -1,13 +1,13 @@
-import 'package:flutter_crud/models/bairro.dart';
-import 'package:flutter_crud/models/cidade.dart';
-import 'package:flutter_crud/models/pergunta.dart';
-import 'package:flutter_crud/models/pesquisa.dart';
-import 'package:flutter_crud/models/resposta.dart';
-import 'package:flutter_crud/provider/bairro_provider.dart';
-import 'package:flutter_crud/provider/cidade_provider.dart';
-import 'package:flutter_crud/provider/pergunta_provider.dart';
-import 'package:flutter_crud/provider/pesquisa_provider.dart';
-import 'package:flutter_crud/provider/resposta_provider.dart';
+import 'package:Pesquisei/models/bairro.dart';
+import 'package:Pesquisei/models/cidade.dart';
+import 'package:Pesquisei/models/pergunta.dart';
+import 'package:Pesquisei/models/pesquisa.dart';
+import 'package:Pesquisei/models/resposta.dart';
+import 'package:Pesquisei/provider/bairro_provider.dart';
+import 'package:Pesquisei/provider/cidade_provider.dart';
+import 'package:Pesquisei/provider/pergunta_provider.dart';
+import 'package:Pesquisei/provider/pesquisa_provider.dart';
+import 'package:Pesquisei/provider/resposta_provider.dart';
 import 'package:intl/intl.dart';
 
 class SincronizeController {

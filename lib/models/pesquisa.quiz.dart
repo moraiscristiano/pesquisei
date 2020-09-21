@@ -1,4 +1,4 @@
-import 'package:flutter_crud/models/resposta.dart';
+import 'package:Pesquisei/models/resposta.dart';
 
 class PerguntaQuiz {
   int id;

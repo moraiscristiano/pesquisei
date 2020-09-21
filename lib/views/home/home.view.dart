@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_crud/stores/app.store.dart';
-import 'package:flutter_crud/views/bairro/bairro.list.view.dart';
-import 'package:flutter_crud/views/fragment/fragment.dart';
-import 'package:flutter_crud/views/pergunta/pergunta.list.view.dart';
-import 'package:flutter_crud/views/pesquisa/pesquisa.list.view.dart';
-import 'package:flutter_crud/views/resposta/pergunta.list.view.dart';
-import 'package:flutter_crud/views/respostaescolhida/resposta.escolhida.list.dart';
-import 'package:flutter_crud/views/signup.view.dart';
-import 'package:flutter_crud/views/sincronize/sincronize.dart';
+import 'package:Pesquisei/stores/app.store.dart';
+import 'package:Pesquisei/views/bairro/bairro.list.view.dart';
+import 'package:Pesquisei/views/fragment/fragment.dart';
+import 'package:Pesquisei/views/pergunta/pergunta.list.view.dart';
+import 'package:Pesquisei/views/pesquisa/pesquisa.list.view.dart';
+import 'package:Pesquisei/views/resposta/pergunta.list.view.dart';
+import 'package:Pesquisei/views/respostaescolhida/resposta.escolhida.list.dart';
+import 'package:Pesquisei/views/signup.view.dart';
+import 'package:Pesquisei/views/sincronize/sincronize.dart';
 import 'package:provider/provider.dart';
 
 import '../cidade/cidade.list.view.dart';
@@ -24,7 +24,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _selectedIndex = 0;
-  String curTitle = 'Home';
+  String curTitle = 'Pesquisei';
 
   @override
   Widget build(BuildContext context) {
@@ -205,16 +205,16 @@ class _HomeState extends State<Home> {
   _onSelectItem(int index) {
     switch (index) {
       case 0: // Home
-        curTitle = 'Home';
+        curTitle = 'Pesquisei';
         break;
       case 1: // Cidades
         curTitle = 'Cidades';
         break;
       case 2: // PesquisaApp
-        curTitle = 'PesquisaApp';
+        curTitle = 'Pesquisei';
         break;
       case 3: // Sincronizar
-        curTitle = 'Sincronizar';
+        curTitle = 'Pesquisei';
         break;
       case 4: // Bairros
         curTitle = 'Bairros';
