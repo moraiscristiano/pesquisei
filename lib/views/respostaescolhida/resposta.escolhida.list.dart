@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_crud/models/bairro.dart';
 import 'package:flutter_crud/models/resposta.escolhida.dart';
-import 'package:flutter_crud/provider/bairro_provider.dart';
 import 'package:flutter_crud/provider/resposta_escolhida.dart';
 import 'package:intl/intl.dart';
 
@@ -52,10 +50,10 @@ class _RespostaEscolhidaListState extends State<RespostaEscolhidaList> {
             .map(
               (resp) => DataRow(cells: [
                 DataCell(
-                  Text(resp.idpergunta.toString()),
+                  Text(resp.idPergunta.toString()),
                 ),
                 DataCell(
-                  Text(resp.idresposta.toString()),
+                  Text(resp.idResposta.toString()),
                 ),
                 
               ]),

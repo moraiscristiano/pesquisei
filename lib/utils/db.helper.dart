@@ -48,7 +48,7 @@ class DbHelper {
         "CREATE TABLE Resposta (id INTEGER PRIMARY KEY  UNIQUE NOT NULL,perguntaId INTEGER NOT NULL, descricao VARCHAR (255) NOT NULL,ordem INTEGER NOT NULL,alteracao VARCHAR NOT NULL)");
 
     await db.execute(
-        "CREATE TABLE RespostaEscolhida (id INTEGER PRIMARY KEY  UNIQUE NOT NULL,idpergunta INTEGER NOT NULL, idresposta INTEGER NOT NULL, idbairro INTEGER NOT NULL,dataalteracao VARCHAR NOT NULL)");
+        "CREATE TABLE RespostaEscolhida (id INTEGER PRIMARY KEY  UNIQUE NOT NULL,idPergunta INTEGER NOT NULL, idResposta INTEGER NOT NULL, idBairro INTEGER NOT NULL,alteracao VARCHAR NOT NULL, dataprocessamento VARCHAR)");
   }
 
   Future close() async {

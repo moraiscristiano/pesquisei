@@ -5,6 +5,7 @@ import 'package:flutter_crud/controllers/cidade.controller.dart';
 import 'package:flutter_crud/controllers/pergunta.controller.dart';
 import 'package:flutter_crud/controllers/pesquisa.controller.dart';
 import 'package:flutter_crud/controllers/resposta.controller.dart';
+import 'package:flutter_crud/controllers/resposta.escolhida.controller.dart';
 import 'package:flutter_crud/controllers/sincronize.controller..dart';
 import 'package:flutter_crud/stores/app.store.dart';
 import 'package:flutter_crud/view-models/sincronize.viewmodel.dart';
@@ -24,6 +25,7 @@ class _SincronizePageState extends State<SincronizePage> {
   final _pesquisaController = new PesquisaController();
   final _perguntaController = new PerguntaController();
   final _respostaController = new RespostaController();
+  final _respostaEscolhidaController = new RespostaEscolhidaController();
 
   var model = new SincronizeViewModel();
 
@@ -83,10 +85,17 @@ class _SincronizePageState extends State<SincronizePage> {
                               setState(() {});
 
                               _respostaController
-                                  .sincronizar(store.name, store.pass, model)
+                                  .sincronizar(store.name, store.pass)
                                   .then((data) {
-                                print('pesquisas sincronizadas!');
+                                print('Respostas sincronizadas!');
                                 setState(() {});
+
+                                _respostaEscolhidaController
+                                    .sincronizar(store.name, store.pass, model)
+                                    .then((data) {
+                                  print('Respostas Escolhias sincronizadas!');
+                                  setState(() {});
+                                });
                               });
                             });
                           });

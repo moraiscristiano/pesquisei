@@ -16,8 +16,6 @@ class BairroList extends StatefulWidget {
 
 class _BairroListState extends State<BairroList> {
   Future<List<Bairro>> bairros;
-  DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
-
   final formKey = new GlobalKey<FormState>();
 
   @override

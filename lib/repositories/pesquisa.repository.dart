@@ -139,7 +139,10 @@ class PesquisaRepository {
         }
       } else {
         salvar(_db, o);
-        print('registro de id:' + o.id.toString() + '  adicionado'+ o.idbairro.toString());
+        print('registro de id:' +
+            o.id.toString() +
+            '  adicionado' +
+            o.idbairro.toString());
       }
     }
     return tokenReturn;

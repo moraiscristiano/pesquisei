@@ -135,9 +135,9 @@ class _PerguntaQuizViewState extends State<PerguntaQuizView> {
           ),
           onTap: () {
             RespostaEscolhida resp = new RespostaEscolhida();
-            resp.idbairro = bairro;
-            resp.idpergunta = _controller.question.id;
-            resp.idresposta = idResposta;
+            resp.idBairro = bairro;
+            resp.idPergunta = _controller.question.id;
+            resp.idResposta = idResposta;
             print(bairro);
             print(_controller.question.id);
             print(idResposta);

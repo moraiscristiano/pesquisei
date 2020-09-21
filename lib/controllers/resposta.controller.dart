@@ -9,7 +9,7 @@ class RespostaController {
     repository = new RespostaRepository();
   }
 
-  Future<TokenReturn> sincronizar(String pUser, String pPass, SincronizeViewModel vm) async {
+  Future<TokenReturn> sincronizar(String pUser, String pPass) async {
     TokenReturn retorno = new TokenReturn();
     bool processado = false;
     int tentativas = 0;
@@ -23,9 +23,6 @@ class RespostaController {
         tentativas = tentativas + 1;
       }
     }
-
-    vm.busy = false;
-
 
     return retorno;
   }

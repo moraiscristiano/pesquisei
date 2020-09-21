@@ -23,4 +23,5 @@ class Strings {
   static const String GET_ALL_PESQUISAS_FROM_WEB_API = "pesquisa";
   static const String GET_ALL_PERGUNTAS_FROM_WEB_API = "pergunta";
   static const String GET_ALL_RESPOSTAS_FROM_WEB_API = "resposta";
+  static const String GET_ALL_RESPOSTAS_ESCOLHIDAS_FROM_WEB_API = "resultado";
 }

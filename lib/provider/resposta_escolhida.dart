@@ -20,7 +20,7 @@ class RespostaEscolhidaProvider {
 
   Future<RespostaEscolhida> saveRespostaEscolhida(
       RespostaEscolhida resposta) async {
-    resposta.dataalteracao =
+    resposta.alteracao =
         DateTime.parse(new DateTime.now().toString()).toString();
     var dbRespostaEscolhida = await _db;
     resposta.id =
@@ -34,10 +34,11 @@ class RespostaEscolhidaProvider {
     List<Map> maps = await dbRespostaEscolhida.query('RespostaEscolhida',
         columns: [
           'id',
-          'idpergunta',
-          'idresposta',
-          'idbairro',
-          'dataalteracao'
+          'idPergunta',
+          'idResposta',
+          'idBairro',
+          'alteracao',
+          'dataprocessamento'
         ]);
     //List<Map> maps = await dbClient.rawQuery("SELECT * FROM $TABLE");
     List<RespostaEscolhida> resp = [];

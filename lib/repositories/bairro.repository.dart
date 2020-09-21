@@ -30,7 +30,6 @@ class BairroRepository {
 
     print('listaDb' + listaDb.length.toString());
 
-
     for (var itemApi in listaApi) {
       bool itemParaAtualizar = false;
       bool itemExist = false;
@@ -74,15 +73,13 @@ class BairroRepository {
         .query('Bairro', columns: ['id', 'idcidade', 'nome', 'alteracao']);
     //List<Map> maps = await dbClient.rawQuery("SELECT * FROM $TABLE");
     List<Bairro> lista = [];
-print('map1');
-print(maps);
-
+    print('map1');
+    print(maps);
 
     if (maps.length > 0) {
       for (int i = 0; i < maps.length; i++) {
-print('map2');
+        print('map2');
         print(Bairro.fromMapDb(maps[i]));
-
 
         lista.add(Bairro.fromMapDb(maps[i]));
       }
@@ -94,7 +91,7 @@ print('map2');
     String bearerAuth = 'Bearer ' + accessToken;
     List<Bairro> bairros = [];
 
-print('Bearer');
+    print('Bearer');
 
     var r = await get(
         Strings.BASE_URL_WEB_API + Strings.GET_ALL_BAIRROS_FROM_WEB_API,
@@ -106,14 +103,10 @@ print('Bearer');
     if (r.statusCode == 200) {
       List<dynamic> lista = jsonDecode(r.body);
 
-
-print('lista: '+lista.toString());
-
-
+      print('lista: ' + lista.toString());
 
       if (null != lista && lista.length > 0) {
         for (int i = 0; i < lista.length; i++) {
-
           print(Bairro.fromMap(lista[i]).id);
           print(Bairro.fromMap(lista[i]).alteracao);
           print(Bairro.fromMap(lista[i]).idcidade);

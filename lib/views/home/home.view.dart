@@ -93,6 +93,7 @@ class _HomeState extends State<Home> {
               },
             ),
         
+        /*
             ListTile(
               title: Text('Cidades'),
               selected: 1 == _selectedIndex,
@@ -146,7 +147,7 @@ class _HomeState extends State<Home> {
                 _onSelectItem(8);
               },
             ),
-              
+              */
 
             ListTile(
               title: Text('PesquisaApp'),
