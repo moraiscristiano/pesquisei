@@ -49,7 +49,7 @@ class _HomeState extends State<Home> {
               FlatButton(
                 child: new Text("SIM"),
                 onPressed: () async {
-                  await Future.delayed(Duration(seconds: 1));
+                //  await Future.delayed(Duration(seconds: 1));
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => SignupView()),

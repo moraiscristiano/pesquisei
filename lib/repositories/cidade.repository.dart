@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:Pesquisei/controllers/auth.controller.dart';
 import 'package:Pesquisei/models/cidade.dart';
+import 'package:Pesquisei/models/retorno.sincronizacao.dart';
 import 'package:Pesquisei/models/token.return.dart';
 import 'package:Pesquisei/utils/db.helper.dart';
 import 'package:Pesquisei/utils/strings.dart';
@@ -9,63 +10,73 @@ import 'package:http/http.dart';
 import 'package:sqflite/sqflite.dart';
 
 class CidadeRepository {
-  Future<TokenReturn> sincronizar(String pUser, String pPass) async {
+  Future<RetornoSincronizacao> sincronizar(String pUser, String pPass) async {
     Future<Database> _db = DbHelper().db;
 
     AuthController _authController = new AuthController();
-
+    RetornoSincronizacao retorno = new RetornoSincronizacao();
+    retorno.erros = 0;
+    retorno.mensagem = "";
+    retorno.registrosSincronizados = 0;
     // Get Token (Authenticate)
-    TokenReturn tokenReturn = await _authController.authenticate(pUser, pPass);
 
-    if (tokenReturn.statuscode != 200) {
-      return tokenReturn;
-    }
+    try {
+      TokenReturn tokenReturn =
+          await _authController.authenticate(pUser, pPass);
 
-    // Get Cidades da API
-    List<Cidade> listaApi =
-        await getCidadesWebApi(tokenReturn.token.accessToken);
+      if (tokenReturn.statuscode != 200) {
+        retorno.erros = 1;
+        retorno.mensagem = tokenReturn.error_description;
+        retorno.registrosSincronizados = 0;
+        return retorno;
+      }
 
-    // Get Cidades Db
-    List<Cidade> listaDb = await getCidadesDb(_db);
+      // Get Cidades da API
+      List<Cidade> listaApi =
+          await getCidadesWebApi(tokenReturn.token.accessToken);
 
-    print('listaApi' + listaApi.length.toString());
-    print('listaDb' + listaDb.length.toString());
+      // Get Cidades Db
+      List<Cidade> listaDb = await getCidadesDb(_db);
 
-    for (var itemApi in listaApi) {
-      bool itemParaAtualizar = false;
-      bool itemExist = false;
-      for (var itemDb in listaDb) {
-        if (itemApi.id == itemDb.id) {
-          itemExist = true;
+ //     print('listaApi' + listaApi.length.toString());
+  //    print('listaDb' + listaDb.length.toString());
 
-          if (itemApi.alteracao?.isEmpty ||
-              itemDb.alteracao?.isEmpty ||
-              DateTime.parse(itemApi.alteracao)
-                  .isAfter(DateTime.parse(itemDb.alteracao))) {
-            itemParaAtualizar = true;
+      for (var itemApi in listaApi) {
+        bool itemParaAtualizar = false;
+        bool itemExist = false;
+        for (var itemDb in listaDb) {
+          if (itemApi.id == itemDb.id) {
+            itemExist = true;
+
+            if (itemApi.alteracao?.isEmpty ||
+                itemDb.alteracao?.isEmpty ||
+                DateTime.parse(itemApi.alteracao)
+                    .isAfter(DateTime.parse(itemDb.alteracao))) {
+              itemParaAtualizar = true;
+            }
           }
         }
-      }
 
-      print('itemExist?' + itemExist.toString());
-      print('itemParaAtualizar?' + itemParaAtualizar.toString());
-      if (itemExist) {
-        if (itemParaAtualizar) {
-          // Atualizar
-          int q = await atualizarCidade(_db, itemApi);
-          print(q.toString() + ' registro atualizado');
+        if (itemExist) {
+          if (itemParaAtualizar) {
+            retorno.registrosSincronizados = retorno.registrosSincronizados + 1;
+            // Atualizar
+            int q = await atualizarCidade(_db, itemApi);
+            print(q.toString() + ' registro atualizado');
+          }
+        } else {
+          // add
+          retorno.registrosSincronizados = retorno.registrosSincronizados + 1;
+
+          salvarCidade(_db, itemApi);
+          print('registro de id:' + itemApi.id.toString() + '  adicionado');
         }
-      } else {
-        // add
-        salvarCidade(_db, itemApi);
-        print('registro de id:' + itemApi.id.toString() + '  adicionado');
       }
-
-      print('statusCode: ' + tokenReturn.statuscode.toString());
-      print('accessToken: ' + tokenReturn.token.accessToken);
+    } catch (error) {
+      retorno.erros = 1;
+      retorno.mensagem = error.toString();
     }
-
-    return tokenReturn;
+    return retorno;
   }
 
   Future<List<Cidade>> getCidadesDb(Future<Database> db) async {
@@ -89,9 +100,9 @@ class CidadeRepository {
     var r = await get(
         Strings.BASE_URL_WEB_API + Strings.GET_ALL_CIDADES_FROM_WEB_API,
         headers: <String, String>{'authorization': bearerAuth});
-    await Future.delayed(new Duration(milliseconds: 1500));
+   // await Future.delayed(new Duration(milliseconds: 1500));
 
-    print(r.body);
+ //   print(r.body);
 
     if (r.statusCode == 200) {
       List<dynamic> lista = jsonDecode(utf8convert(r.body));

@@ -34,7 +34,7 @@ class _SignupViewState extends State<SignupView> {
                 TextFormField(
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
-                    labelText: "Nome",
+                    labelText: "Usuário",
                     labelStyle: TextStyle(
                       color: Theme.of(context).primaryColor,
                       fontWeight: FontWeight.w400,
@@ -43,7 +43,7 @@ class _SignupViewState extends State<SignupView> {
                   ),
                   validator: (value) {
                     if (value.isEmpty) {
-                      return 'Nome Inválido';
+                      return 'Informe seu usuário.';
                     }
                     return null;
                   },
@@ -64,7 +64,7 @@ class _SignupViewState extends State<SignupView> {
                   ),
                   validator: (value) {
                     if (value.isEmpty) {
-                      return 'Senha Inválida';
+                      return 'Senha Inválida!';
                     }
                     return null;
                   },
@@ -103,7 +103,7 @@ class _SignupViewState extends State<SignupView> {
                                     content: SingleChildScrollView(
                                       child: ListBody(
                                         children: <Widget>[
-                                          Text('Ocorreu um erro.'),
+                                          Text('Usuário e/ou senha inválidos.'),
                                           Text('Tente fazer login novamente.'),
                                         ],
                                       ),

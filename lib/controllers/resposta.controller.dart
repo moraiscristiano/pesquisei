@@ -1,3 +1,4 @@
+import 'package:Pesquisei/models/retorno.sincronizacao.dart';
 import 'package:Pesquisei/models/token.return.dart';
 import 'package:Pesquisei/repositories/resposta.repository.dart';
 import 'package:Pesquisei/view-models/sincronize.viewmodel.dart';
@@ -9,21 +10,29 @@ class RespostaController {
     repository = new RespostaRepository();
   }
 
-  Future<TokenReturn> sincronizar(String pUser, String pPass) async {
+  Future<RetornoSincronizacao> sincronizar(String pUser, String pPass) async {
     TokenReturn retorno = new TokenReturn();
     bool processado = false;
     int tentativas = 0;
     print('sincroniza Resposta...');
-    while (processado == false && tentativas <= 3) {
-      retorno = await repository.sincronizar(pUser, pPass);
+    RetornoSincronizacao retornoSync = new RetornoSincronizacao();
 
-      if (retorno.statuscode == 200) {
-        processado = true;
-      } else {
-        tentativas = tentativas + 1;
+    try {
+      while (processado == false && tentativas <= 3) {
+        retornoSync = await repository.sincronizar(pUser, pPass);
+
+        if (retornoSync.erros > 0) {
+          tentativas = tentativas + 1;
+        } else {
+          processado = true;
+        }
       }
+    } catch (error) {
+      retornoSync.mensagem = error.toString();
+      retornoSync.erros = 1;
+      retornoSync.registrosSincronizados = 0;
+      print(error);
     }
-
-    return retorno;
+    return retornoSync;
   }
 }

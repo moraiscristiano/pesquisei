@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:Pesquisei/controllers/auth.controller.dart';
 import 'package:Pesquisei/models/pergunta.dart';
+import 'package:Pesquisei/models/retorno.sincronizacao.dart';
 import 'package:Pesquisei/models/token.return.dart';
 import 'package:Pesquisei/utils/db.helper.dart';
 import 'package:Pesquisei/utils/strings.dart';
@@ -9,63 +10,78 @@ import 'package:http/http.dart';
 import 'package:sqflite/sqflite.dart';
 
 class PerguntaRepository {
-  Future<TokenReturn> sincronizar(String pUser, String pPass) async {
+  Future<RetornoSincronizacao> sincronizar(String pUser, String pPass) async {
+    RetornoSincronizacao retorno = new RetornoSincronizacao();
+    retorno.erros = 0;
+    retorno.mensagem = "";
+    retorno.registrosSincronizados = 0;
+
     Future<Database> _db = DbHelper().db;
 
     AuthController _authController = new AuthController();
+    try {
+      // Get Token (Authenticate)
+      TokenReturn tokenReturn =
+          await _authController.authenticate(pUser, pPass);
 
-    // Get Token (Authenticate)
-    TokenReturn tokenReturn = await _authController.authenticate(pUser, pPass);
+      if (tokenReturn.statuscode != 200) {
+        retorno.erros = 1;
+        retorno.mensagem = tokenReturn.error_description;
+        retorno.registrosSincronizados = 0;
+        return retorno;
+      }
 
-    if (tokenReturn.statuscode != 200) {
-      return tokenReturn;
-    }
+      // Get Pergunta da API
+      List<Pergunta> listaApi =
+          await getFromWebApi(tokenReturn.token.accessToken);
 
-    // Get Pergunta da API
-    List<Pergunta> listaApi =
-        await getFromWebApi(tokenReturn.token.accessToken);
+      // Get Pergunta Db
+      List<Pergunta> listaDb = await getFromDb(_db);
 
-    // Get Pergunta Db
-    List<Pergunta> listaDb = await getFromDb(_db);
+    //  print('listaApi' + listaApi.length.toString());
+    //  print('listaDb' + listaDb.length.toString());
 
-    print('listaApi' + listaApi.length.toString());
-    print('listaDb' + listaDb.length.toString());
+      for (var itemApi in listaApi) {
+        bool itemParaAtualizar = false;
+        bool itemExist = false;
+        for (var itemDb in listaDb) {
+          if (itemApi.id == itemDb.id) {
+            itemExist = true;
 
-    for (var itemApi in listaApi) {
-      bool itemParaAtualizar = false;
-      bool itemExist = false;
-      for (var itemDb in listaDb) {
-        if (itemApi.id == itemDb.id) {
-          itemExist = true;
-
-          if (itemApi.alteracao?.isEmpty ||
-              itemDb.alteracao?.isEmpty ||
-              DateTime.parse(itemApi.alteracao)
-                  .isAfter(DateTime.parse(itemDb.alteracao))) {
-            itemParaAtualizar = true;
+            if (itemApi.alteracao?.isEmpty ||
+                itemDb.alteracao?.isEmpty ||
+                DateTime.parse(itemApi.alteracao)
+                    .isAfter(DateTime.parse(itemDb.alteracao))) {
+              itemParaAtualizar = true;
+            }
           }
         }
-      }
 
-      print('itemExist?' + itemExist.toString());
-      print('itemParaAtualizar?' + itemParaAtualizar.toString());
-      if (itemExist) {
-        if (itemParaAtualizar) {
-          // Atualizar
-          int q = await atualizar(_db, itemApi);
-          print(q.toString() + ' registro atualizado');
+    //    print('itemExist?' + itemExist.toString());
+     //   print('itemParaAtualizar?' + itemParaAtualizar.toString());
+        if (itemExist) {
+          if (itemParaAtualizar) {
+            // Atualizar
+            retorno.registrosSincronizados = retorno.registrosSincronizados + 1;
+            int q = await atualizar(_db, itemApi);
+            print(q.toString() + ' registro atualizado');
+          }
+        } else {
+          // add
+          retorno.registrosSincronizados = retorno.registrosSincronizados + 1;
+          salvar(_db, itemApi);
+          print('registro de id:' + itemApi.id.toString() + '  adicionado');
         }
-      } else {
-        // add
-        salvar(_db, itemApi);
-        print('registro de id:' + itemApi.id.toString() + '  adicionado');
-      }
 
-      print('statusCode: ' + tokenReturn.statuscode.toString());
-      print('accessToken: ' + tokenReturn.token.accessToken);
+    //    print('statusCode: ' + tokenReturn.statuscode.toString());
+   //     print('accessToken: ' + tokenReturn.token.accessToken);
+      }
+    } catch (error) {
+      retorno.erros = 1;
+      retorno.mensagem = error.toString();
     }
 
-    return tokenReturn;
+    return retorno;
   }
 
   Future<List<Pergunta>> getFromDb(Future<Database> db) async {
@@ -89,9 +105,9 @@ class PerguntaRepository {
     var r = await get(
         Strings.BASE_URL_WEB_API + Strings.GET_ALL_PERGUNTAS_FROM_WEB_API,
         headers: <String, String>{'authorization': bearerAuth});
-    await Future.delayed(new Duration(milliseconds: 1500));
+    //await Future.delayed(new Duration(milliseconds: 1500));
 
-    print(r.body);
+  //  print(r.body);
 
     if (r.statusCode == 200) {
       List<dynamic> lista = jsonDecode(utf8convert(r.body));

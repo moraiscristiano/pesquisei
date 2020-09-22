@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:Pesquisei/controllers/auth.controller.dart';
 import 'package:Pesquisei/models/resposta.escolhida.dart';
-import 'package:Pesquisei/models/resposta.escolhida.list.dart';
+import 'package:Pesquisei/models/retorno.sincronizacao.dart';
 import 'package:Pesquisei/models/token.return.dart';
 import 'package:Pesquisei/utils/db.helper.dart';
 import 'package:Pesquisei/utils/strings.dart';
@@ -13,41 +13,61 @@ import 'package:sqflite/sqflite.dart';
 class RespostaEscolhidaRepository {
   DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
 
-  Future<TokenReturn> sincronizar(String pUser, String pPass) async {
+  Future<RetornoSincronizacao> sincronizar(String pUser, String pPass) async {
     Future<Database> _db = DbHelper().db;
+    RetornoSincronizacao retorno = new RetornoSincronizacao();
+    retorno.erros = 0;
+    retorno.mensagem = "";
+    retorno.registrosSincronizados = 0;
 
     AuthController _authController = new AuthController();
 
-    // Get Token (Authenticate)
-    TokenReturn tokenReturn = await _authController.authenticate(pUser, pPass);
+    try {
+      // Get Token (Authenticate)
+      TokenReturn tokenReturn =
+          await _authController.authenticate(pUser, pPass);
 
-    if (tokenReturn.statuscode != 200) {
-      return tokenReturn;
-    }
+      if (tokenReturn.statuscode != 200) {
+        retorno.erros = 1;
+        retorno.mensagem = tokenReturn.error_description;
+        retorno.registrosSincronizados = 0;
+        return retorno;
+      }
 
-    // Get Resposta Db
-    List<RespostaEscolhida> listaDb = await getFromDb(_db);
-    print('listaDb' + listaDb.length.toString());
+      // Get Resposta Db
+      List<RespostaEscolhida> listaDb = await getFromDb(_db);
+      //await Future.delayed(new Duration(milliseconds: 1500));
+    //  print('listaDb' + listaDb.length.toString());
 
-    if (null != listaDb && listaDb.length > 0) {
-      //RespostaEscolhidaList list = RespostaEscolhidaList(listaDb);
+      if (!listVazia(listaDb)) {
+        //RespostaEscolhidaList list = RespostaEscolhidaList(listaDb);
 
-      String jsonRespostas =
-          List<dynamic>.from(listaDb.map((x) => x.toMapList())).toString();
-      Response resposta = await postRespostasRescolhidas(
-          tokenReturn.token.accessToken, jsonRespostas);
+        String jsonRespostas =
+            List<dynamic>.from(listaDb.map((x) => x.toMapList())).toString();
+        Response resposta = await postRespostasRescolhidas(
+            tokenReturn.token.accessToken, jsonRespostas);
 
-      print('Post Status Code: ' + resposta.statusCode.toString());
+    //    print('Post Status Code: ' + resposta.statusCode.toString());
 
-      if (resposta.statusCode == 201) {
-        for (var item in listaDb) {
-          item.dataprocessamento = dateFormat.format(DateTime.now());
-          int i = await atualizar(_db, item);
+        if (resposta.statusCode == 201) {
+          for (var item in listaDb) {
+            retorno.registrosSincronizados = retorno.registrosSincronizados + 1;
+            item.dataprocessamento = dateFormat.format(DateTime.now());
+            int i = await atualizar(_db, item);
+          }
         }
       }
+    } catch (error) {
+      retorno.erros = 1;
+      retorno.mensagem = error.toString();
     }
 
-    return tokenReturn;
+    return retorno;
+  }
+
+  bool listVazia(var myList) {
+    //length of empty list is zero
+    return myList.length == 0;
   }
 
   Future<Response> postRespostasRescolhidas(
@@ -62,9 +82,9 @@ class RespostaEscolhidaRepository {
           'Content-type': 'application/json'
         },
         body: jsonRespostas);
-    await Future.delayed(new Duration(milliseconds: 1500));
+    //await Future.delayed(new Duration(milliseconds: 1500));
 
-    print(r.body);
+  //  print(r.body);
 
     return r;
   }
