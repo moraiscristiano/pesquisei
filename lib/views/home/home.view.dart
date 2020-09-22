@@ -150,7 +150,7 @@ class _HomeState extends State<Home> {
               */
 
             ListTile(
-              title: Text('PesquisaApp'),
+              title: Text('Pesquisa'),
               leading: Icon(Icons.search),
               selected: 2 == _selectedIndex,
               onTap: () {
