@@ -1,5 +1,6 @@
 import 'package:Pesquisei/models/pesquisa.dart';
 import 'package:Pesquisei/models/pesquisa.quiz.dart';
+import 'package:Pesquisei/models/resumo.pesquisa.dart';
 import 'package:Pesquisei/models/retorno.sincronizacao.dart';
 import 'package:Pesquisei/models/token.return.dart';
 import 'package:Pesquisei/repositories/pesquisa.repository.dart';
@@ -23,6 +24,14 @@ class PesquisaController {
         await repository.getPerguntasPorPesquisa(idpesquisa);
 
     return perguntas;
+  }
+
+  Future<ResumoPesquisa> getResumoPorPesquisaBairro(
+      int pId, String pNome, int pIdBairro, int pIdCidade) async {
+    ResumoPesquisa resumo = await repository.getResumoPorPesquisaBairro(
+        pId, pNome, pIdBairro, pIdCidade);
+
+    return resumo;
   }
 
   Future<RetornoSincronizacao> sincronizar(String pUser, String pPass) async {

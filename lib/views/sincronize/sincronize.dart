@@ -38,14 +38,16 @@ class _SincronizePageState extends State<SincronizePage> {
     return Scaffold(
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Text(
-              'Sincronizar\n',
-              style: TextStyle(
-                fontSize: 16.0,
-              ),
-            ),
+           Container(
+            alignment: Alignment.topCenter,
+            margin: EdgeInsets.only(bottom: 75, top: 75),
+           /* child: Text(
+              'Clique no botão abaixo para sincronizar',
+              style: TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
+            ),*/
+          ),
             model.busy
                 ? Center(
                     child: Container(
@@ -55,6 +57,7 @@ class _SincronizePageState extends State<SincronizePage> {
                     ),
                   )
                 : FlatButton(
+                  
                     onPressed: () {
                       // new SincronizeController().Sincronizar();
                       print('name: ' + store.name);
@@ -188,9 +191,12 @@ class _SincronizePageState extends State<SincronizePage> {
                         print(data);
                       });
                     },
+                    padding:  EdgeInsets.fromLTRB(35,12,35,12),
                     color: Colors.blue,
                     textColor: Colors.white,
-                    child: Text('Clique aqui'),
+                    child: Text('Sincronizar',               style: TextStyle(fontWeight: FontWeight.w500, fontSize: 25, ),
+),
+
                   )
           ],
         ),

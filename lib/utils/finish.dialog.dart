@@ -1,6 +1,9 @@
+import 'package:Pesquisei/stores/pesquisa.store.dart';
+import 'package:Pesquisei/views/pergunta.quiz.view.dart';
 import 'package:flutter/material.dart';
 import 'package:Pesquisei/views/home/home.view.dart';
 import 'package:Pesquisei/views/pesquisa.list.view.dart';
+import 'package:provider/provider.dart';
 
 class FinishDialog {
   static Future show(
@@ -12,6 +15,10 @@ class FinishDialog {
       context: context,
       barrierDismissible: false,
       builder: (context) {
+
+            var pesquisaStore = Provider.of<PesquisaStore>(context);
+
+
         return AlertDialog(
           backgroundColor: Colors.white,
           shape: RoundedRectangleBorder(
@@ -64,7 +71,7 @@ class FinishDialog {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => PesquisaListView()),
+                  MaterialPageRoute(builder: (context) =>  PerguntaQuizView(pesquisaStore.id)),
                 );
               },
             ),

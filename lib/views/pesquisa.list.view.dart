@@ -41,7 +41,8 @@ class _PesquisaListViewState extends State<PesquisaListView> {
             DataColumn(
               label: Text(
                 'Selecione uma pesquisa',
-                style: TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
+              
+                 style: TextStyle(fontWeight: FontWeight.w800, color: Colors.black, fontSize: 20),
               ),
             ),
           ],
@@ -50,7 +51,8 @@ class _PesquisaListViewState extends State<PesquisaListView> {
               .map(
                 (pesquisa) => DataRow(cells: [
                   DataCell(
-                    Text(pesquisa.descricao, style: TextStyle(fontSize: 14)),
+                    Text(pesquisa.descricao, style: TextStyle(fontSize: 16),
+                    overflow: TextOverflow.clip),
                     onTap: () {
                       setState(() {});
 
@@ -80,12 +82,12 @@ class _PesquisaListViewState extends State<PesquisaListView> {
     }
 
     list(int idbairro) {
-      return Expanded(
-        child: FutureBuilder(
+  
+        return FutureBuilder(
           future: getPesquisasPorCidadeBairro(idbairro),
           builder: (context, snapshot) {
             if (null == snapshot.data || snapshot.data.length == 0) {
-              return Center(
+              return Expanded(
                   child: Text(
                       "Não há pesquisas cadastradas para o Bairro escolhido."));
             }
@@ -96,8 +98,8 @@ class _PesquisaListViewState extends State<PesquisaListView> {
 
             return CircularProgressIndicator();
           },
-        ),
-      );
+        );
+  
     }
 
     return new Scaffold(
@@ -118,7 +120,8 @@ class _PesquisaListViewState extends State<PesquisaListView> {
           ),
         ],
       ),
-      body: new Container(
+      body:  Container(
+        padding: new EdgeInsets.all(15.0),
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,

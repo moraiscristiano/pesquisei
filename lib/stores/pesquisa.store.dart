@@ -1,5 +1,6 @@
 import 'package:Pesquisei/controllers/pesquisa.controller.dart';
 import 'package:Pesquisei/models/pesquisa.quiz.dart';
+import 'package:Pesquisei/models/resumo.pesquisa.dart';
 import 'package:mobx/mobx.dart';
 part 'pesquisa.store.g.dart';
 
@@ -24,6 +25,9 @@ abstract class _PesquisaStore with Store {
   @observable
   List<PerguntaQuiz> perguntas;
 
+  @observable
+  ResumoPesquisa resumo;
+
   @action
   Future<void> setPerguntas(
     int pId,
@@ -31,7 +35,15 @@ abstract class _PesquisaStore with Store {
     PesquisaController _controller = new PesquisaController();
 
     perguntas = await _controller.getPerguntasPorPesquisa(pId);
-    
+  }
+
+  @action
+  Future<void> setResumo(
+      int pId, String pNome, int pIdBairro, int pIdCidade) async {
+    PesquisaController _controller = new PesquisaController();
+
+    resumo = await _controller.getResumoPorPesquisaBairro(
+        pId, pNome, pIdBairro, pIdCidade);
   }
 
   @action
@@ -48,7 +60,8 @@ abstract class _PesquisaStore with Store {
     idbairro = pIdBairro;
     idcidade = pIdCidade;
 
-        setPerguntas(pId);
+    setPerguntas(pId);
 
+    setResumo(pId, pNome, pIdBairro, pIdCidade);
   }
 }

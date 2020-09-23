@@ -111,11 +111,36 @@ mixin _$PesquisaStore on _PesquisaStore, Store {
     }, _$perguntasAtom, name: '${_$perguntasAtom.name}_set');
   }
 
+  final _$resumoAtom = Atom(name: '_PesquisaStore.resumo');
+
+  @override
+  ResumoPesquisa get resumo {
+    _$resumoAtom.context.enforceReadPolicy(_$resumoAtom);
+    _$resumoAtom.reportObserved();
+    return super.resumo;
+  }
+
+  @override
+  set resumo(ResumoPesquisa value) {
+    _$resumoAtom.context.conditionallyRunInAction(() {
+      super.resumo = value;
+      _$resumoAtom.reportChanged();
+    }, _$resumoAtom, name: '${_$resumoAtom.name}_set');
+  }
+
   final _$setPerguntasAsyncAction = AsyncAction('setPerguntas');
 
   @override
   Future<void> setPerguntas(int pId) {
     return _$setPerguntasAsyncAction.run(() => super.setPerguntas(pId));
+  }
+
+  final _$setResumoAsyncAction = AsyncAction('setResumo');
+
+  @override
+  Future<void> setResumo(int pId, String pNome, int pIdBairro, int pIdCidade) {
+    return _$setResumoAsyncAction
+        .run(() => super.setResumo(pId, pNome, pIdBairro, pIdCidade));
   }
 
   final _$_PesquisaStoreActionController =

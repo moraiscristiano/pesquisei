@@ -5,6 +5,7 @@ import 'package:Pesquisei/models/bairro.pesquisa.dart';
 import 'package:Pesquisei/models/pesquisa.dart';
 import 'package:Pesquisei/models/pesquisa.quiz.dart';
 import 'package:Pesquisei/models/resposta.dart';
+import 'package:Pesquisei/models/resumo.pesquisa.dart';
 import 'package:Pesquisei/models/retorno.sincronizacao.dart';
 import 'package:Pesquisei/models/token.return.dart';
 import 'package:Pesquisei/utils/db.helper.dart';
@@ -31,10 +32,40 @@ class PesquisaRepository {
     List<Pesquisa> pesquisas = [];
     if (maps.length > 0) {
       for (int i = 0; i < maps.length; i++) {
-        pesquisas.add(Pesquisa.fromJson(maps[i]));
+        pesquisas.add(Pesquisa.fromJsonDb(maps[i]));
       }
     }
     return pesquisas;
+  }
+
+  Future<ResumoPesquisa> getResumoPorPesquisaBairro(
+      int pId, String pNome, int pIdBairro, int pIdCidade) async {
+    var db = await _db;
+
+    List<Map> retorno = await db.rawQuery(
+        "SELECT p.descricao as descricaoPesquisa, c.nome as cidade, b.nome as bairro, p.numeroEntrevistados as numeroEntrevistadosConfigurado, bp.percentual as percentual FROM Pesquisa p join bairro b on b.id = p.idbairro join cidade c on c.id = b.idcidade join BairroPesquisas bp on (bp.idpesquisa = p.id and bp.idbairro = b.id)  where p.id = $pId and b.id= $pIdBairro and c.id = $pIdCidade");
+
+ //   print(retorno);
+
+    ResumoPesquisa result = ResumoPesquisa.fromJson(retorno[0]);
+    result.numeroEntrevistadosParaBairro =
+        ((result.percentual / 100) * result.numeroEntrevistadosConfigurado);
+
+    List<Map> retorno2 = await db.rawQuery(
+        "SELECT pe.id as perguntaId, count(*) as numeroEntrevistadosAtual from RespostaEscolhida re JOIN Pergunta pe on (pe.id = re.idPergunta)  JOIN Pesquisa p on (p.id = pe.pesquisaId)  JOIN Bairro b on (b.id = re.idBairro)  where p.id = $pId and b.id= $pIdBairro GROUP BY pe.id");
+
+  //  print(retorno2);
+
+    Map<String, dynamic> json = retorno2[0];
+    var numeroAtual = json['numeroEntrevistadosAtual'];
+
+  //  print(num);
+
+    result.numeroEntrevistadosAtual = numeroAtual;
+
+    print(result);
+
+    return result;
   }
 
   Future<List<PerguntaQuiz>> getPerguntasPorPesquisa(int idpesquisa) async {
@@ -88,7 +119,7 @@ class PesquisaRepository {
         return retorno;
       }
 
-  //    print('chegou api');
+      //    print('chegou api');
 
       List<Pesquisa> lApi = [];
 
@@ -97,9 +128,12 @@ class PesquisaRepository {
           await getListaWebApi(tokenReturn.token.accessToken);
 
       for (var iapi in listaApi) {
-        List<BairroPesquisas> listaBP =
-            await getListaBairroPesquisaWebApi(tokenReturn.token.accessToken);
+        List<BairroPesquisas> listaBP = await getListaBairroPesquisaWebApi(
+            tokenReturn.token.accessToken, iapi.id);
+
         for (var itemBP in listaBP) {
+          bairroPesquisaSaveIfNotExist(_db, itemBP);
+
           Pesquisa p = Pesquisa(
               id: iapi.id,
               nome: iapi.nome,
@@ -119,11 +153,11 @@ class PesquisaRepository {
         bool itemParaAtualizar = false;
         bool itemExist = false;
 
-    //    if (listaDb.length > 0) {
-    //      print('MAIOR QUE ZERO');
-     //   } else {
-     //     print('MENOR QUE ZERO');
-    //    }
+        //    if (listaDb.length > 0) {
+        //      print('MAIOR QUE ZERO');
+        //   } else {
+        //     print('MENOR QUE ZERO');
+        //    }
         for (var itemDb in listaDb) {
           if (o.id == itemDb.id && o.idbairro == itemDb.idbairro) {
             itemExist = true;
@@ -136,11 +170,11 @@ class PesquisaRepository {
             }
           }
 
-     //     print(itemDb);
+          //     print(itemDb);
         }
 
-   //     print('OOOOOOOOOO' + o.idbairro.toString());
-   //     print('itemExist' + itemExist.toString());
+        //     print('OOOOOOOOOO' + o.idbairro.toString());
+        //     print('itemExist' + itemExist.toString());
 
         if (itemExist) {
           if (itemParaAtualizar) {
@@ -200,7 +234,7 @@ class PesquisaRepository {
       List<dynamic> lista = jsonDecode(utf8convert(r.body));
 
 //      print('decode=');
-  //    print(lista);
+      //    print(lista);
       if (null != lista && lista.length > 0) {
         for (int i = 0; i < lista.length; i++) {
           pesquisas.add(Pesquisa.fromJson(lista[i]));
@@ -211,7 +245,7 @@ class PesquisaRepository {
   }
 
   Future<List<BairroPesquisas>> getListaBairroPesquisaWebApi(
-      String accessToken) async {
+      String accessToken, int idpesquisa) async {
     String bearerAuth = 'Bearer ' + accessToken;
     List<BairroPesquisas> bairroPesquisas = [];
 
@@ -220,24 +254,30 @@ class PesquisaRepository {
         headers: <String, String>{'authorization': bearerAuth});
     //await Future.delayed(new Duration(milliseconds: 1500));
 
- //   print(r.body);
+    //   print(r.body);
 
     if (r.statusCode == 200) {
       List<dynamic> lista = jsonDecode(r.body);
 
-  //    print('decode=');
-  //    print(lista);
+      //    print('decode=');
+      //    print(lista);
       if (null != lista && lista.length > 0) {
         for (int i = 0; i < lista.length; i++) {
           Map<String, dynamic> j = lista[i];
 
-    //      print('id? ' + j['id'].toString());
-
+          //      print('id? ' + j['id'].toString());
+          var codpesquisa = j['id'];
           var bairrospesquisas = j['bairroPesquisas'];
-          if (null != bairrospesquisas && bairrospesquisas.length > 0) {
-            for (int k = 0; k < bairrospesquisas.length; k++) {
-              bairroPesquisas
-                  .add(BairroPesquisas.fromJson(bairrospesquisas[k]));
+
+          if (codpesquisa == idpesquisa) {
+            if (null != bairrospesquisas && bairrospesquisas.length > 0) {
+              for (int k = 0; k < bairrospesquisas.length; k++) {
+                BairroPesquisas b =
+                    BairroPesquisas.fromJson(bairrospesquisas[k]);
+                b.idpesquisa = codpesquisa;
+
+                bairroPesquisas.add(b);
+              }
             }
           }
         }
@@ -250,6 +290,54 @@ class PesquisaRepository {
     var database = await db;
     param.id = await database.insert('Pesquisa', param.toJson());
     print("salvar().pesquisa.id: " + param.id.toString());
+  }
+
+  void bairroPesquisaSaveIfNotExist(
+      Future<Database> db, BairroPesquisas param) async {
+    var database = await db;
+
+    String pesquisaId = param.idpesquisa.toString();
+    String bairroId = param.idbairro.toString();
+    String percentual = param.percentual.toString();
+
+    List<Map> maps = await database.rawQuery(
+        "SELECT * FROM BairroPesquisas where idpesquisa = $pesquisaId and idbairro = $bairroId");
+
+    List<BairroPesquisas> bairrosp = [];
+    if (maps.length > 0) {
+      for (int i = 0; i < maps.length; i++) {
+        bairrosp.add(BairroPesquisas.fromJson(maps[i]));
+      }
+    }
+
+    bool itemExist = false;
+    bool itemParaAtualizar = false;
+    for (var o in bairrosp) {
+      itemExist = true;
+      if (o.percentual != percentual) {
+        itemParaAtualizar = true;
+      }
+    }
+
+    if (itemExist) {
+      if (itemParaAtualizar) {
+        var database = await db;
+        int i = await database.update('BairroPesquisas', param.toJson(),
+            where: 'idpesquisa = ? and idbairro = ?',
+            whereArgs: [param.idpesquisa, param.idbairro]);
+      }
+    } else {
+      String sql =
+          "INSERT INTO BairroPesquisas(idpesquisa, idbairro, percentual) VALUES (" +
+              param.idpesquisa.toString() +
+              ", " +
+              param.idbairro.toString() +
+              ", " +
+              param.percentual.toString() +
+              ")";
+
+      database.execute(sql);
+    }
   }
 
   Future<int> atualizar(Future<Database> db, Pesquisa param) async {
