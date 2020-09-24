@@ -15,26 +15,27 @@ class QuizController {
 
   List<PerguntaQuiz> _questionBank;
 
-  Random _random = new Random();
+ // Random _random = new Random();
   int questionIndex = 0;
-  bool _shiftAnswer;
-  int hitNumber = 0;
+ // bool _shiftAnswer;
+ // int hitNumber = 0;
 
   int get questionsNumber => _questionBank.length ?? 0;
   PerguntaQuiz get question => _questionBank[questionIndex];
 
   Future<void> initialize() async {
     questionIndex = 0;
-    hitNumber = 0;
+   // hitNumber = 0;
     _questionBank = await repository.getPerguntasPorPesquisa(idpesquisa);
     print('Number of questions: ${_questionBank.length}');
-    _questionBank.shuffle();
-    _shiftAnswer = _random.nextBool();
+  //  _questionBank.shuffle();
+  //  _shiftAnswer = _random.nextBool();
   }
 
   void nextQuestion() {
-    questionIndex = ++questionIndex % _questionBank.length;
-    _shiftAnswer = _random.nextBool();
+    //questionIndex = questionIndex++;
+    questionIndex = ++questionIndex;// % _questionBank.length;
+   // _shiftAnswer = _random.nextBool();
   }
 
   String getQuestion() {

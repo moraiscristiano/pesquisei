@@ -62,6 +62,6 @@ abstract class _PesquisaStore with Store {
 
     setPerguntas(pId);
 
-    setResumo(pId, pNome, pIdBairro, pIdCidade);
+    // setResumo(pId, pNome, pIdBairro, pIdCidade);
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:Pesquisei/views/resumo.view.dart';
 import 'package:flutter/material.dart';
 import 'package:Pesquisei/controllers/pesquisa.controller.dart';
 import 'package:Pesquisei/models/pesquisa.dart';
@@ -54,21 +55,38 @@ class _PesquisaListViewState extends State<PesquisaListView> {
                     Text(pesquisa.descricao, style: TextStyle(fontSize: 16),
                     overflow: TextOverflow.clip),
                     onTap: () {
-                      setState(() {});
+                      setState(() {
 
-                      pesquisaStore.setPesquisa(
+    pesquisaStore.setPesquisa(
                           pesquisa.id,
                           pesquisa.nome,
                           pesquisa.descricao,
                           pesquisaLocalidadeStore.idbairro,
                           pesquisaLocalidadeStore.idcidade);
+                      });
 
-                      setState(() {});
+                  
+
+
+
+                     
+
+
+                      setState(() {
+                             pesquisaStore.setResumo(pesquisa.id, pesquisa.nome, pesquisaLocalidadeStore.idbairro, pesquisaLocalidadeStore.idcidade);
+
+                      });
+
+              
+
 
                       Navigator.push(
                         context,
                         MaterialPageRoute(
+
                           
+                          
+                       //   builder: (context) => ResumoView(pesquisa.id, pesquisa.descricao, pesquisaLocalidadeStore.idbairro, pesquisaLocalidadeStore.idcidade),
                           builder: (context) => PerguntaQuizView(pesquisa.id),
                         ),
                       );
@@ -104,12 +122,12 @@ class _PesquisaListViewState extends State<PesquisaListView> {
 
     return new Scaffold(
       appBar: AppBar(
-        title: Text('Pesquisas'),
+        title: Text('Pesquisei'),
         actions: <Widget>[
           FlatButton(
             child: Icon(Icons.home,color: Colors.white),
             onPressed: () async {
-              await Future.delayed(Duration(seconds: 3));
+           //   await Future.delayed(Duration(seconds: 3));
               Navigator.push(
                 context,
                 MaterialPageRoute(

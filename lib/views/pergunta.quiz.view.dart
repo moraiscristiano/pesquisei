@@ -65,13 +65,13 @@ class _PerguntaQuizViewState extends State<PerguntaQuizView> {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.0),
-          child: _buildQuiz(pesquisaLocalidadeStore.idbairro),
+          child: _buildQuiz(pesquisaLocalidadeStore.idbairro, pesquisaStore.resumo.numeroEntrevistadosAtual, pesquisaStore.resumo.numeroEntrevistadosParaBairro, pesquisaStore.resumo.bairro),
         ),
       ),
     );
   }
 
-  _buildQuiz(int bairro) {
+  _buildQuiz(int bairro, int qtd, double total, String nomeBairro) {
     if (_loading) return CenteredCircularProgress();
 
     if (_controller.questionsNumber == 0)
@@ -84,9 +84,16 @@ class _PerguntaQuizViewState extends State<PerguntaQuizView> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
+        Text(nomeBairro + ': ' + qtd.toString() + '/' + total.round().toString() ,
+         textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 15.0,
+              color: Colors.black
+            )
+        ),
         _buildQuestion(_controller.getQuestion()),
         for (var i in _controller.getAnswers())
-          _buildAnswerButton(i.id, bairro, i.descricao),
+          _buildAnswerButton(i.id, bairro, i.descricao, i.perguntaId),
         _buildScoreKeeper(),
       ],
     );
@@ -111,7 +118,7 @@ class _PerguntaQuizViewState extends State<PerguntaQuizView> {
     );
   }
 
-  _buildAnswerButton(int idResposta, int bairro, String answer) {
+  _buildAnswerButton(int idResposta, int bairro, String answer, int pergunta) {
     return Expanded(
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 8.0),
@@ -136,10 +143,10 @@ class _PerguntaQuizViewState extends State<PerguntaQuizView> {
           onTap: () {
             RespostaEscolhida resp = new RespostaEscolhida();
             resp.idBairro = bairro;
-            resp.idPergunta = _controller.question.id;
+            resp.idPergunta = pergunta;
             resp.idResposta = idResposta;
             print(bairro);
-            print(_controller.question.id);
+            print(pergunta);
             print(idResposta);
 
             new RespostaEscolhidaProvider().saveRespostaEscolhida(resp);
@@ -161,7 +168,7 @@ class _PerguntaQuizViewState extends State<PerguntaQuizView> {
                     _controller.nextQuestion();
                   } else {
                     FinishDialog.show(context,
-                        hitNumber: _controller.hitNumber,
+                      //  hitNumber: _controller.hitNumber,
                         questionNumber: _controller.questionsNumber);
                   }
                 });

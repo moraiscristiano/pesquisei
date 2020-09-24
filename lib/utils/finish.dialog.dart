@@ -2,22 +2,19 @@ import 'package:Pesquisei/stores/pesquisa.store.dart';
 import 'package:Pesquisei/views/pergunta.quiz.view.dart';
 import 'package:flutter/material.dart';
 import 'package:Pesquisei/views/home/home.view.dart';
-import 'package:Pesquisei/views/pesquisa.list.view.dart';
 import 'package:provider/provider.dart';
 
 class FinishDialog {
   static Future show(
     BuildContext context, {
-    @required int hitNumber,
+    //   @required int hitNumber,
     @required int questionNumber,
   }) {
     return showDialog<void>(
       context: context,
       barrierDismissible: false,
       builder: (context) {
-
-            var pesquisaStore = Provider.of<PesquisaStore>(context);
-
+        var pesquisaStore = Provider.of<PesquisaStore>(context);
 
         return AlertDialog(
           backgroundColor: Colors.white,
@@ -30,7 +27,7 @@ class FinishDialog {
             backgroundColor: Colors.blue,
             maxRadius: 35.0,
             child: Icon(
-              hitNumber < 6 ? Icons.warning : Icons.favorite,
+              Icons.favorite,
               color: Colors.white,
             ),
           ),
@@ -55,12 +52,12 @@ class FinishDialog {
                   color: Colors.blue,
                 ),
               ),
-                const SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text(
                 'Deseja realizar uma nova pesquisa?',
                 style: TextStyle(
                   color: Colors.black,
-                      fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ],
@@ -69,9 +66,13 @@ class FinishDialog {
             FlatButton(
               child: const Text('NOVA PESQUISA'),
               onPressed: () {
+                pesquisaStore.setResumo(pesquisaStore.id, pesquisaStore.nome,
+                    pesquisaStore.idbairro, pesquisaStore.idcidade);
+
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) =>  PerguntaQuizView(pesquisaStore.id)),
+                  MaterialPageRoute(
+                      builder: (context) => PerguntaQuizView(pesquisaStore.id)),
                 );
               },
             ),

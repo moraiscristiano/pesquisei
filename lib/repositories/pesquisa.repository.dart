@@ -45,21 +45,24 @@ class PesquisaRepository {
     List<Map> retorno = await db.rawQuery(
         "SELECT p.descricao as descricaoPesquisa, c.nome as cidade, b.nome as bairro, p.numeroEntrevistados as numeroEntrevistadosConfigurado, bp.percentual as percentual FROM Pesquisa p join bairro b on b.id = p.idbairro join cidade c on c.id = b.idcidade join BairroPesquisas bp on (bp.idpesquisa = p.id and bp.idbairro = b.id)  where p.id = $pId and b.id= $pIdBairro and c.id = $pIdCidade");
 
- //   print(retorno);
+    print(retorno);
 
     ResumoPesquisa result = ResumoPesquisa.fromJson(retorno[0]);
     result.numeroEntrevistadosParaBairro =
         ((result.percentual / 100) * result.numeroEntrevistadosConfigurado);
 
     List<Map> retorno2 = await db.rawQuery(
-        "SELECT pe.id as perguntaId, count(*) as numeroEntrevistadosAtual from RespostaEscolhida re JOIN Pergunta pe on (pe.id = re.idPergunta)  JOIN Pesquisa p on (p.id = pe.pesquisaId)  JOIN Bairro b on (b.id = re.idBairro)  where p.id = $pId and b.id= $pIdBairro GROUP BY pe.id");
 
-  //  print(retorno2);
+        "SELECT  re.idBairro as bairroId, re.idPergunta as perguntaId, count(*) as numeroEntrevistadosAtual from RespostaEscolhida re  join Pergunta per on per.id = re.idPergunta  where re.idBairro= $pIdBairro and per.pesquisaId = $pId GROUP BY re.idPergunta, re.idBairro");
+    print(retorno2);
 
-    Map<String, dynamic> json = retorno2[0];
-    var numeroAtual = json['numeroEntrevistadosAtual'];
+    int numeroAtual = 0;
+    if (retorno2.isNotEmpty) {
+      Map<String, dynamic> json = retorno2[0];
+      numeroAtual = json['numeroEntrevistadosAtual'];
+    }
 
-  //  print(num);
+    print(num);
 
     result.numeroEntrevistadosAtual = numeroAtual;
 
@@ -72,7 +75,7 @@ class PesquisaRepository {
     var db = await _db;
 
     List<Map> maps = await db
-        .rawQuery("SELECT * FROM Pergunta where pesquisaId = $idpesquisa");
+        .rawQuery("SELECT * FROM Pergunta where pesquisaId = $idpesquisa order by ordem");
 
     List<PerguntaQuiz> perguntas = [];
     if (maps.length > 0) {

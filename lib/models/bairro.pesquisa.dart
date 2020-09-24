@@ -9,7 +9,7 @@ class BairroPesquisas {
 
   BairroPesquisas.fromJson(Map<String, dynamic> json) {
     idpesquisa = 0;
-    idbairro = Bairro.fromMap(json['bairro']).id;
+    idbairro = Bairro.fromJson(json['bairro']).id;
     percentual = json['percentual'];
   }
 
