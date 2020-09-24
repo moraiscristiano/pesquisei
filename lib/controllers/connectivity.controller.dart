@@ -10,11 +10,14 @@ class ConnectivityController {
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         return true;
       } else {
+         vm.busy = false;
         return false;
       }
     } on SocketException catch (_) {
+      vm.busy = false;
       return false;
     } catch (error) {
+      vm.busy = false;
       print(error);
       return false;
     }
