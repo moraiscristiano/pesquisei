@@ -51,8 +51,8 @@ class _PerguntaQuizViewState extends State<PerguntaQuizView> {
   @override
   Widget build(BuildContext context) {
     var pesquisaStore = Provider.of<PesquisaStore>(context);
-   var pesquisaLocalidadeStore = Provider.of<PesquisaLocalidadeStore>(context);
-   
+    var pesquisaLocalidadeStore = Provider.of<PesquisaLocalidadeStore>(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
@@ -65,7 +65,11 @@ class _PerguntaQuizViewState extends State<PerguntaQuizView> {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.0),
-          child: _buildQuiz(pesquisaLocalidadeStore.idbairro, pesquisaStore.resumo.numeroEntrevistadosAtual, pesquisaStore.resumo.numeroEntrevistadosParaBairro, pesquisaStore.resumo.bairro),
+          child: _buildQuiz(
+              pesquisaLocalidadeStore.idbairro,
+              pesquisaStore.resumo.numeroEntrevistadosAtual,
+              pesquisaStore.resumo.numeroEntrevistadosParaBairro,
+              pesquisaStore.resumo.bairro),
         ),
       ),
     );
@@ -84,16 +88,24 @@ class _PerguntaQuizViewState extends State<PerguntaQuizView> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        Text(nomeBairro + ': ' + qtd.toString() + '/' + total.round().toString() ,
-         textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 15.0,
-              color: Colors.black
-            )
-        ),
+        Text(
+            nomeBairro + ': ' + qtd.toString() + '/' + total.round().toString(),
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 15.0, color: Colors.black)),
         _buildQuestion(_controller.getQuestion()),
-        for (var i in _controller.getAnswers())
-          _buildAnswerButton(i.id, bairro, i.descricao, i.perguntaId),
+        Container(
+          height: 350,
+          //   width: 300,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                for (var i in _controller.getAnswers())
+                  _buildAnswerButton(i.id, bairro, i.descricao, i.perguntaId),
+              ],
+            ),
+          ),
+        ),
         _buildScoreKeeper(),
       ],
     );
@@ -119,12 +131,11 @@ class _PerguntaQuizViewState extends State<PerguntaQuizView> {
   }
 
   _buildAnswerButton(int idResposta, int bairro, String answer, int pergunta) {
-    return Expanded(
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 8.0),
-        child: GestureDetector(
+    return Column(
+      children: <Widget>[
+        GestureDetector(
           child: Container(
-            padding: EdgeInsets.all(4.0),
+            padding: EdgeInsets.all(6.0),
             color: Colors.blue,
             child: Center(
               child: AutoSizeText(
@@ -168,7 +179,7 @@ class _PerguntaQuizViewState extends State<PerguntaQuizView> {
                     _controller.nextQuestion();
                   } else {
                     FinishDialog.show(context,
-                      //  hitNumber: _controller.hitNumber,
+                        //  hitNumber: _controller.hitNumber,
                         questionNumber: _controller.questionsNumber);
                   }
                 });
@@ -176,7 +187,10 @@ class _PerguntaQuizViewState extends State<PerguntaQuizView> {
             );
           },
         ),
-      ),
+        SizedBox(
+          height: 10,
+        ),
+      ],
     );
   }
 
