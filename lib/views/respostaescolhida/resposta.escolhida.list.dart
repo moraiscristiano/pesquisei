@@ -42,7 +42,7 @@ class _RespostaEscolhidaListState extends State<RespostaEscolhidaList> {
             label: Text('ID PERGUNTA'),
           ),
           DataColumn(
-            label: Text('IS RESPOSTA'),
+            label: Text('ID  RESPOSTA'),
           ),
           
         ],

@@ -3,9 +3,9 @@ class ResumoPesquisa {
   String cidade;
   String bairro;
   int numeroEntrevistadosConfigurado;
-  double numeroEntrevistadosParaBairro;
+  int numeroEntrevistadosParaBairro;
   int numeroEntrevistadosAtual;
-  int percentual;
+  int quantidade;
 
   ResumoPesquisa(
       {this.descricaoPesquisa,
@@ -14,7 +14,7 @@ class ResumoPesquisa {
       this.numeroEntrevistadosConfigurado,
       this.numeroEntrevistadosParaBairro,
       this.numeroEntrevistadosAtual,
-      this.percentual});
+      this.quantidade});
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
@@ -24,7 +24,7 @@ class ResumoPesquisa {
       'numeroEntrevistadosConfigurado': numeroEntrevistadosConfigurado,
       'numeroEntrevistadosParaBairro': numeroEntrevistadosParaBairro,
       'numeroEntrevistadosAtual': numeroEntrevistadosAtual,
-      'percentual': percentual
+      'quantidade': quantidade
     };
 
     return map;
@@ -37,7 +37,7 @@ class ResumoPesquisa {
     numeroEntrevistadosConfigurado = map['numeroEntrevistadosConfigurado'];
     numeroEntrevistadosParaBairro = map['numeroEntrevistadosParaBairro'];
     numeroEntrevistadosAtual = map['numeroEntrevistadosAtual'];
-    percentual = map['percentual'];
+    quantidade = map['quantidade'];
   }
 
   factory ResumoPesquisa.fromJson(Map<String, dynamic> json) {
@@ -48,6 +48,6 @@ class ResumoPesquisa {
         numeroEntrevistadosConfigurado: json['numeroEntrevistadosConfigurado'],
         numeroEntrevistadosParaBairro: json['numeroEntrevistadosParaBairro'],
         numeroEntrevistadosAtual: json['numeroEntrevistadosAtual'],
-        percentual: json['percentual']);
+        quantidade: json['quantidade']);
   }
 }

@@ -75,7 +75,7 @@ class _PerguntaQuizViewState extends State<PerguntaQuizView> {
     );
   }
 
-  _buildQuiz(int bairro, int qtd, double total, String nomeBairro) {
+  _buildQuiz(int bairro, int qtd, int total, String nomeBairro) {
     if (_loading) return CenteredCircularProgress();
 
     if (_controller.questionsNumber == 0)
@@ -89,7 +89,7 @@ class _PerguntaQuizViewState extends State<PerguntaQuizView> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         Text(
-            nomeBairro + ': ' + qtd.toString() + '/' + total.round().toString(),
+            nomeBairro + ': ' + qtd.toString() + '/' + total.toString(),
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 15.0, color: Colors.black)),
         _buildQuestion(_controller.getQuestion()),

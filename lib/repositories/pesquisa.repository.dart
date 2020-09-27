@@ -43,16 +43,15 @@ class PesquisaRepository {
     var db = await _db;
 
     List<Map> retorno = await db.rawQuery(
-        "SELECT p.descricao as descricaoPesquisa, c.nome as cidade, b.nome as bairro, p.numeroEntrevistados as numeroEntrevistadosConfigurado, bp.percentual as percentual FROM Pesquisa p join bairro b on b.id = p.idbairro join cidade c on c.id = b.idcidade join BairroPesquisas bp on (bp.idpesquisa = p.id and bp.idbairro = b.id)  where p.id = $pId and b.id= $pIdBairro and c.id = $pIdCidade");
+        "SELECT p.descricao as descricaoPesquisa, c.nome as cidade, b.nome as bairro, p.numeroEntrevistados as numeroEntrevistadosConfigurado, bp.quantidade as quantidade FROM Pesquisa p join bairro b on b.id = p.idbairro join cidade c on c.id = b.idcidade join BairroPesquisas bp on (bp.idpesquisa = p.id and bp.idbairro = b.id)  where p.id = $pId and b.id= $pIdBairro and c.id = $pIdCidade");
 
     print(retorno);
 
     ResumoPesquisa result = ResumoPesquisa.fromJson(retorno[0]);
-    result.numeroEntrevistadosParaBairro =
-        ((result.percentual / 100) * result.numeroEntrevistadosConfigurado);
+
+    result.numeroEntrevistadosParaBairro = result.quantidade;
 
     List<Map> retorno2 = await db.rawQuery(
-
         "SELECT  re.idBairro as bairroId, re.idPergunta as perguntaId, count(*) as numeroEntrevistadosAtual from RespostaEscolhida re  join Pergunta per on per.id = re.idPergunta  where re.idBairro= $pIdBairro and per.pesquisaId = $pId GROUP BY re.idPergunta, re.idBairro");
     print(retorno2);
 
@@ -74,8 +73,8 @@ class PesquisaRepository {
   Future<List<PerguntaQuiz>> getPerguntasPorPesquisa(int idpesquisa) async {
     var db = await _db;
 
-    List<Map> maps = await db
-        .rawQuery("SELECT * FROM Pergunta where pesquisaId = $idpesquisa order by ordem");
+    List<Map> maps = await db.rawQuery(
+        "SELECT * FROM Pergunta where pesquisaId = $idpesquisa order by ordem");
 
     List<PerguntaQuiz> perguntas = [];
     if (maps.length > 0) {
@@ -301,7 +300,7 @@ class PesquisaRepository {
 
     String pesquisaId = param.idpesquisa.toString();
     String bairroId = param.idbairro.toString();
-    String percentual = param.percentual.toString();
+    String quantidade = param.quantidade.toString();
 
     List<Map> maps = await database.rawQuery(
         "SELECT * FROM BairroPesquisas where idpesquisa = $pesquisaId and idbairro = $bairroId");
@@ -317,7 +316,7 @@ class PesquisaRepository {
     bool itemParaAtualizar = false;
     for (var o in bairrosp) {
       itemExist = true;
-      if (o.percentual != percentual) {
+      if (o.quantidade != quantidade) {
         itemParaAtualizar = true;
       }
     }
@@ -331,12 +330,12 @@ class PesquisaRepository {
       }
     } else {
       String sql =
-          "INSERT INTO BairroPesquisas(idpesquisa, idbairro, percentual) VALUES (" +
+          "INSERT INTO BairroPesquisas(idpesquisa, idbairro, quantidade) VALUES (" +
               param.idpesquisa.toString() +
               ", " +
               param.idbairro.toString() +
               ", " +
-              param.percentual.toString() +
+              param.quantidade.toString() +
               ")";
 
       database.execute(sql);
