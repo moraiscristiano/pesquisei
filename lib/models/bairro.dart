@@ -5,8 +5,9 @@ class Bairro {
   int idcidade;
   String nome;
   String alteracao;
+  bool completo=false;
 
-  Bairro({this.id, this.idcidade, this.nome, this.alteracao});
+  Bairro({this.id, this.idcidade, this.nome, this.alteracao, this.completo});
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{

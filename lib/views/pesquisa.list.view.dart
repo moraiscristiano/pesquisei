@@ -52,7 +52,7 @@ class _PesquisaListViewState extends State<PesquisaListView> {
               .map(
                 (pesquisa) => DataRow(cells: [
                   DataCell(
-                    Text(pesquisa.descricao, style: TextStyle(fontSize: 16),
+                    Text(pesquisa.nome, style: TextStyle(fontSize: 16),
                     overflow: TextOverflow.clip),
                     onTap: () {
                       setState(() {

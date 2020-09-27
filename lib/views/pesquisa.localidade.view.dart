@@ -120,7 +120,9 @@ class _PesquisaLocalidadeViewState extends State<PesquisaLocalidadeView> {
                         },
                         items: bairros?.map((item) {
                               return new DropdownMenuItem(
-                                child: new Text(item.nome),
+                                child: new Text(item.completo
+                                    ? "\u{2705} " + item.nome
+                                    : item.nome),
                                 value: item.id.toString(),
                               );
                             })?.toList() ??
@@ -220,6 +222,12 @@ class _PesquisaLocalidadeViewState extends State<PesquisaLocalidadeView> {
 
     List<Bairro> retornoBairros =
         await bairroProvider.getBairrosPorCidadeId(_minhaCidade);
+
+    for (var item in retornoBairros) {
+      item.completo = await bairroProvider.verificaPesquisaFinalizada(
+          item.id, item.idcidade);
+      print(item);
+    }
 
     setState(() {
       bairros = retornoBairros;

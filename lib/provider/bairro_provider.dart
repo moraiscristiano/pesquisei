@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:Pesquisei/controllers/pesquisa.controller.dart';
+import 'package:Pesquisei/controllers/quiz.controller.dart';
 import 'package:dio/dio.dart';
 import 'package:Pesquisei/models/bairro.dart';
 import 'package:Pesquisei/utils/strings.dart';
@@ -62,6 +64,28 @@ class BairroProvider {
       lista = responseJson.map((m) => new Bairro.fromJson(m)).toList();
     }
     return lista;
+  }
+
+  Future<bool> verificaPesquisaFinalizada(int idbairro, int idcidade) async {
+    bool retorno = true;
+
+    var _controllerPesquisa = new PesquisaController();
+
+    var listPesquisas =
+        await _controllerPesquisa.getPesquisasPorCidadeBairro(idbairro);
+
+    if (listPesquisas.length > 0) {
+      for (var pesquisa in listPesquisas) {
+        var resumo = await _controllerPesquisa.getResumoPorPesquisaBairro(
+            pesquisa.id, pesquisa.nome, pesquisa.idbairro, idcidade);
+        if (resumo.numeroEntrevistadosAtual <
+            resumo.numeroEntrevistadosParaBairro) {
+          retorno = false;
+        }
+      }
+    }
+
+    return retorno;
   }
 
   Future<List<Bairro>> getBairrosPorCidadeId(String minhaCidade) async {
