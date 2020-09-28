@@ -88,8 +88,7 @@ class _PerguntaQuizViewState extends State<PerguntaQuizView> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        Text(
-            nomeBairro + ': ' + qtd.toString() + '/' + total.toString(),
+        Text(nomeBairro + ': ' + qtd.toString() + '/' + total.toString(),
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 15.0, color: Colors.black)),
         _buildQuestion(_controller.getQuestion()),
@@ -121,7 +120,7 @@ class _PerguntaQuizViewState extends State<PerguntaQuizView> {
             question,
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 25.0,
+              fontSize: 28,
               color: Colors.black,
             ),
           ),
@@ -160,31 +159,69 @@ class _PerguntaQuizViewState extends State<PerguntaQuizView> {
             print(pergunta);
             print(idResposta);
 
-            new RespostaEscolhidaProvider().saveRespostaEscolhida(resp);
+            if (_controller.questionIndex == 0 &&
+                answer.toUpperCase().trim() == "BRANCO") {
+              new RespostaEscolhidaProvider().saveRespostaEscolhida(resp);
 
-            ResultDialog.show(
-              context,
-              resp: answer,
-              question: _controller.question,
-              onNext: () {
-                setState(() {
-                  _scoreKeeper.add(
-                    Icon(
-                      Icons.check,
-                      color: Colors.green,
-                    ),
-                  );
+              for (int k = 1; k < _controller.questionsNumber; k++) {
+                _controller.nextQuestion();
+                var opcoes = _controller.getAnswers();
 
-                  if (_scoreKeeper.length < _controller.questionsNumber) {
-                    _controller.nextQuestion();
-                  } else {
-                    FinishDialog.show(context,
-                        //  hitNumber: _controller.hitNumber,
-                        questionNumber: _controller.questionsNumber);
+                for (var item in opcoes) {
+                  if (item.descricao.toUpperCase().trim() == "BRANCO") {
+                    RespostaEscolhida resp1 = new RespostaEscolhida();
+                    resp1.idBairro = bairro;
+                    resp1.idPergunta = item.perguntaId;
+                    resp1.idResposta = item.id;
+                    print("BRANCO" + k.toString());
+                    print(bairro);
+                    print(item.perguntaId);
+                    print(item.id);
+
+                    new RespostaEscolhidaProvider().saveRespostaEscolhida(resp1);
+
+                    setState(() {
+                      _scoreKeeper.add(
+                        Icon(
+                          Icons.check,
+                          color: Colors.green,
+                        ),
+                      );
+                    });
                   }
-                });
-              },
-            );
+                }
+              }
+
+              FinishDialog.show(context,
+                  //  hitNumber: _controller.hitNumber,
+                  questionNumber: _controller.questionsNumber);
+            } else {
+              new RespostaEscolhidaProvider().saveRespostaEscolhida(resp);
+
+              ResultDialog.show(
+                context,
+                resp: answer,
+                question: _controller.question,
+                onNext: () {
+                  setState(() {
+                    _scoreKeeper.add(
+                      Icon(
+                        Icons.check,
+                        color: Colors.green,
+                      ),
+                    );
+
+                    if (_scoreKeeper.length < _controller.questionsNumber) {
+                      _controller.nextQuestion();
+                    } else {
+                      FinishDialog.show(context,
+                          //  hitNumber: _controller.hitNumber,
+                          questionNumber: _controller.questionsNumber);
+                    }
+                  });
+                },
+              );
+            }
           },
         ),
         SizedBox(
