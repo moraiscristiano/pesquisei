@@ -2,7 +2,6 @@ import 'package:Pesquisei/models/pesquisa.dart';
 import 'package:Pesquisei/models/pesquisa.quiz.dart';
 import 'package:Pesquisei/models/resumo.pesquisa.dart';
 import 'package:Pesquisei/models/retorno.sincronizacao.dart';
-import 'package:Pesquisei/models/token.return.dart';
 import 'package:Pesquisei/repositories/pesquisa.repository.dart';
 
 class PesquisaController {
@@ -35,7 +34,6 @@ class PesquisaController {
   }
 
   Future<RetornoSincronizacao> sincronizar(String pUser, String pPass) async {
-    TokenReturn retorno = new TokenReturn();
     RetornoSincronizacao retornoSync = new RetornoSincronizacao();
 
     try {

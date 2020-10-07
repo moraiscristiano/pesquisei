@@ -13,7 +13,6 @@ class PerguntaController {
   Future<RetornoSincronizacao> sincronizar(String pUser, String pPass) async {
     RetornoSincronizacao retornoSync = new RetornoSincronizacao();
 
-    TokenReturn retorno = new TokenReturn();
     bool processado = false;
     int tentativas = 0;
     print('sincroniza Pergunta...');

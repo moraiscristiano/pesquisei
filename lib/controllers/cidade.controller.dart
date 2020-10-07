@@ -13,7 +13,6 @@ class CidadeController {
   }
 
   Future<RetornoSincronizacao> sincronizar(String pUser, String pPass) async {
-    TokenReturn retorno = new TokenReturn();
     RetornoSincronizacao retornoSync = new RetornoSincronizacao();
 
     bool processado = false;

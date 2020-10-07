@@ -1,5 +1,4 @@
 import 'package:Pesquisei/models/retorno.sincronizacao.dart';
-import 'package:Pesquisei/models/token.return.dart';
 import 'package:Pesquisei/repositories/bairro.repository.dart';
 
 class BairroController {
@@ -10,7 +9,6 @@ class BairroController {
   }
 
   Future<RetornoSincronizacao> sincronizar(String pUser, String pPass) async {
-    TokenReturn retorno = new TokenReturn();
     RetornoSincronizacao retornoSync = new RetornoSincronizacao();
     bool processado = false;
     int tentativas = 0;

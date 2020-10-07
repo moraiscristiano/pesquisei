@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:Pesquisei/models/pesquisa.quiz.dart';
 import 'package:Pesquisei/models/resposta.dart';
 import 'package:Pesquisei/repositories/pesquisa.repository.dart';

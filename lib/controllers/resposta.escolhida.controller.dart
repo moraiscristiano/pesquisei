@@ -1,6 +1,4 @@
 import 'package:Pesquisei/models/retorno.sincronizacao.dart';
-import 'package:Pesquisei/models/token.return.dart';
-import 'package:Pesquisei/repositories/cidade.repository.dart';
 import 'package:Pesquisei/repositories/resposta.escolhia.repository.dart';
 import 'package:Pesquisei/view-models/sincronize.viewmodel.dart';
 
