@@ -10,7 +10,6 @@ import 'package:Pesquisei/models/retorno.sincronizacao.dart';
 import 'package:Pesquisei/models/token.return.dart';
 import 'package:Pesquisei/utils/db.helper.dart';
 import 'package:Pesquisei/utils/strings.dart';
-import 'package:html_unescape/html_unescape.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:sqflite/sqflite.dart';
@@ -124,6 +123,10 @@ class PesquisaRepository {
       //    print('chegou api');
 
       List<Pesquisa> lApi = [];
+
+      // Delete x Insert para manter registros da exclusão física da painel Online
+      var deletePesquisa = await deletePesquisaFromDb(_db);
+      var deleteBairroPesquisas = await deleteBairroPesquisasFromDb(_db);
 
       // Get Pesquisas da API
       List<Pesquisa> listaApi =
@@ -352,6 +355,16 @@ class PesquisaRepository {
   Future<int> deletar(Future<Database> db, int id) async {
     var database = await db;
     return await database.delete('Pesquisa', where: 'id = ?', whereArgs: [id]);
+  }
+
+  Future<int> deletePesquisaFromDb(Future<Database> db) async {
+    var database = await db;
+    return await database.delete('Pesquisa');
+  }
+
+  Future<int> deleteBairroPesquisasFromDb(Future<Database> db) async {
+    var database = await db;
+    return await database.delete('BairroPesquisas');
   }
 
   static String utf8convert(String text) {

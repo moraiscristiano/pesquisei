@@ -11,9 +11,27 @@ class RespostaEscolhidaController {
     repository = new RespostaEscolhidaRepository();
   }
 
+  Future<RetornoSincronizacao> deleteWherePerguntaOrBairroNotExistInDb(
+      SincronizeViewModel vm) async {
+
+    RetornoSincronizacao retornoSync = new RetornoSincronizacao();
+    try {
+      print('sincroniza deleteWherePesquisaOrBairroNotExistInDb...');
+      retornoSync = await repository.deleteWherePerguntaOrBairroNotExistInDb();
+    } catch (error) {
+      retornoSync.mensagem = error.toString();
+      retornoSync.erros = 1;
+      retornoSync.registrosSincronizados = 0;
+      print(error);
+    } finally {
+      vm.busy = false;
+    }
+
+    return retornoSync;
+  }
+
   Future<RetornoSincronizacao> sincronizar(
       String pUser, String pPass, SincronizeViewModel vm) async {
-    vm.busy = true;
 
     RetornoSincronizacao retornoSync = new RetornoSincronizacao();
 
@@ -36,9 +54,7 @@ class RespostaEscolhidaController {
       retornoSync.erros = 1;
       retornoSync.registrosSincronizados = 0;
       print(error);
-    } finally {
-      vm.busy = false;
-    }
+    } 
 
     return retornoSync;
   }

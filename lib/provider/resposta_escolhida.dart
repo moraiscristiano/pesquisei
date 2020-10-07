@@ -1,20 +1,11 @@
-import 'package:dio/dio.dart';
 import 'package:Pesquisei/models/resposta.escolhida.dart';
-import 'package:Pesquisei/utils/strings.dart';
 import 'package:Pesquisei/utils/db.helper.dart';
 import 'package:sqflite/sqflite.dart';
 
 class RespostaEscolhidaProvider {
   Future<Database> _db;
-  Dio _dio;
 
   RespostaEscolhidaProvider() {
-    BaseOptions options = new BaseOptions(
-      baseUrl: Strings.BASE_URL_SERVER,
-      connectTimeout: 5000,
-    );
-    _dio = new Dio(options);
-
     _db = DbHelper().db;
   }
 

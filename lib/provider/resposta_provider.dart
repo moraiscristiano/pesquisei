@@ -1,22 +1,12 @@
-import 'dart:convert';
 
-import 'package:dio/dio.dart';
 import 'package:Pesquisei/models/resposta.dart';
-import 'package:Pesquisei/utils/strings.dart';
 import 'package:Pesquisei/utils/db.helper.dart';
 import 'package:sqflite/sqflite.dart';
 
 class RespostaProvider {
   Future<Database> _db;
-  Dio _dio;
 
   RespostaProvider() {
-    BaseOptions options = new BaseOptions(
-      baseUrl: Strings.BASE_URL_SERVER,
-      connectTimeout: 5000,
-    );
-    _dio = new Dio(options);
-
     _db = DbHelper().db;
   }
 
@@ -51,17 +41,5 @@ class RespostaProvider {
     var dbResposta = await _db;
     return await dbResposta.update('Resposta', resposta.toMap(),
         where: 'id = ?', whereArgs: [resposta.id]);
-  }
-
-  Future<List<Resposta>> getRespostasFromServer() async {
-    List<Resposta> lista;
-
-    Response<String> response =
-        await _dio.get(Strings.GET_ALL_RESPOSTAS_FROM_SERVER);
-    if (response != null && response.statusCode == 200) {
-      List responseJson = json.decode(response.data);
-      lista = responseJson.map((m) => new Resposta.fromJson(m)).toList();
-    }
-    return lista;
   }
 }

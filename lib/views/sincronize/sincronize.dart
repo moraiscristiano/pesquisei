@@ -40,14 +40,14 @@ class _SincronizePageState extends State<SincronizePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-           Container(
-            alignment: Alignment.topCenter,
-            margin: EdgeInsets.only(bottom: 75, top: 75),
-           /* child: Text(
+            Container(
+              alignment: Alignment.topCenter,
+              margin: EdgeInsets.only(bottom: 75, top: 75),
+              /* child: Text(
               'Clique no botão abaixo para sincronizar',
               style: TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
             ),*/
-          ),
+            ),
             model.busy
                 ? Center(
                     child: Container(
@@ -57,7 +57,6 @@ class _SincronizePageState extends State<SincronizePage> {
                     ),
                   )
                 : FlatButton(
-                  
                     onPressed: () {
                       // new SincronizeController().Sincronizar();
                       print('name: ' + store.name);
@@ -162,21 +161,28 @@ class _SincronizePageState extends State<SincronizePage> {
                                             data.registrosSincronizados;
                                       }
 
-                                      if (erros > 0) {
-                                        _showMyDialog(
-                                            'Sincronização finalizada com erros!\nFavor tente novamente.');
-                                      } else {
-                                        if (resultadosEnviados > 0) {
+                                      _respostaEscolhidaController
+                                          .deleteWherePerguntaOrBairroNotExistInDb(
+                                              model)
+                                          .then((data) {
+
+                                            //FINAL
+                                        if (erros > 0) {
                                           _showMyDialog(
-                                              'Sincronização finalizada com sucesso!\n' +
-                                                  resultadosEnviados
-                                                      .toString() +
-                                                  ' registros enviados ao painel online.');
+                                              'Sincronização finalizada com erros!\nFavor tente novamente.');
                                         } else {
-                                          _showMyDialog(
-                                              'Sincronização finalizada com sucesso!');
+                                          if (resultadosEnviados > 0) {
+                                            _showMyDialog(
+                                                'Sincronização finalizada com sucesso!\n' +
+                                                    resultadosEnviados
+                                                        .toString() +
+                                                    ' registros enviados ao painel online.');
+                                          } else {
+                                            _showMyDialog(
+                                                'Sincronização finalizada com sucesso!');
+                                          }
                                         }
-                                      }
+                                      });
                                     });
                                   });
                                 });
@@ -191,12 +197,16 @@ class _SincronizePageState extends State<SincronizePage> {
                         print(data);
                       });
                     },
-                    padding:  EdgeInsets.fromLTRB(35,12,35,12),
+                    padding: EdgeInsets.fromLTRB(35, 12, 35, 12),
                     color: Colors.blue,
                     textColor: Colors.white,
-                    child: Text('Sincronizar',               style: TextStyle(fontWeight: FontWeight.w500, fontSize: 25, ),
-),
-
+                    child: Text(
+                      'Sincronizar',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 25,
+                      ),
+                    ),
                   )
           ],
         ),

@@ -1,22 +1,12 @@
-import 'dart:convert';
 
-import 'package:dio/dio.dart';
 import 'package:Pesquisei/models/cidade.dart';
-import 'package:Pesquisei/utils/strings.dart';
 import 'package:Pesquisei/utils/db.helper.dart';
 import 'package:sqflite/sqflite.dart';
 
 class CidadeProvider {
   Future<Database> _db;
-  Dio _dio;
 
   CidadeProvider() {
-    BaseOptions options = new BaseOptions(
-      baseUrl: Strings.BASE_URL_SERVER,
-      connectTimeout: 5000,
-    );
-    _dio = new Dio(options);
-
     _db = DbHelper().db;
   }
 
@@ -59,15 +49,4 @@ class CidadeProvider {
         where: 'id = ?', whereArgs: [cidade.id]);
   }
 
-  Future<List<Cidade>> getCidadesFromServer() async {
-    List<Cidade> lista;
-
-    Response<String> response =
-        await _dio.get(Strings.GET_ALL_CIDADES_FROM_SERVER);
-    if (response != null && response.statusCode == 200) {
-      List responseJson = json.decode(response.data);
-      lista = responseJson.map((m) => new Cidade.fromJson(m)).toList();
-    }
-    return lista;
-  }
 }

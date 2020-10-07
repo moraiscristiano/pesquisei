@@ -1,24 +1,13 @@
-import 'dart:convert';
 
 import 'package:Pesquisei/controllers/pesquisa.controller.dart';
-import 'package:Pesquisei/controllers/quiz.controller.dart';
-import 'package:dio/dio.dart';
 import 'package:Pesquisei/models/bairro.dart';
-import 'package:Pesquisei/utils/strings.dart';
 import 'package:Pesquisei/utils/db.helper.dart';
 import 'package:sqflite/sqflite.dart';
 
 class BairroProvider {
-  Future<Database> _db;
-  Dio _dio;
+  Future<Database> _db; 
 
   BairroProvider() {
-    BaseOptions options = new BaseOptions(
-      baseUrl: Strings.BASE_URL_SERVER,
-      connectTimeout: 5000,
-    );
-    _dio = new Dio(options);
-
     _db = DbHelper().db;
   }
 
@@ -52,18 +41,6 @@ class BairroProvider {
     var dbBairro = await _db;
     return await dbBairro.update('Bairro', bairro.toMap(),
         where: 'id = ?', whereArgs: [bairro.id]);
-  }
-
-  Future<List<Bairro>> getBairrosFromServer() async {
-    List<Bairro> lista;
-
-    Response<String> response =
-        await _dio.get(Strings.GET_ALL_BAIRROS_FROM_SERVER);
-    if (response != null && response.statusCode == 200) {
-      List responseJson = json.decode(response.data);
-      lista = responseJson.map((m) => new Bairro.fromJson(m)).toList();
-    }
-    return lista;
   }
 
   Future<bool> verificaPesquisaFinalizada(int idbairro, int idcidade) async {

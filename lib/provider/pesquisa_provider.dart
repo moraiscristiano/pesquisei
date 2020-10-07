@@ -1,22 +1,11 @@
-import 'dart:convert';
-
-import 'package:dio/dio.dart';
 import 'package:Pesquisei/models/pesquisa.dart';
-import 'package:Pesquisei/utils/strings.dart';
 import 'package:Pesquisei/utils/db.helper.dart';
 import 'package:sqflite/sqflite.dart';
 
 class PesquisaProvider {
   Future<Database> _db;
-  Dio _dio;
 
   PesquisaProvider() {
-    BaseOptions options = new BaseOptions(
-      baseUrl: Strings.BASE_URL_SERVER,
-      connectTimeout: 5000,
-    );
-    _dio = new Dio(options);
-
     _db = DbHelper().db;
   }
 
@@ -29,8 +18,15 @@ class PesquisaProvider {
 
   Future<List<Pesquisa>> getPesquisas() async {
     var dbPesquisa = await _db;
-    List<Map> maps = await dbPesquisa.query('Pesquisa',
-        columns: ['id', 'nome', 'descricao', 'dataCricao' ,'numeroEntrevistados' ,'alteracao', 'idbairro']);
+    List<Map> maps = await dbPesquisa.query('Pesquisa', columns: [
+      'id',
+      'nome',
+      'descricao',
+      'dataCricao',
+      'numeroEntrevistados',
+      'alteracao',
+      'idbairro'
+    ]);
     //List<Map> maps = await dbClient.rawQuery("SELECT * FROM $TABLE");
     List<Pesquisa> pesquisas = [];
     if (maps.length > 0) {
@@ -51,17 +47,5 @@ class PesquisaProvider {
     var dbPesquisa = await _db;
     return await dbPesquisa.update('Pesquisa', pesquisa.toJson(),
         where: 'id = ?', whereArgs: [pesquisa.id]);
-  }
-
-  Future<List<Pesquisa>> getPesquisasFromServer() async {
-    List<Pesquisa> lista;
-
-    Response<String> response =
-        await _dio.get(Strings.GET_ALL_PESQUISAS_FROM_SERVER);
-    if (response != null && response.statusCode == 200) {
-      List responseJson = json.decode(response.data);
-      lista = responseJson.map((m) => new Pesquisa.fromJson(m)).toList();
-    }
-    return lista;
   }
 }

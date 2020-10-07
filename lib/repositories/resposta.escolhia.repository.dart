@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:Pesquisei/controllers/auth.controller.dart';
 import 'package:Pesquisei/models/resposta.escolhida.dart';
 import 'package:Pesquisei/models/retorno.sincronizacao.dart';
@@ -12,6 +10,31 @@ import 'package:sqflite/sqflite.dart';
 
 class RespostaEscolhidaRepository {
   DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
+
+  Future<RetornoSincronizacao> deleteWherePerguntaOrBairroNotExistInDb() async {
+    Future<Database> _db = DbHelper().db;
+
+    RetornoSincronizacao retorno = new RetornoSincronizacao();
+    retorno.erros = 0;
+    retorno.mensagem = "";
+    retorno.registrosSincronizados = 0;
+
+    try {
+      var database = await _db;
+      // Delete from Db RespostaEscolhida where not exist Pergunta and Bairro in Db
+      database.execute(
+          'Delete from RespostaEscolhida where (idPergunta,idBairro) not in (SELECT pergunta, bairro FROM (SELECT p.id as pergunta, pes.idbairro as bairro from  BairroPesquisas bp join Pesquisa pes on pes.id = bp.idpesquisa join Pergunta p on p.pesquisaId = pes.id )) ');
+
+      print("exclusão de respostas sem pergunta e bairro realizada.");
+
+      return retorno;
+    } catch (error) {
+      retorno.erros = 1;
+      retorno.mensagem = error.toString();
+    }
+
+    return retorno;
+  }
 
   Future<RetornoSincronizacao> sincronizar(String pUser, String pPass) async {
     Future<Database> _db = DbHelper().db;
@@ -37,7 +60,7 @@ class RespostaEscolhidaRepository {
       // Get Resposta Db
       List<RespostaEscolhida> listaDb = await getFromDb(_db);
       //await Future.delayed(new Duration(milliseconds: 1500));
-    //  print('listaDb' + listaDb.length.toString());
+      //  print('listaDb' + listaDb.length.toString());
 
       if (!listVazia(listaDb)) {
         //RespostaEscolhidaList list = RespostaEscolhidaList(listaDb);
@@ -47,7 +70,7 @@ class RespostaEscolhidaRepository {
         Response resposta = await postRespostasRescolhidas(
             tokenReturn.token.accessToken, jsonRespostas);
 
-    //    print('Post Status Code: ' + resposta.statusCode.toString());
+        //    print('Post Status Code: ' + resposta.statusCode.toString());
 
         if (resposta.statusCode == 201) {
           for (var item in listaDb) {
@@ -84,7 +107,7 @@ class RespostaEscolhidaRepository {
         body: jsonRespostas);
     //await Future.delayed(new Duration(milliseconds: 1500));
 
-  //  print(r.body);
+    //  print(r.body);
 
     return r;
   }
